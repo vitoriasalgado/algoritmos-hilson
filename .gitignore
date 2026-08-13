@@ -1,30 +1,20 @@
-### IntelliJ IDEA ###
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# Java
+*.class
+java/out/
 out/
-!**/src/main/**/out/
-!**/src/test/**/out/
-.kotlin
+target/
 
-### Eclipse ###
-.apt_generated
-.classpath
-.factorypath
-.project
-.settings
-.springBeans
-.sts4-cache
-bin/
-!**/src/main/**/bin/
-!**/src/test/**/bin/
-
-### NetBeans ###
-/nbproject/private/
-/nbbuild/
-/dist/
-/nbdist/
-/.nb-gradle/
-
-### VS Code ###
+# IDE
+.idea/
+*.iml
 .vscode/
 
-### Mac OS ###
+# Sistema
 .DS_Store
+Thumbs.db

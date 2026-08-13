@@ -1,0 +1,9 @@
+# Normaliza fim de linha entre macOS (Vitória) e Linux (Jotage).
+* text=auto eol=lf
+
+# Windows: o avaliador pode rodar o .bat, que exige CRLF.
+*.bat text eol=crlf
+
+# Preserva o docx do relatório como binário.
+*.docx binary
+*.pdf binary
