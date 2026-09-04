@@ -1,0 +1,8 @@
+=== PROBLEMA 01 — SISTEMA DE ATENDIMENTO DE UMA CLÍNICA MÉDICA ===
+Estrutura: Fila   |   Linguagem: Python
+
+[ENTRADA]    15 pacientes lidos de dados/pacientes.csv
+[OPERAÇÕES]  15 enfileiramentos, 15 desenfileiramentos
+[SAÍDA]      ordem de atendimento por chegada | tempo médio de espera = 117.7 min
+[COMPLEX.]   enfileirar/desenfileirar O(1) | simulação O(n) | espaço O(n)
+==========================================================
