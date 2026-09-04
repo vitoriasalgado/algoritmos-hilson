@@ -30,24 +30,22 @@ das decisões de projeto tomadas antes da implementação.
 
 ### Justificativa de escolha
 
-O problema exige que os pacientes sejam atendidos exatamente na ordem de chegada — é a definição de
-um comportamento FIFO (First-In, First-Out), que é a garantia central de uma fila. Não há necessidade
-de acessar um paciente no meio da estrutura, nem de reordenar por prioridade: a única operação
-relevante é "quem chegou primeiro é atendido primeiro". Uma pilha inverteria essa ordem; uma lista com
-acesso por posição arbitrária ofereceria capacidade que o problema não usa. A fila é a estrutura que
-expressa exatamente a regra de negócio, sem funcionalidade sobrando.
+Os pacientes precisam ser atendidos exatamente na ordem em que chegam — isso é o comportamento
+FIFO (primeiro a entrar, primeiro a sair), que é a base de uma fila. Não é preciso acessar um paciente
+no meio da lista nem reordenar por prioridade, só respeitar quem chegou primeiro. Uma pilha inverteria
+essa ordem; uma lista com acesso por posição livre ofereceria mais do que o problema precisa. A fila
+resolve exatamente o que o problema pede, sem sobrar nem faltar nada.
 
 ### Decisão de implementação
 
-A restrição do item 5.4 do enunciado proíbe o uso de `collections.deque` ou qualquer fila pronta da
-biblioteca padrão. A implementação usa uma lista (`list`) como área de armazenamento, mantendo um
-índice `_inicio` que avança a cada remoção em vez de deslocar fisicamente os elementos. Essa escolha
-mantém `enfileirar` e `desenfileirar` em O(1) — a alternativa mais direta, remover o primeiro elemento
-de uma lista com `pop(0)`, é O(n), porque desloca todos os elementos restantes uma posição. O
-custo dessa escolha é que a lista interna nunca encolhe: elementos já atendidos continuam ocupando
-posição em memória até o fim da execução. Para o volume do problema (15 pacientes), esse custo é
-irrelevante; para uma fila que rodasse indefinidamente, seria necessário reciclar o espaço — por
-exemplo, com uma implementação circular.
+O item 5.4 do enunciado proíbe usar `collections.deque` ou qualquer fila pronta do Python. A
+implementação usa uma lista (`list`) como armazenamento, com um índice `_inicio` que avança a cada
+remoção em vez de tirar o elemento fisicamente da lista. Isso mantém `enfileirar` e `desenfileirar` em
+O(1) — se fosse usado `pop(0)` pra remover o primeiro elemento, seria O(n), porque todos os outros
+elementos precisariam se deslocar uma posição. O preço dessa escolha é que a lista interna nunca
+diminui: os pacientes já atendidos continuam ocupando espaço até o fim da execução. Com 15 pacientes
+isso não importa; numa fila que rodasse sem parar, seria necessário reaproveitar esse espaço de algum
+jeito — por exemplo, com uma fila circular.
 
 ### Estimativa de tempo de espera
 
@@ -63,13 +61,12 @@ significado, foi necessário atribuir uma duração estimada por tipo de atendim
 | Urgência | 10 min |
 | Retorno | 10 min |
 
-A simulação processa a fila em ordem de chegada. Para cada paciente, o horário de início do
-atendimento é o maior valor entre o horário de chegada dele e o horário em que o atendimento anterior
-terminou; a espera é a diferença entre esses dois valores. Essa regra reproduz o comportamento real de
-uma fila de atendimento único: se a demanda (frequência de chegadas) supera a capacidade de
-atendimento (duração média), o atraso se acumula ao longo do dia — o que de fato ocorre com os dados
-de teste, em que a espera cresce de 0 minutos (primeiro paciente) a 263 minutos (último paciente),
-com média de 117,7 minutos.
+A simulação processa a fila em ordem de chegada. Pra cada paciente, o horário de início do
+atendimento é o maior entre o horário de chegada dele e o horário em que o atendimento anterior
+terminou; a espera é a diferença entre os dois. Isso reproduz o que acontece numa fila de atendimento
+único de verdade: se os pacientes chegam mais rápido do que a clínica consegue atender, o atraso vai
+se acumulando ao longo do dia — e é o que acontece com os dados de teste, onde a espera vai de 0
+minutos (primeiro paciente) até 263 minutos (último), com média de 117,7 minutos.
 
 ### Complexidade
 
@@ -79,8 +76,8 @@ com média de 117,7 minutos.
 | `desenfileirar` | O(1) | — |
 | Simulação completa (n pacientes) | O(n) | O(n) |
 
-O espaço O(n) decorre de duas listas proporcionais ao número de pacientes: a área de armazenamento
-interna da fila e a lista de tempos de espera mantida para o cálculo da média.
+O espaço O(n) vem de duas listas que crescem junto com o número de pacientes: o armazenamento
+interno da fila e a lista de tempos de espera usada pra calcular a média.
 
 ### Exemplo de execução
 
@@ -99,23 +96,116 @@ Média de tempo de espera: 117.7 minutos
 
 ### Dificuldades encontradas e soluções adotadas
 
-- **Indentação como estrutura de bloco.** O cálculo de espera de cada paciente foi escrito inicialmente
-  fora do laço `while`, por engano de indentação — em Python, ao contrário de Java, o bloco pertencente
-  a um `while`/`if`/`for` é definido pelo recuo do código, não por chaves. O erro não gerava exceção
-  (o código era sintaticamente válido), só produzia um resultado funcionalmente errado: a simulação
-  calculava a espera uma única vez, com os dados do último paciente, em vez de uma vez por paciente.
-  Foi identificado ao inspecionar a saída do programa e comparar o número de linhas impressas com o
-  número de pacientes esperado.
-- **Docstring na mesma linha do `def`.** Uma tentativa inicial de documentar os métodos da fila colocou
-  a docstring na mesma linha dos dois-pontos do `def`, o que gera `IndentationError` na linha seguinte
-  — o corpo da função precisa começar em uma nova linha, indentado, quando a docstring está presente.
-- **Gerenciamento do arquivo aberto.** A leitura do CSV inicialmente usava `open()` sem fechamento
-  explícito do arquivo. Foi substituído por `with open(...) as arquivo:`, que garante o fechamento
-  automático ao final do bloco, inclusive em caso de exceção.
+- **Indentação definindo o bloco.** O cálculo da espera de cada paciente ficou escrito, no começo, fora
+  do laço `while`, por um erro de indentação — em Python, diferente de Java, o que pertence a um
+  `while`/`if`/`for` é definido pelo recuo do código, não por chaves. Não deu erro (o código era válido),
+  só o resultado saiu errado: a simulação calculava a espera uma única vez, usando os dados do último
+  paciente, em vez de calcular uma vez pra cada um. Percebi olhando a saída do programa e reparando
+  que o número de linhas impressas não batia com o número de pacientes.
+- **Docstring na mesma linha do `def`.** Numa tentativa inicial, a docstring dos métodos da fila ficou
+  na mesma linha dos dois-pontos do `def`, o que dá `IndentationError` na linha seguinte — o corpo da
+  função precisa começar numa linha nova, indentada, quando tem docstring.
+- **Arquivo aberto sem fechar.** A leitura do CSV, no começo, usava `open()` sem fechar o arquivo
+  depois. Troquei por `with open(...) as arquivo:`, que fecha automaticamente no fim do bloco, mesmo
+  se der erro no meio do caminho.
 
 ### Conclusão
 
-A fila resolveu o problema sem exigir nenhuma operação fora do seu contrato natural (inserir no fim,
-remover do início). A parte não trivial do problema não estava na estrutura de dados em si, mas na
-modelagem da simulação — decidir como estimar uma duração de atendimento a partir de um dado que o
-CSV não fornece, e propagar corretamente o efeito de fila (atraso acumulado) ao longo do dia.
+A fila resolveu o problema sem precisar de nenhuma operação fora do que ela já faz naturalmente
+(inserir no fim, remover do início). A parte mais difícil não foi a estrutura de dados em si, mas montar
+a simulação — decidir como estimar a duração de um atendimento a partir de um dado que o CSV não
+fornece, e fazer o atraso se propagar corretamente ao longo do dia.
+
+---
+
+## Situação-Problema 2 — Fila de Impressão em Laboratório de Informática
+
+**Estrutura utilizada:** Fila (mesma implementação do Problema 1, `python/lineares/fila.py`, estendida)
+**Linguagem:** Python
+
+### Justificativa de escolha
+
+Uma impressora processa os trabalhos na ordem em que chegam, sem prioridade — é o mesmo
+comportamento do Problema 1. Por isso deu pra reaproveitar a mesma `Fila`, sem mudar a parte principal
+dela.
+
+### O que precisou ser adicionado: `cancelar_ultimo` e `listar`
+
+O enunciado pede uma operação que uma fila comum não faz sozinha: cancelar o último trabalho enviado,
+ou seja, mexer no fim da fila, não no início. Foram adicionados dois métodos novos na classe `Fila`:
+
+- `cancelar_ultimo()`: remover o último item de uma lista Python é uma operação rápida (não precisa
+  deslocar nada, diferente de remover o primeiro). Por isso deu pra resolver com um método a mais na
+  própria classe, sem precisar de outra estrutura.
+- `listar()`: mostra todos os trabalhos que ainda estão na fila, sem remover nenhum — usado pra atender
+  o pedido de "listar fila" do enunciado.
+
+Os dois seguem o mesmo padrão de erro do Problema 1: `cancelar_ultimo()` dá erro se a fila estiver
+vazia, `listar()` não, porque uma fila vazia listada é só uma lista vazia, não é um erro.
+
+### Simulação
+
+A simulação foi dividida em três partes separadas, sem misturar tudo no mesmo laço:
+
+1. todos os 15 trabalhos do CSV são enfileirados;
+2. a fila é listada, e o último trabalho enviado é cancelado — pra mostrar que o cancelamento é algo
+   pontual, não uma regra aplicada em todo trabalho;
+3. os trabalhos que sobraram são processados em ordem, um por vez, simulando a impressora.
+
+### Complexidade
+
+| Operação | Tempo | Espaço |
+| --- | --- | --- |
+| `enfileirar` | O(1) | — |
+| `desenfileirar` | O(1) | — |
+| `cancelar_ultimo` | O(1) | — |
+| `listar` | O(n) | O(n) (cópia da fatia) |
+| Simulação completa (n trabalhos) | O(n) | O(n) |
+
+### Exemplo de execução
+
+```
+Impressões na fila:
+  - relatorio_final.pdf (Páginas: 22)
+  - tcc_capitulo1.docx (Páginas: 6)
+  ...
+  - referencias.docx (Páginas: 24)
+  - poster_congresso.pdf (Páginas: 30)
+Impressão: relatorio_final.pdf, Páginas: 22
+Impressão: tcc_capitulo1.docx, Páginas: 6
+...
+Impressão: referencias.docx, Páginas: 24
+
+=== PROBLEMA 02 — FILA DE IMPRESSÃO EM LABORATÓRIO DE INFORMÁTICA ===
+Estrutura: Fila   |   Linguagem: Python
+
+[ENTRADA]    15 trabalhos lidos de dados/impressoes.csv
+[OPERAÇÕES]  15 enfileiramentos, 1 listagem, 1 cancelamento, 14 desenfileiramentos
+[SAÍDA]      14 trabalhos impressos em ordem de chegada (1 cancelado antes da impressão)
+[COMPLEX.]   enfileirar/desenfileirar/cancelar_ultimo O(1) | listar/simulação O(n) | espaço O(n)
+==========================================================
+```
+
+O `poster_congresso.pdf` aparece na listagem (ainda estava na fila naquele momento), mas não aparece
+na sequência final de impressão — foi o trabalho cancelado, que era o último enviado.
+
+### Dificuldades encontradas e soluções adotadas
+
+- **Tentar achar a regra de cancelamento no CSV.** No começo, tentei decidir quando cancelar um
+  trabalho olhando uma coluna do CSV (`impressoes[2]`, que na verdade é o número de páginas),
+  procurando algo tipo `"Cancelar"`. Mas essa informação não existe nos dados — o cancelamento é uma
+  decisão da simulação, não algo que vem do arquivo.
+- **Misturar as operações no mesmo laço.** Em duas tentativas, o código enfileirava e, na mesma
+  volta do laço, já desenfileirava (ou cancelava) o item que acabou de entrar — a fila nunca chegava a
+  ter mais de um trabalho por vez. Resolvido separando em laços diferentes, do mesmo jeito que já
+  tinha sido feito no Problema 1.
+- **Ignorar o retorno de `listar()`.** Uma primeira versão chamava `fila.listar()` mas não guardava o
+  resultado em nenhuma variável, então nada aparecia na tela. Só funcionou depois de percorrer o
+  retorno com um `for` e imprimir cada item.
+
+### Conclusão
+
+Reaproveitar a `Fila` do Problema 1 e só adicionar dois métodos novos mostrou que a estrutura já
+estava bem pensada desde o início — não precisou refazer nada, só completar. A parte mais difícil não
+foi o FIFO em si, que já estava resolvido, e sim entender qual ponta da fila cada operação nova
+precisava mexer, e decidir se isso cabia dentro da própria classe ou exigia outra coisa.
