@@ -1,5 +1,6 @@
 import csv 
 from lineares.fila import Fila
+from lineares.pilha import Pilha
 
 # valores escolhidos para estimar o tempo fora do csv
 duracao_por_tipo ={
@@ -74,18 +75,36 @@ def problema_02():
     for impressao in impressoes:
         fila.enfileirar(impressao)
 
-    if fila.vazia():
-        print("Nenhuma impressão na fila.")
-    else:
-        print("Impressões na fila: ")
-        for impressao in fila.listar():
-            print(f"  - {impressao[1]} (Páginas: {impressao[2]})")
+    linhas_saida = []
 
-    fila.cancelar_ultimo() # cancela a última impressão da fila
+    def registrar(mensagem):
+        print(mensagem)
+        linhas_saida.append(mensagem)
+
+    if fila.vazia():
+        registrar("Nenhuma impressão na fila.")
+    else:
+        registrar("Impressões na fila:")
+        for impressao in fila.listar():
+            registrar(
+                f"  - Aluno: {impressao[0]} | Arquivo: {impressao[1]} "
+                f"| Páginas: {impressao[2]}"
+            )
+
+    cancelada = fila.cancelar_ultimo()
+    registrar(
+        f"Cancelamento: {cancelada[1]} enviado por {cancelada[0]} "
+        f"({cancelada[2]} páginas)."
+    )
+
+    registrar("Sequência de impressão:")
     total_impressos = 0
     while not fila.vazia():
         impressao = fila.desenfileirar()
-        print(f"Impressão: {impressao[1]}, Páginas: {impressao[2]}")
+        registrar(
+            f"  - Aluno: {impressao[0]} | Arquivo: {impressao[1]} "
+            f"| Páginas: {impressao[2]}"
+        )
         total_impressos += 1
 
     bloco = f"""=== PROBLEMA 02 — FILA DE IMPRESSÃO EM LABORATÓRIO DE INFORMÁTICA ===
@@ -97,11 +116,54 @@ Estrutura: Fila   |   Linguagem: Python
 [COMPLEX.]   enfileirar/desenfileirar/cancelar_ultimo O(1) | listar/simulação O(n) | espaço O(n)
 =========================================================="""
 
-    print(bloco)
+    registrar("")
+    registrar(bloco)
 
     with open('saidas/problema_02.txt', 'w', encoding='utf-8') as arquivo_saida:
-        arquivo_saida.write(bloco)
+        arquivo_saida.write("\n".join(linhas_saida))
+
+
+def problema_03():
+    pilha = Pilha()
+    texto = ""
+    linhas_saida = []
+
+    def registrar(mensagem):
+        print(mensagem)
+        linhas_saida.append(mensagem)
+
+    trechos = ["Olá", ", ", "mundo", "!", " Este", " é", " um", " problema", " de", " pilha."]
+
+    registrar("Ações executadas:")
+    for trecho in trechos:
+        acao = ["digitação", trecho, texto]
+        pilha.empilhar(acao)
+        texto = texto + trecho
+        registrar(f"Digitação: {trecho!r} | Texto atual: {texto}")
+
+    registrar("Desfazendo ações:")
+    while not pilha.vazia():
+        acao_desfeita = pilha.desempilhar()
+        texto = acao_desfeita[2]
+        registrar(f"Ação desfeita: {acao_desfeita[0]} - {acao_desfeita[1]!r}")
+        registrar(f"Texto após desfazer: {texto}")
+
+    bloco = f"""=== PROBLEMA 03 — SISTEMA DE DESFAZER EM EDITOR DE TEXTO ===
+Estrutura: Pilha   |   Linguagem: Python
+
+[ENTRADA]    {len(trechos)} ações de digitação simuladas
+[OPERAÇÕES]  {len(trechos)} empilhamentos, {len(trechos)} desfazimentos
+[SAÍDA]      texto final após desfazer todas as ações = {texto!r}
+[COMPLEX.]   empilhar/desempilhar O(1) | simulação O(n) | espaço O(n)
+=========================================================="""
+
+    registrar("")
+    registrar(bloco)
+
+    with open('saidas/problema_03.txt', 'w', encoding='utf-8') as arquivo_saida:
+        arquivo_saida.write("\n".join(linhas_saida))
 
 if __name__ == "__main__":
     problema_01()
     problema_02()
+    problema_03()
