@@ -238,19 +238,21 @@ configuração de compilação, sem alteração do código-fonte.
 
 ## 11. Cronograma de execução
 
-O desenvolvimento está organizado em sete semanas, conforme a sugestão apresentada no item 6 do
-enunciado, com execução paralela entre os integrantes. A conclusão está prevista para 25 de outubro,
-com o intervalo restante reservado à integração, à revisão e à elaboração do Relatório Técnico.
+O desenvolvimento foi replanejado para execução paralela entre os integrantes, a partir de 21 de
+setembro. A conclusão das implementações está prevista para 25 de outubro; as duas semanas seguintes
+são reservadas para integração, testes, relatório técnico e organização da entrega. Os dias 9 e 10 de
+novembro permanecem como margem antes da entrega em 11 de novembro.
 
 | Sem. | Período | João Guilherme — Java | Vitória — Python |
 | --- | --- | --- | --- |
-| 1 | 07/09 a 13/09 | Listas encadeadas (5 e 6) | Filas (1 e 2) e Pilhas (3 e 4) |
-| 2 | 14/09 a 20/09 | Árvore Binária de Busca (7 e 8) | Implementação dos cinco algoritmos de ordenação |
-| 3 | 21/09 a 27/09 | AVL — inserção e rotações (9) | Ordenação aplicada (15 a 18) |
-| 4 | 28/09 a 04/10 | AVL — remoção e consulta Top-K (10) | Grafos — caminho mínimo (11) |
-| 5 | 05/10 a 11/10 | Tabela Hash (13 e 14) | Grafos — percurso em largura (12) |
-| 6 | 12/10 a 18/10 | Revisão do bloco não-linear | Merge e Quick aplicados (19 a 24) |
-| 7 | 19/10 a 25/10 | Integração, testes finais e Relatório Técnico | |
+| 1 | 21/09 a 27/09 | Listas encadeadas (5 e 6) | Problemas 1 e 2: revisão final das filas; concluir Pilhas (3 e 4) |
+| 2 | 28/09 a 04/10 | Árvore Binária de Busca (7 e 8) | Implementar Bubble, Selection, Insertion, Merge e Quick Sort |
+| 3 | 05/10 a 11/10 | Árvore AVL (9 e 10) | Aplicar ordenação: problemas 15 a 18 |
+| 4 | 12/10 a 18/10 | Tabela Hash (13 e 14) | Grafos: problemas 11 e 12 |
+| 5 | 19/10 a 25/10 | Revisão do bloco não-linear | Aplicar Merge e Quick: problemas 19 a 24 |
+| 6 | 26/10 a 01/11 | Integração, saídas e Relatório Técnico | Integração, saídas e Relatório Técnico |
+| 7 | 02/11 a 08/11 | Revisão final, testes e organização do arquivo `.zip` | Revisão final, testes e organização do arquivo `.zip` |
+| — | 11/11 | Entrega pela plataforma iCEV Digital | Entrega pela plataforma iCEV Digital |
 
 ## 12. Entregáveis
 

@@ -1,3 +1,36 @@
+Impressões na fila:
+  - Aluno: Ana Beatriz Souza | Arquivo: relatorio_final.pdf | Páginas: 22
+  - Aluno: Bruno Carvalho Lima | Arquivo: tcc_capitulo1.docx | Páginas: 6
+  - Aluno: Carla Menezes Rocha | Arquivo: lista_exercicios.pdf | Páginas: 36
+  - Aluno: Daniel Freitas Alves | Arquivo: slides_seminario.pptx | Páginas: 35
+  - Aluno: Eduarda Nunes Pinto | Arquivo: artigo_cientifico.pdf | Páginas: 19
+  - Aluno: Felipe Moreira Castro | Arquivo: planilha_custos.xlsx | Páginas: 19
+  - Aluno: Gabriela Torres Dias | Arquivo: mapa_conceitual.png | Páginas: 30
+  - Aluno: Henrique Barbosa Melo | Arquivo: resumo_aula.docx | Páginas: 10
+  - Aluno: Isabela Cardoso Ramos | Arquivo: prova_simulada.pdf | Páginas: 42
+  - Aluno: Joao Pedro Antunes | Arquivo: fichamento.docx | Páginas: 37
+  - Aluno: Karina Lopes Ferreira | Arquivo: cronograma.pdf | Páginas: 20
+  - Aluno: Lucas Vieira Guedes | Arquivo: diagrama_classes.png | Páginas: 2
+  - Aluno: Mariana Teixeira Prado | Arquivo: manual_laboratorio.pdf | Páginas: 24
+  - Aluno: Nicolas Almeida Cruz | Arquivo: referencias.docx | Páginas: 24
+  - Aluno: Olivia Ribeiro Sampaio | Arquivo: poster_congresso.pdf | Páginas: 30
+Cancelamento: poster_congresso.pdf enviado por Olivia Ribeiro Sampaio (30 páginas).
+Sequência de impressão:
+  - Aluno: Ana Beatriz Souza | Arquivo: relatorio_final.pdf | Páginas: 22
+  - Aluno: Bruno Carvalho Lima | Arquivo: tcc_capitulo1.docx | Páginas: 6
+  - Aluno: Carla Menezes Rocha | Arquivo: lista_exercicios.pdf | Páginas: 36
+  - Aluno: Daniel Freitas Alves | Arquivo: slides_seminario.pptx | Páginas: 35
+  - Aluno: Eduarda Nunes Pinto | Arquivo: artigo_cientifico.pdf | Páginas: 19
+  - Aluno: Felipe Moreira Castro | Arquivo: planilha_custos.xlsx | Páginas: 19
+  - Aluno: Gabriela Torres Dias | Arquivo: mapa_conceitual.png | Páginas: 30
+  - Aluno: Henrique Barbosa Melo | Arquivo: resumo_aula.docx | Páginas: 10
+  - Aluno: Isabela Cardoso Ramos | Arquivo: prova_simulada.pdf | Páginas: 42
+  - Aluno: Joao Pedro Antunes | Arquivo: fichamento.docx | Páginas: 37
+  - Aluno: Karina Lopes Ferreira | Arquivo: cronograma.pdf | Páginas: 20
+  - Aluno: Lucas Vieira Guedes | Arquivo: diagrama_classes.png | Páginas: 2
+  - Aluno: Mariana Teixeira Prado | Arquivo: manual_laboratorio.pdf | Páginas: 24
+  - Aluno: Nicolas Almeida Cruz | Arquivo: referencias.docx | Páginas: 24
+
 === PROBLEMA 02 — FILA DE IMPRESSÃO EM LABORATÓRIO DE INFORMÁTICA ===
 Estrutura: Fila   |   Linguagem: Python
 

@@ -1,0 +1,41 @@
+Ações executadas:
+Digitação: 'Olá' | Texto atual: Olá
+Digitação: ', ' | Texto atual: Olá, 
+Digitação: 'mundo' | Texto atual: Olá, mundo
+Digitação: '!' | Texto atual: Olá, mundo!
+Digitação: ' Este' | Texto atual: Olá, mundo! Este
+Digitação: ' é' | Texto atual: Olá, mundo! Este é
+Digitação: ' um' | Texto atual: Olá, mundo! Este é um
+Digitação: ' problema' | Texto atual: Olá, mundo! Este é um problema
+Digitação: ' de' | Texto atual: Olá, mundo! Este é um problema de
+Digitação: ' pilha.' | Texto atual: Olá, mundo! Este é um problema de pilha.
+Desfazendo ações:
+Ação desfeita: digitação - ' pilha.'
+Texto após desfazer: Olá, mundo! Este é um problema de
+Ação desfeita: digitação - ' de'
+Texto após desfazer: Olá, mundo! Este é um problema
+Ação desfeita: digitação - ' problema'
+Texto após desfazer: Olá, mundo! Este é um
+Ação desfeita: digitação - ' um'
+Texto após desfazer: Olá, mundo! Este é
+Ação desfeita: digitação - ' é'
+Texto após desfazer: Olá, mundo! Este
+Ação desfeita: digitação - ' Este'
+Texto após desfazer: Olá, mundo!
+Ação desfeita: digitação - '!'
+Texto após desfazer: Olá, mundo
+Ação desfeita: digitação - 'mundo'
+Texto após desfazer: Olá, 
+Ação desfeita: digitação - ', '
+Texto após desfazer: Olá
+Ação desfeita: digitação - 'Olá'
+Texto após desfazer: 
+
+=== PROBLEMA 03 — SISTEMA DE DESFAZER EM EDITOR DE TEXTO ===
+Estrutura: Pilha   |   Linguagem: Python
+
+[ENTRADA]    10 ações de digitação simuladas
+[OPERAÇÕES]  10 empilhamentos, 10 desfazimentos
+[SAÍDA]      texto final após desfazer todas as ações = ''
+[COMPLEX.]   empilhar/desempilhar O(1) | simulação O(n) | espaço O(n)
+==========================================================

@@ -12,6 +12,9 @@ target/
 
 # IDE
 .idea/
+
+# Instruções locais para assistentes de código
+AGENTS.md
 *.iml
 .vscode/
 

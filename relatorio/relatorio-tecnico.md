@@ -131,8 +131,9 @@ dela.
 
 ### O que precisou ser adicionado: `cancelar_ultimo` e `listar`
 
-O enunciado pede uma operação que uma fila comum não faz sozinha: cancelar o último trabalho enviado,
-ou seja, mexer no fim da fila, não no início. Foram adicionados dois métodos novos na classe `Fila`:
+O enunciado permite uma operação que uma fila comum não faz sozinha: cancelar o último trabalho
+enviado, ou seja, mexer no fim da fila, não no início. Para demonstrar essa variação, foram adicionados
+dois métodos novos na classe `Fila`:
 
 - `cancelar_ultimo()`: remover o último item de uma lista Python é uma operação rápida (não precisa
   deslocar nada, diferente de remover o primeiro). Por isso deu pra resolver com um método a mais na
@@ -166,15 +167,17 @@ A simulação foi dividida em três partes separadas, sem misturar tudo no mesmo
 
 ```
 Impressões na fila:
-  - relatorio_final.pdf (Páginas: 22)
-  - tcc_capitulo1.docx (Páginas: 6)
-  ...
-  - referencias.docx (Páginas: 24)
-  - poster_congresso.pdf (Páginas: 30)
-Impressão: relatorio_final.pdf, Páginas: 22
-Impressão: tcc_capitulo1.docx, Páginas: 6
+  - Aluno: Ana Beatriz Souza | Arquivo: relatorio_final.pdf | Páginas: 22
+  - Aluno: Bruno Carvalho Lima | Arquivo: tcc_capitulo1.docx | Páginas: 6
 ...
-Impressão: referencias.docx, Páginas: 24
+  - Aluno: Nicolas Almeida Cruz | Arquivo: referencias.docx | Páginas: 24
+  - Aluno: Olivia Ribeiro Sampaio | Arquivo: poster_congresso.pdf | Páginas: 30
+Cancelamento: poster_congresso.pdf enviado por Olivia Ribeiro Sampaio (30 páginas).
+Sequência de impressão:
+  - Aluno: Ana Beatriz Souza | Arquivo: relatorio_final.pdf | Páginas: 22
+  - Aluno: Bruno Carvalho Lima | Arquivo: tcc_capitulo1.docx | Páginas: 6
+...
+  - Aluno: Nicolas Almeida Cruz | Arquivo: referencias.docx | Páginas: 24
 
 === PROBLEMA 02 — FILA DE IMPRESSÃO EM LABORATÓRIO DE INFORMÁTICA ===
 Estrutura: Fila   |   Linguagem: Python
@@ -206,6 +209,101 @@ na sequência final de impressão — foi o trabalho cancelado, que era o últim
 ### Conclusão
 
 Reaproveitar a `Fila` do Problema 1 e só adicionar dois métodos novos mostrou que a estrutura já
-estava bem pensada desde o início — não precisou refazer nada, só completar. A parte mais difícil não
+estava bem pensada desde o início (não precisou refazer nada, só completar). A parte mais difícil não
 foi o FIFO em si, que já estava resolvido, e sim entender qual ponta da fila cada operação nova
 precisava mexer, e decidir se isso cabia dentro da própria classe ou exigia outra coisa.
+
+---
+
+## Situação-Problema 3 — Sistema de Desfazer em Editor de Texto Simples
+
+**Estrutura utilizada:** Pilha (implementação própria, `python/lineares/pilha.py`)
+**Linguagem:** Python
+
+### Justificativa de escolha
+
+O recurso de desfazer precisa reverter a ação mais recente antes de qualquer ação anterior. Esse
+comportamento é LIFO (*Last In, First Out*): a última ação executada é a primeira a sair. Uma pilha
+representa exatamente essa regra. Uma fila produziria o resultado contrário, desfazendo primeiro a
+ação mais antiga, o que não corresponde ao botão "Desfazer" de um editor.
+
+### Decisão de implementação
+
+A classe `Pilha` usa uma lista Python apenas como armazenamento interno, conforme permitido pelo
+enunciado. `empilhar` usa `append`, que insere no fim da lista, e `desempilhar` usa `pop()` sem índice,
+que remove o último item. O método `topo` consulta `self._itens[-1]` sem remover a ação, e os métodos
+que dependem de um item existente lançam `IndexError` se a pilha estiver vazia.
+
+Cada ação é armazenada em uma lista com três informações: tipo da ação, trecho digitado e estado do
+texto antes da alteração. Guardar o estado anterior permite desfazer sem precisar reconstruir a regra
+inversa de cada ação. Na simulação, foram registradas dez digitações que formam a frase "Olá, mundo!
+Este é um problema de pilha.". Depois, as ações são removidas uma a uma até a pilha ficar vazia.
+
+### Simulação
+
+A execução é dividida em duas etapas:
+
+1. para cada trecho digitado, o programa registra a ação na pilha e atualiza o texto atual;
+2. enquanto a pilha não estiver vazia, o programa remove a ação do topo e restaura o texto que existia
+   antes dela.
+
+Assim, a primeira ação desfeita é a digitação de `" pilha."`; a última é `"Olá"`. Ao final, o texto
+volta a ficar vazio, comprovando que todas as dez ações foram revertidas na ordem inversa em que foram
+executadas.
+
+### Complexidade
+
+| Operação | Tempo | Espaço |
+| --- | --- | --- |
+| `empilhar` | O(1) | O(1) por ação armazenada |
+| `desempilhar` | O(1) | — |
+| `topo` | O(1) | — |
+| `tamanho` e `vazia` | O(1) | — |
+| Simulação com n ações | O(n) operações da pilha | O(n) registros |
+
+Na análise da estrutura, cada operação de pilha é O(1). Como o estado anterior do texto é guardado em
+cada ação, a memória efetiva também depende do tamanho acumulado desses textos. Para a simulação curta
+do trabalho, esse custo é pequeno e deixa o desfazer mais fácil de entender.
+
+### Exemplo de execução
+
+```
+Ações executadas:
+Digitação: 'Olá' | Texto atual: Olá
+Digitação: ', ' | Texto atual: Olá,
+...
+Digitação: ' pilha.' | Texto atual: Olá, mundo! Este é um problema de pilha.
+Desfazendo ações:
+Ação desfeita: digitação - ' pilha.'
+Texto após desfazer: Olá, mundo! Este é um problema de
+...
+Ação desfeita: digitação - 'Olá'
+Texto após desfazer:
+
+=== PROBLEMA 03 — SISTEMA DE DESFAZER EM EDITOR DE TEXTO ===
+Estrutura: Pilha   |   Linguagem: Python
+
+[ENTRADA]    10 ações de digitação simuladas
+[OPERAÇÕES]  10 empilhamentos, 10 desfazimentos
+[SAÍDA]      texto final após desfazer todas as ações = ''
+[COMPLEX.]   empilhar/desempilhar O(1) | simulação O(n) | espaço O(n)
+==========================================================
+```
+
+### Dificuldades encontradas e soluções adotadas
+
+- **Diferenciar pilha de fila.** A primeira ideia reaproveitava um índice de início, usado na fila. Esse
+  índice não se aplica à pilha, porque nela a remoção ocorre sempre no fim da lista. A solução foi usar
+  `pop()` sem índice.
+- **Consultar sem remover.** Para implementar `topo`, foi necessário acessar o último elemento sem
+  alterar a pilha. O índice `-1` resolve isso: em Python, ele representa o último elemento de uma lista.
+- **Restaurar o texto correto.** Guardar apenas o trecho digitado não seria suficiente para todos os
+  tipos de ação possíveis, como exclusão e formatação. Registrar o estado anterior junto da ação torna
+  o desfazer direto e também permite ampliar a simulação depois.
+
+### Conclusão
+
+A pilha modela a operação de desfazer de forma direta: cada ação é guardada quando acontece e a última
+é recuperada primeiro quando o usuário decide revertê-la. A simulação confirma esse comportamento com
+dez ações e termina no mesmo estado inicial, sem usar estruturas prontas além da lista que serve de
+armazenamento interno.
