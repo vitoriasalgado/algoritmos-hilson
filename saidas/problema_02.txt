@@ -1,0 +1,8 @@
+=== PROBLEMA 02 — FILA DE IMPRESSÃO EM LABORATÓRIO DE INFORMÁTICA ===
+Estrutura: Fila   |   Linguagem: Python
+
+[ENTRADA]    15 trabalhos lidos de dados/impressoes.csv
+[OPERAÇÕES]  15 enfileiramentos, 1 listagem, 1 cancelamento, 14 desenfileiramentos
+[SAÍDA]      14 trabalhos impressos em ordem de chegada (1 cancelado antes da impressão)
+[COMPLEX.]   enfileirar/desenfileirar/cancelar_ultimo O(1) | listar/simulação O(n) | espaço O(n)
+==========================================================
