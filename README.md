@@ -114,17 +114,38 @@ linear, ou um min-heap implementado à mão.
 
 ## Padrão de saída
 
-Todo problema imprime um bloco no mesmo formato, gravado em `saidas/problema_NN.txt`:
+Todos os problemas atuais e futuros, em Python e Java, seguem esta ordem:
+título numerado com estrutura e linguagem, entrada, execução, resumo com operações relevantes
+e complexidade com suas variáveis explicadas. Linhas em branco separam as seções.
+A execução pode ter títulos como RESULTADOS, ATENDIMENTOS ou SEQUÊNCIA DE IMPRESSÃO.
+O cabeçalho aparece uma vez, no início. O terminal e o arquivo `saidas/problema_NN.txt`
+apresentam o mesmo conteúdo, incluindo os passos da execução.
+
+Exemplo:
 
 ```
-=== PROBLEMA 09 — ÍNDICE DE CPF PARA SISTEMA DE RH ===
-Estrutura: Árvore AVL   |   Linguagem: Java
+========================================================================
+PROBLEMA 04 — VALIDAÇÃO DE EXPRESSÕES BALANCEADAS
+Estrutura: Pilha | Linguagem: Python
+========================================================================
 
-[ENTRADA]    25 funcionários lidos de dados/funcionarios.csv
-[OPERAÇÕES]  25 inserções, 3 buscas, 2 remoções
-[SAÍDA]      altura final = 5 | fator de balanceamento máx = 1
-[COMPLEX.]   busca O(log n) | espaço O(n)
-==========================================================
+ENTRADA: 6 expressões com parênteses, colchetes e chaves
+
+RESULTADOS:
+  {[()]}   → VÁLIDA
+  ([])     → VÁLIDA
+  ((()))   → VÁLIDA
+  ([)]     → INVÁLIDA
+  ({[]})   → VÁLIDA
+  ((()     → INVÁLIDA
+
+RESUMO:
+  4 expressões válidas e 2 inválidas.
+  Operações: empilhar aberturas e conferir os fechamentos ao desempilhar.
+
+COMPLEXIDADE:
+  Tempo: O(n) por expressão no pior caso.
+  Espaço: O(n), sendo n o número de caracteres da expressão.
 ```
 
 ## Fluxo de branches

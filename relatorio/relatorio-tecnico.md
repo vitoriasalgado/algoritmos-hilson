@@ -21,6 +21,11 @@ justificativa de escolha da estrutura, a análise de complexidade, um exemplo de
 dificuldades encontradas durante o desenvolvimento. Complementa o `relatorio-decisoes.md`, que trata
 das decisões de projeto tomadas antes da implementação.
 
+As saídas seguem um padrão compartilhado pelas duas linguagens: título com número do problema,
+estrutura e linguagem no início; entrada, execução, resumo e complexidade em seções separadas.
+O mesmo conteúdo é exibido no terminal e salvo em `saidas/problema_NN.txt`. Essa organização
+facilita localizar os resultados e comparar a execução com a explicação deste relatório.
+
 ---
 
 ## Situação-Problema 1 — Sistema de Atendimento de uma Clínica Médica
@@ -41,7 +46,7 @@ resolve exatamente o que o problema pede, sem sobrar nem faltar nada.
 O item 5.4 do enunciado proíbe usar `collections.deque` ou qualquer fila pronta do Python. A
 implementação usa uma lista (`list`) como armazenamento, com um índice `_inicio` que avança a cada
 remoção em vez de tirar o elemento fisicamente da lista. Isso mantém `enfileirar` e `desenfileirar` em
-O(1) — se fosse usado `pop(0)` pra remover o primeiro elemento, seria O(n), porque todos os outros
+O(1) amortizado para enfileirar e O(1) para desenfileirar — se fosse usado `pop(0)` pra remover o primeiro elemento, seria O(n), porque todos os outros
 elementos precisariam se deslocar uma posição. O preço dessa escolha é que a lista interna nunca
 diminui: os pacientes já atendidos continuam ocupando espaço até o fim da execução. Com 15 pacientes
 isso não importa; numa fila que rodasse sem parar, seria necessário reaproveitar esse espaço de algum
@@ -72,26 +77,42 @@ minutos (primeiro paciente) até 263 minutos (último), com média de 117,7 minu
 
 | Operação | Tempo | Espaço |
 | --- | --- | --- |
-| `enfileirar` | O(1) | — |
+| `enfileirar` | O(1) amortizado | — |
 | `desenfileirar` | O(1) | — |
 | Simulação completa (n pacientes) | O(n) | O(n) |
 
-O espaço O(n) vem de duas listas que crescem junto com o número de pacientes: o armazenamento
-interno da fila e a lista de tempos de espera usada pra calcular a média.
+O espaço O(n) inclui o armazenamento interno da fila, a lista de tempos de espera e os registros
+da execução. Essa análise considera tamanho limitado por registro de paciente.
 
 ### Exemplo de execução
 
+Trecho da execução; o registro completo está em `saidas/problema_01.txt`.
+
 ```
-Paciente: Ana Beatriz Souza, Horário: 08:04
-Tempo de espera: 0 minutos, Início do atendimento: 08:04, Fim do atendimento: 08:14
-Paciente: Bruno Carvalho Lima, Horário: 08:15
-Tempo de espera: 0 minutos, Início do atendimento: 08:15, Fim do atendimento: 08:25
-Paciente: Carla Menezes Rocha, Horário: 08:19
-Tempo de espera: 6 minutos, Início do atendimento: 08:25, Fim do atendimento: 08:45
-...
-Paciente: Olivia Ribeiro Sampaio, Horário: 09:57
-Tempo de espera: 263 minutos, Início do atendimento: 14:20, Fim do atendimento: 14:35
-Média de tempo de espera: 117.7 minutos
+========================================================================
+PROBLEMA 01 — SISTEMA DE ATENDIMENTO DE UMA CLÍNICA MÉDICA
+Estrutura: Fila | Linguagem: Python
+========================================================================
+
+ENTRADA: 15 pacientes lidos de dados/pacientes.csv
+
+ATENDIMENTOS:
+  Paciente: Ana Beatriz Souza | Chegada: 08:04
+  Espera: 0 min | Início: 08:04 | Fim: 08:14
+
+  ...
+
+  Paciente: Olivia Ribeiro Sampaio | Chegada: 09:57
+  Espera: 263 min | Início: 14:20 | Fim: 14:35
+
+RESUMO:
+  15 pacientes atendidos em ordem de chegada.
+  Tempo médio de espera: 117.7 minutos.
+  Operações: 15 enfileiramentos e 15 desenfileiramentos.
+
+COMPLEXIDADE:
+  Enfileirar: O(1) amortizado. Desenfileirar: O(1).
+  Simulação: tempo O(n) e espaço O(n), sendo n o número de pacientes.
 ```
 
 ### Dificuldades encontradas e soluções adotadas
@@ -156,34 +177,46 @@ A simulação foi dividida em três partes separadas, sem misturar tudo no mesmo
 
 | Operação | Tempo | Espaço |
 | --- | --- | --- |
-| `enfileirar` | O(1) | — |
+| `enfileirar` | O(1) amortizado | — |
 | `desenfileirar` | O(1) | — |
-| `cancelar_ultimo` | O(1) | — |
+| `cancelar_ultimo` | O(1) amortizado | — |
 | `listar` | O(n) | O(n) (cópia da fatia) |
 | Simulação completa (n trabalhos) | O(n) | O(n) |
 
 ### Exemplo de execução
 
+Trecho da execução; o registro completo está em `saidas/problema_02.txt`.
+
 ```
-Impressões na fila:
-  - relatorio_final.pdf (Páginas: 22)
-  - tcc_capitulo1.docx (Páginas: 6)
+========================================================================
+PROBLEMA 02 — FILA DE IMPRESSÃO EM LABORATÓRIO DE INFORMÁTICA
+Estrutura: Fila | Linguagem: Python
+========================================================================
+
+ENTRADA: 15 trabalhos lidos de dados/impressoes.csv
+
+FILA INICIAL:
+  - Aluno: Ana Beatriz Souza | Arquivo: relatorio_final.pdf | Páginas: 22
   ...
-  - referencias.docx (Páginas: 24)
-  - poster_congresso.pdf (Páginas: 30)
-Impressão: relatorio_final.pdf, Páginas: 22
-Impressão: tcc_capitulo1.docx, Páginas: 6
-...
-Impressão: referencias.docx, Páginas: 24
+  - Aluno: Olivia Ribeiro Sampaio | Arquivo: poster_congresso.pdf | Páginas: 30
 
-=== PROBLEMA 02 — FILA DE IMPRESSÃO EM LABORATÓRIO DE INFORMÁTICA ===
-Estrutura: Fila   |   Linguagem: Python
+CANCELAMENTO:
+  poster_congresso.pdf enviado por Olivia Ribeiro Sampaio (30 páginas).
 
-[ENTRADA]    15 trabalhos lidos de dados/impressoes.csv
-[OPERAÇÕES]  15 enfileiramentos, 1 listagem, 1 cancelamento, 14 desenfileiramentos
-[SAÍDA]      14 trabalhos impressos em ordem de chegada (1 cancelado antes da impressão)
-[COMPLEX.]   enfileirar/desenfileirar/cancelar_ultimo O(1) | listar/simulação O(n) | espaço O(n)
-==========================================================
+SEQUÊNCIA DE IMPRESSÃO:
+  - Aluno: Ana Beatriz Souza | Arquivo: relatorio_final.pdf | Páginas: 22
+  ...
+  - Aluno: Nicolas Almeida Cruz | Arquivo: referencias.docx | Páginas: 24
+
+RESUMO:
+  14 trabalhos impressos em ordem de chegada e 1 cancelado.
+  Operações: 15 enfileiramentos, 1 listagem, 1 cancelamento
+  e 14 desenfileiramentos.
+
+COMPLEXIDADE:
+  Enfileirar/cancelar último: O(1) amortizado. Desenfileirar: O(1).
+  Listar: O(n). Simulação: tempo O(n) e espaço O(n).
+  n é o número de trabalhos de impressão.
 ```
 
 O `poster_congresso.pdf` aparece na listagem (ainda estava na fila naquele momento), mas não aparece
@@ -248,39 +281,58 @@ texto volta a ser vazio, comprovando que a ordem foi exatamente a inversa da ord
 
 | Operação | Tempo | Espaço |
 | --- | --- | --- |
-| `empilhar` | O(1) | O(1) por ação armazenada |
-| `desempilhar` | O(1) | — |
+| `empilhar` | O(1) amortizado | O(1) por referência de ação armazenada |
+| `desempilhar` | O(1) amortizado | — |
 | `topo` | O(1) | — |
 | `tamanho` e `vazia` | O(1) | — |
 | Simulação com n ações | O(n) operações da pilha | O(n) registros |
 
-Como o estado anterior do texto é guardado em cada ação, a memória efetiva também depende do tamanho
-acumulado desses textos. Para a simulação curta do trabalho, esse custo é pequeno e deixa o processo de
-desfazer mais fácil de compreender.
+As inserções e remoções no fim da lista têm custo O(1) amortizado: uma operação isolada pode
+redimensionar o armazenamento, mas uma sequência de n operações tem custo O(n).
+A simulação completa também cria e registra textos. Seu tempo e espaço são O(n + C), sendo C
+a soma dos tamanhos dos estados de texto e dos registros gerados. Portanto, O(n) descreve
+as operações da pilha, mas não todo o custo de copiar, armazenar e exibir os textos.
 
 ### Exemplo de execução
 
+Trecho da execução; o registro completo está em `saidas/problema_03.txt`.
+
 ```
-Ações executadas:
-Digitação: 'Olá' | Texto atual: Olá
-Digitação: ', ' | Texto atual: Olá,
-...
-Digitação: ' pilha.' | Texto atual: Olá, mundo! Este é um problema de pilha.
-Desfazendo ações:
-Ação desfeita: digitação - ' pilha.'
-Texto após desfazer: Olá, mundo! Este é um problema de
-...
-Ação desfeita: digitação - 'Olá'
-Texto após desfazer:
+========================================================================
+PROBLEMA 03 — SISTEMA DE DESFAZER EM EDITOR DE TEXTO
+Estrutura: Pilha | Linguagem: Python
+========================================================================
 
-=== PROBLEMA 03 — SISTEMA DE DESFAZER EM EDITOR DE TEXTO ===
-Estrutura: Pilha   |   Linguagem: Python
+ENTRADA: 10 ações de digitação simuladas
 
-[ENTRADA]    10 ações de digitação simuladas
-[OPERAÇÕES]  10 empilhamentos, 10 desfazimentos
-[SAÍDA]      texto final após desfazer todas as ações = ''
-[COMPLEX.]   empilhar/desempilhar O(1) | simulação O(n) | espaço O(n)
-==========================================================
+AÇÕES EXECUTADAS:
+  Digitação: 'Olá'
+  Texto atual: 'Olá'
+
+  ...
+
+  Digitação: ' pilha.'
+  Texto atual: 'Olá, mundo! Este é um problema de pilha.'
+
+DESFAZENDO AÇÕES:
+  Ação desfeita: digitação - ' pilha.'
+  Texto após desfazer: 'Olá, mundo! Este é um problema de'
+
+  ...
+
+  Ação desfeita: digitação - 'Olá'
+  Texto após desfazer: ''
+
+RESUMO:
+  10 ações executadas e desfeitas da mais recente à mais antiga.
+  Texto final: '' (vazio).
+  Operações: 10 empilhamentos e 10 desempilhamentos.
+
+COMPLEXIDADE:
+  Empilhar/desempilhar: O(1) amortizado por operação da pilha.
+  n ações: O(n) operações da pilha.
+  Os textos e registros também têm custo: tempo e espaço O(n + C),
+  sendo C a soma dos tamanhos dos estados de texto e registros gerados.
 ```
 
 ### Dificuldades encontradas e soluções adotadas
@@ -297,3 +349,93 @@ Estrutura: Pilha   |   Linguagem: Python
 A pilha modela a função de desfazer de forma direta: cada ação é registrada quando ocorre e a mais
 recente é recuperada primeiro. A simulação com dez ações termina no mesmo estado inicial, sem usar
 estruturas prontas além da lista que serve de armazenamento interno.
+
+---
+
+## Situação-Problema 4 — Validação de Expressões Balanceadas
+
+**Estrutura utilizada:** Pilha (implementação própria, `python/lineares/pilha.py`)
+**Linguagem:** Python
+
+### Justificativa de escolha
+
+Ao fechar um parêntese, colchete ou chave, é necessário verificar primeiro o último símbolo
+de abertura que ainda não foi fechado. Essa ordem é LIFO e corresponde ao funcionamento de
+uma pilha. Contar apenas aberturas e fechamentos não seria suficiente: a expressão `([)]`
+tem quantidades iguais, mas os símbolos estão na ordem errada.
+
+### Decisão de implementação
+
+A função `expressao_balanceada(expressao)` cria uma pilha vazia e percorre os caracteres:
+
+1. Se o caractere for `(`, `[` ou `{`, empilha a abertura.
+2. Se for um fechamento, verifica se existe uma abertura na pilha. Caso esteja vazia, retorna `False`.
+3. Remove a abertura do topo e confere se ela corresponde ao fechamento. Se o par for diferente,
+   retorna `False`.
+4. Depois de percorrer a expressão, retorna `pilha.vazia()`: aberturas restantes indicam
+   símbolos sem fechamento.
+
+Outros caracteres são ignorados. A função verifica somente o balanceamento dos delimitadores,
+sem avaliar a expressão nem validar sua sintaxe completa.
+
+### Simulação
+
+Foram usadas seis expressões: `{[()]}`, `([])`, `((()))`, `([)]`, `({[]})` e `((()`.
+Quatro foram classificadas como válidas e duas como inválidas. A expressão `([)]` demonstra
+fechamentos fora de ordem; `((()` demonstra aberturas que permanecem sem fechamento.
+Cada chamada cria uma pilha nova, de modo que uma expressão não interfere na seguinte.
+
+### Complexidade
+
+| Operação | Tempo | Espaço auxiliar |
+| --- | --- | --- |
+| Empilhar ou desempilhar | O(1) amortizado | — |
+| Validar uma expressão de n caracteres | O(n) no pior caso | O(n) no pior caso |
+
+Cada caractere é examinado no máximo uma vez. No pior caso, a pilha guarda até n aberturas.
+Um erro encontrado durante o percurso permite encerrar a verificação antes do final.
+Para um conjunto de expressões, o tempo de validação é O(N), sendo N a soma de seus comprimentos.
+Os registros salvos também ocupam espaço proporcional ao conteúdo da saída.
+
+### Exemplo de execução
+
+```
+========================================================================
+PROBLEMA 04 — VALIDAÇÃO DE EXPRESSÕES BALANCEADAS
+Estrutura: Pilha | Linguagem: Python
+========================================================================
+
+ENTRADA: 6 expressões com parênteses, colchetes e chaves
+
+RESULTADOS:
+  {[()]}   → VÁLIDA
+  ([])     → VÁLIDA
+  ((()))   → VÁLIDA
+  ([)]     → INVÁLIDA
+  ({[]})   → VÁLIDA
+  ((()     → INVÁLIDA
+
+RESUMO:
+  4 expressões válidas e 2 inválidas.
+  Operações: empilhar aberturas e conferir os fechamentos ao desempilhar.
+
+COMPLEXIDADE:
+  Tempo: O(n) por expressão no pior caso.
+  Espaço: O(n), sendo n o número de caracteres da expressão.
+```
+
+### Dificuldades encontradas e soluções adotadas
+
+- **Relacionar abertura e fechamento.** A validação foi organizada para comparar o fechamento
+  atual com a abertura retirada do topo. Assim, pares de tipos diferentes são rejeitados.
+- **Distinguir o resultado da função da apresentação.** A função retorna `True` ou `False`;
+  o laço da simulação transforma esse retorno em VÁLIDA ou INVÁLIDA para a leitura do resultado.
+- **Organizar os registros.** A função local `registrar` exibe cada mensagem e a guarda em
+  uma lista. Ao final, as linhas são gravadas em `saidas/problema_04.txt`, mantendo o mesmo
+  conteúdo do terminal.
+
+### Conclusão
+
+A pilha permite verificar tanto o tipo quanto a ordem dos delimitadores. A simulação distingue
+expressões balanceadas de fechamentos incompatíveis e de aberturas sem fechamento, reaproveitando
+a estrutura implementada no problema 3.

@@ -1,0 +1,22 @@
+========================================================================
+PROBLEMA 04 — VALIDAÇÃO DE EXPRESSÕES BALANCEADAS
+Estrutura: Pilha | Linguagem: Python
+========================================================================
+
+ENTRADA: 6 expressões com parênteses, colchetes e chaves
+
+RESULTADOS:
+  {[()]}   → VÁLIDA
+  ([])     → VÁLIDA
+  ((()))   → VÁLIDA
+  ([)]     → INVÁLIDA
+  ({[]})   → VÁLIDA
+  ((()     → INVÁLIDA
+
+RESUMO:
+  4 expressões válidas e 2 inválidas.
+  Operações: empilhar aberturas e conferir os fechamentos ao desempilhar.
+
+COMPLEXIDADE:
+  Tempo: O(n) por expressão no pior caso.
+  Espaço: O(n), sendo n o número de caracteres da expressão.
