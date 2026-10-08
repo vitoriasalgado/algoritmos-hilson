@@ -3,7 +3,7 @@ class Pilha:
         self._itens = [] 
 
     def vazia(self):
-        """ mapeia para is_Empty """
+        """ mapeia para is_empty """
         return len(self._itens) == 0
 
     def empilhar(self, item):
@@ -26,4 +26,3 @@ class Pilha:
     def tamanho(self):
         """ mapeia para size """
         return len(self._itens)
-
