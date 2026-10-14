@@ -1,35 +1,39 @@
 ========================================================================
-VERIFICAÇÃO DO ALGORITMO — BUBBLE SORT
+VERIFICAÇÃO DO ALGORITMO — BUBBLE SORT COM PARADA ANTECIPADA
 Armazenamento: Lista | Linguagem: Python
 ========================================================================
 
-ENTRADA: 6 listas para verificação isolada, executadas em 14/10/2026
+ENTRADA: 7 listas para verificação isolada, executadas em 14/10/2026
 
 RESULTADOS:
   [5, 3, 8, 1] → [1, 3, 5, 8]
-  Comparações: 6 | Trocas: 4 | Tempo: 0.000009875 s
+  Comparações: 6 | Trocas: 4 | Tempo: 0.000004417 s
 
   [] → []
-  Comparações: 0 | Trocas: 0 | Tempo: 0.000002250 s
+  Comparações: 0 | Trocas: 0 | Tempo: 0.000000750 s
 
   [7] → [7]
-  Comparações: 0 | Trocas: 0 | Tempo: 0.000000708 s
+  Comparações: 0 | Trocas: 0 | Tempo: 0.000000334 s
 
   [1, 2, 3] → [1, 2, 3]
-  Comparações: 3 | Trocas: 0 | Tempo: 0.000001542 s
+  Comparações: 2 | Trocas: 0 | Tempo: 0.000000667 s
 
   [3, 2, 1] → [1, 2, 3]
-  Comparações: 3 | Trocas: 3 | Tempo: 0.000001416 s
+  Comparações: 3 | Trocas: 3 | Tempo: 0.000000833 s
 
   [2, -1, 2, 0] → [-1, 0, 2, 2]
-  Comparações: 6 | Trocas: 3 | Tempo: 0.000001209 s
+  Comparações: 6 | Trocas: 3 | Tempo: 0.000000833 s
+
+  [2, 2, 2] → [2, 2, 2]
+  Comparações: 2 | Trocas: 0 | Tempo: 0.000000291 s
 
 RESUMO:
-  6 casos com ordenação e contadores conforme esperado.
+  7 casos com ordenação e contadores conforme esperado.
+  Lista ordenada e lista de valores iguais encerram após uma passagem sem trocas.
   Lista alterada diretamente; comparações, trocas e tempo retornados pela função.
   Tempos observados nesta execução; podem variar em execuções posteriores.
   Registro de verificação isolada, não de uma situação-problema concluída.
 
 COMPLEXIDADE:
-  Tempo: O(n²), inclusive para entrada ordenada, sem parada antecipada.
+  Tempo: O(n) no melhor caso; O(n²) no caso médio e no pior caso.
   Espaço auxiliar: O(1), sendo n o número de elementos da lista.

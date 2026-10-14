@@ -453,15 +453,26 @@ estejam concluídos.
 **Arquivo:** `python/ordenacao/bubble_sort.py`
 **Função:** `bubble_sort(valores)`
 
+#### Justificativa de escolha
+
+O Bubble Sort é solicitado nos problemas 15 e 16. Para uma turma de até 30 alunos e uma
+vitrine de 10–20 produtos, seu funcionamento simples permite acompanhar as comparações e
+as trocas. A estabilidade preserva a ordem relativa de registros com a mesma chave quando
+a comparação considera apenas a nota ou o preço. A parada antecipada evita passagens
+desnecessárias em entradas já ordenadas. O custo quadrático, porém, o torna pouco adequado
+para grandes volumes. As aplicações a notas e produtos ainda serão implementadas.
+
 #### Funcionamento e decisões de implementação
 
 A função percorre a lista comparando elementos vizinhos. Quando o elemento da esquerda é maior
 que o da direita, troca suas posições usando uma variável temporária. A cada passagem, o maior
 elemento da parte ainda não ordenada chega ao final dessa parte.
 
-O laço externo realiza n − 1 passagens. O laço interno faz n − 1 − i comparações na passagem i,
-evitando a parte final já ordenada. Esta versão não usa parada antecipada: mesmo uma lista já
-ordenada percorre todas as comparações previstas.
+O laço externo realiza até n − 1 passagens. O laço interno faz n − 1 − i comparações na passagem i,
+evitando a parte final já ordenada. A variável `houve_troca` começa como `False` em cada passagem
+e passa a `True` quando ocorre uma troca. Se a passagem terminar sem trocas, `break` encerra
+o laço externo: a lista já está ordenada. Essa otimização atende à exigência de parada antecipada
+do problema 15 (página 11 do enunciado).
 
 A lista recebida é modificada diretamente. A função retorna `comparacoes, trocas, tempo`.
 A contagem de comparações aumenta a cada comparação entre valores; a de trocas aumenta somente
@@ -472,12 +483,14 @@ com a leitura inicial antes dos laços e a final após todas as passagens.
 
 | Aspecto | Resultado |
 | --- | --- |
-| Comparações, para n ≥ 1 | n(n − 1)/2 |
-| Tempo no melhor, médio e pior caso | O(n²), nesta versão sem parada antecipada |
+| Comparações no melhor caso, para n ≥ 2 | n − 1 |
+| Comparações no pior caso, para n ≥ 1 | n(n − 1)/2 |
+| Tempo no melhor caso | O(n), com entrada já ordenada |
+| Tempo no caso médio e no pior caso | O(n²) |
 | Espaço auxiliar | O(1), pois não cria outra lista |
 | Estabilidade | Preserva a ordem relativa dos elementos iguais |
 
-Para uma lista vazia, são feitas zero comparações. Elementos iguais não são trocados porque
+Para uma lista vazia ou com um único elemento, são feitas zero comparações. Elementos iguais não são trocados porque
 a condição usa maior que, sem incluir igualdade. O algoritmo foi escolhido como uma base
 simples de comparação; seu custo quadrático limita o uso com listas grandes.
 
@@ -488,22 +501,35 @@ simples de comparação; seu custo quadrático limita o uso com listas grandes.
 | [5, 3, 8, 1] | [1, 3, 5, 8] | 6 | 4 |
 | [] | [] | 0 | 0 |
 | [7] | [7] | 0 | 0 |
-| [1, 2, 3] | [1, 2, 3] | 3 | 0 |
+| [1, 2, 3] | [1, 2, 3] | 2 | 0 |
 | [3, 2, 1] | [1, 2, 3] | 3 | 3 |
 | [2, -1, 2, 0] | [-1, 0, 2, 2] | 6 | 3 |
+| [2, 2, 2] | [2, 2, 2] | 2 | 0 |
 
-As seis execuções produziram os resultados e contadores esperados. O registro está em
+As sete execuções produziram os resultados e contadores esperados. O registro está em
 `saidas/bubble_sort.txt`. Os tempos registrados variam entre execuções e, para entradas tão
 pequenas, não sustentam uma comparação de desempenho entre algoritmos.
 
-#### Pontos trabalhados durante a implementação
+#### Dificuldades encontradas e soluções adotadas
 
 A implementação foi feita por etapas, com revisão dos limites dos laços e dos recuos.
 A variável temporária preserva o primeiro valor durante a troca. A contagem de trocas fica
 dentro do `if`, enquanto o cálculo do tempo e o retorno ficam fora dos dois laços, para
-serem executados somente após terminar a ordenação.
+serem executados somente após terminar a ordenação. Na otimização, a verificação de
+`houve_troca` fica após o laço interno, para avaliar a passagem inteira, e o indicador é
+reiniciado a cada passagem.
+
+#### Conclusão sobre a aplicabilidade
+
+A verificação isolada confirma a ordenação crescente e a contagem de operações. A versão
+otimizada reconhece uma lista ordenada após uma passagem sem trocas, mas continua com custo
+O(n²) no pior caso. É uma base apropriada para estudar ordenação em conjuntos pequenos;
+a avaliação nos cenários de notas e produtos depende das simulações específicas e, no
+problema 15, da comparação com outros algoritmos.
 
 #### Estado de conclusão
 
-A função e sua verificação isolada estão concluídas. Ainda falta integrá-la às situações-problema
-que exigem ordenação, com seus dados, saídas numeradas e análises específicas.
+A função otimizada e sua verificação isolada estão concluídas. No problema 15, ainda faltam
+a simulação de notas e a comparação das contagens com outros algoritmos. No problema 16,
+a aplicação deverá trabalhar com nome e preço de 10–20 produtos e oferecer ordem crescente
+e decrescente. Essas aplicações precisarão de saídas numeradas e análises específicas.
