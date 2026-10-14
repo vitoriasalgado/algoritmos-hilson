@@ -439,3 +439,71 @@ COMPLEXIDADE:
 A pilha permite verificar tanto o tipo quanto a ordem dos delimitadores. A simulação distingue
 expressões balanceadas de fechamentos incompatíveis e de aberturas sem fechamento, reaproveitando
 a estrutura implementada no problema 3.
+
+---
+
+## Apêndice A — Algoritmos de ordenação implementados
+
+Esta seção documenta os algoritmos reutilizáveis antes de sua aplicação às situações-problema.
+A implementação isolada de um algoritmo não significa que os problemas que dependem dele
+estejam concluídos.
+
+### Bubble Sort — Python
+
+**Arquivo:** `python/ordenacao/bubble_sort.py`
+**Função:** `bubble_sort(valores)`
+
+#### Funcionamento e decisões de implementação
+
+A função percorre a lista comparando elementos vizinhos. Quando o elemento da esquerda é maior
+que o da direita, troca suas posições usando uma variável temporária. A cada passagem, o maior
+elemento da parte ainda não ordenada chega ao final dessa parte.
+
+O laço externo realiza n − 1 passagens. O laço interno faz n − 1 − i comparações na passagem i,
+evitando a parte final já ordenada. Esta versão não usa parada antecipada: mesmo uma lista já
+ordenada percorre todas as comparações previstas.
+
+A lista recebida é modificada diretamente. A função retorna `comparacoes, trocas, tempo`.
+A contagem de comparações aumenta a cada comparação entre valores; a de trocas aumenta somente
+quando um par efetivamente troca de posição. O tempo é medido em segundos por `perf_counter()`,
+com a leitura inicial antes dos laços e a final após todas as passagens.
+
+#### Complexidade e propriedades
+
+| Aspecto | Resultado |
+| --- | --- |
+| Comparações, para n ≥ 1 | n(n − 1)/2 |
+| Tempo no melhor, médio e pior caso | O(n²), nesta versão sem parada antecipada |
+| Espaço auxiliar | O(1), pois não cria outra lista |
+| Estabilidade | Preserva a ordem relativa dos elementos iguais |
+
+Para uma lista vazia, são feitas zero comparações. Elementos iguais não são trocados porque
+a condição usa maior que, sem incluir igualdade. O algoritmo foi escolhido como uma base
+simples de comparação; seu custo quadrático limita o uso com listas grandes.
+
+#### Verificação por execução
+
+| Entrada | Resultado | Comparações | Trocas |
+| --- | --- | --- | --- |
+| [5, 3, 8, 1] | [1, 3, 5, 8] | 6 | 4 |
+| [] | [] | 0 | 0 |
+| [7] | [7] | 0 | 0 |
+| [1, 2, 3] | [1, 2, 3] | 3 | 0 |
+| [3, 2, 1] | [1, 2, 3] | 3 | 3 |
+| [2, -1, 2, 0] | [-1, 0, 2, 2] | 6 | 3 |
+
+As seis execuções produziram os resultados e contadores esperados. O registro está em
+`saidas/bubble_sort.txt`. Os tempos registrados variam entre execuções e, para entradas tão
+pequenas, não sustentam uma comparação de desempenho entre algoritmos.
+
+#### Pontos trabalhados durante a implementação
+
+A implementação foi feita por etapas, com revisão dos limites dos laços e dos recuos.
+A variável temporária preserva o primeiro valor durante a troca. A contagem de trocas fica
+dentro do `if`, enquanto o cálculo do tempo e o retorno ficam fora dos dois laços, para
+serem executados somente após terminar a ordenação.
+
+#### Estado de conclusão
+
+A função e sua verificação isolada estão concluídas. Ainda falta integrá-la às situações-problema
+que exigem ordenação, com seus dados, saídas numeradas e análises específicas.
