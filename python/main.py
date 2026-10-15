@@ -1,6 +1,8 @@
 import csv 
 from lineares.fila import Fila
 from lineares.pilha import Pilha
+from ordenacao.bubble_sort import bubble_sort
+from ordenacao.selection_sort import selection_sort
 
 # valores escolhidos para estimar o tempo fora do csv
 duracao_por_tipo ={
@@ -238,6 +240,127 @@ def problema_04():
     with open("saidas/problema_04.txt", "w", encoding="utf-8") as arquivo_saida:
         arquivo_saida.write("\n".join(linhas_saida) + "\n")
 
+def problema_15():
+    notas = [7.5, 4, 9, 6.5, 8, 5, 10, 3.5,
+             5.5, 6, 8.5, 2, 9.5, 5.5, 7]
+
+    linhas_saida = []
+
+    def registrar(mensagem):
+        print(mensagem)
+        linhas_saida.append(mensagem)
+
+    registrar("=" * 72)
+    registrar("PROBLEMA 15 — ORDENAÇÃO DE NOTAS DE UMA TURMA PEQUENA")
+    registrar("Algoritmos: Bubble Sort e Selection Sort | Linguagem: Python")
+    registrar("=" * 72)
+    registrar(f"\nENTRADA: {len(notas)} notas")
+    registrar(f"  Notas originais: {notas}")
+
+    # cada algoritmo recebe uma cópia da mesma entrada original
+    notas_bubble = notas.copy()
+    notas_selection = notas.copy()
+    comparacoes_bubble, trocas_bubble, tempo_bubble = bubble_sort(notas_bubble)
+    comparacoes_selection, trocas_selection, tempo_selection = selection_sort(notas_selection)
+
+    registrar("\nRESULTADOS:")
+    registrar(f"  Bubble Sort:    {notas_bubble}")
+    registrar(f"  Selection Sort: {notas_selection}")
+
+    registrar("\nCOMPARAÇÃO DE OPERAÇÕES:")
+    registrar("  Algoritmo       | Comparações | Trocas | Tempo (segundos)")
+    registrar(f"  Bubble Sort     | {comparacoes_bubble:11} | {trocas_bubble:6} | {tempo_bubble:.9f}")
+    registrar(f"  Selection Sort  | {comparacoes_selection:11} | {trocas_selection:6} | {tempo_selection:.9f}")
+    registrar("  Contagem: comparação entre valores e troca efetiva de um par.")
+
+    registrar("\nRESUMO:")
+    registrar(f"  Resultados iguais: {'sim' if notas_bubble == notas_selection else 'não'}.")
+    registrar("  Bubble Sort encerra quando uma passagem inteira não faz trocas.")
+    registrar("  As contagens acima se referem à mesma lista original de notas.")
+    registrar("  Os tempos podem variar entre execuções; a amostra é pequena.")
+
+    registrar("\nCOMPLEXIDADE:")
+    registrar("  Bubble Sort: O(n) no melhor caso; O(n²) no médio e no pior caso.")
+    registrar("  Selection Sort: O(n²) no melhor, médio e pior caso.")
+    registrar("  Espaço auxiliar de cada algoritmo: O(1).")
+    registrar("  A simulação usa O(n) para as cópias e os registros.")
+    registrar("  n é o número de notas.")
+
+    with open("saidas/problema_15.txt", "w", encoding="utf-8") as arquivo_saida:
+        arquivo_saida.write("\n".join(linhas_saida) + "\n")
+
+def problema_16():
+    with open('dados/produtos.csv', newline="", encoding='utf-8') as arquivo:
+        leitor = csv.reader(arquivo)
+        linhas = list(leitor)
+        cabecalho = linhas[0]
+        dados_produtos = linhas[1:16]
+
+    produtos = []
+
+    for linha in dados_produtos:
+        nome = linha[1]
+        preco = float(linha[3])
+        produtos.append([nome, preco])
+        
+    produtos_crescente = produtos.copy()
+    produtos_decrescente = produtos.copy()
+
+    comparacoes_c, trocas_c, tempo_c = bubble_sort(
+        produtos_crescente, indice_preco=1
+    )
+
+    comparacoes_d, trocas_d, tempo_d = bubble_sort(
+        produtos_decrescente, indice_preco=1, decrescente=True
+    )
+
+    linhas_saida = []
+
+    def registrar(mensagem):
+        print(mensagem)
+        linhas_saida.append(mensagem)
+
+    registrar("=" * 72)
+    registrar("PROBLEMA 16 — ORDENAÇÃO DE PRODUTOS POR PREÇO")
+    registrar("Algoritmo: Bubble Sort | Linguagem: Python")
+    registrar("=" * 72)
+
+    registrar(f"\nENTRADA: {len(produtos)} produtos de dados/produtos.csv")
+    for nome, preco in produtos:
+        registrar(f"  {nome} | R$ {preco:.2f}")
+
+    registrar("\nRESULTADOS — ORDEM CRESCENTE:")
+    for nome, preco in produtos_crescente:
+        registrar(f"  {nome} | R$ {preco:.2f}")
+
+    registrar("\nRESULTADOS — ORDEM DECRESCENTE:")
+    for nome, preco in produtos_decrescente:
+        registrar(f"  {nome} | R$ {preco:.2f}")
+
+    registrar("\nRESUMO:")
+    registrar(
+        f"  Crescente: {comparacoes_c} comparações, "
+        f"{trocas_c} trocas, {tempo_c:.9f} segundos."
+    )
+    registrar(
+        f"  Decrescente: {comparacoes_d} comparações, "
+        f"{trocas_d} trocas, {tempo_d:.9f} segundos."
+    )
+    registrar("  As duas ordenações partiram da mesma lista original.")
+    registrar("  Os tempos podem variar entre execuções.")
+
+    registrar("\nCOMPLEXIDADE:")
+    registrar("  Bubble Sort: O(n) no melhor caso; O(n²) no médio e no pior.")
+    registrar("  Espaço auxiliar do algoritmo: O(1).")
+    registrar("  Cópias e registros dos produtos selecionados: O(n).")
+    registrar("  A leitura completa do CSV ocupa O(m) de tempo e espaço.")
+    registrar("  Simulação: O(m + n²) de tempo no pior caso e O(m + n) de espaço.")
+    registrar("  n é o número de produtos selecionados; m, de linhas do CSV.")
+
+    with open("saidas/problema_16.txt", "w", encoding="utf-8") as arquivo_saida:
+        arquivo_saida.write("\n".join(linhas_saida) + "\n")
+
+
 if __name__ == "__main__":
     problema_01()
     print("\n")
@@ -249,3 +372,9 @@ if __name__ == "__main__":
     print("\n")
 
     problema_04()
+    print("\n")
+
+    problema_15()
+    print("\n")
+
+    problema_16()
