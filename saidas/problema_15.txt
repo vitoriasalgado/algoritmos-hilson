@@ -1,0 +1,30 @@
+========================================================================
+PROBLEMA 15 — ORDENAÇÃO DE NOTAS DE UMA TURMA PEQUENA
+Algoritmos: Bubble Sort e Selection Sort | Linguagem: Python
+========================================================================
+
+ENTRADA: 15 notas
+  Notas originais: [7.5, 4, 9, 6.5, 8, 5, 10, 3.5, 5.5, 6, 8.5, 2, 9.5, 5.5, 7]
+
+RESULTADOS:
+  Bubble Sort:    [2, 3.5, 4, 5, 5.5, 5.5, 6, 6.5, 7, 7.5, 8, 8.5, 9, 9.5, 10]
+  Selection Sort: [2, 3.5, 4, 5, 5.5, 5.5, 6, 6.5, 7, 7.5, 8, 8.5, 9, 9.5, 10]
+
+COMPARAÇÃO DE OPERAÇÕES:
+  Algoritmo       | Comparações | Trocas | Tempo (segundos)
+  Bubble Sort     |         102 |     53 | 0.000020625
+  Selection Sort  |         105 |     13 | 0.000011125
+  Contagem: comparação entre valores e troca efetiva de um par.
+
+RESUMO:
+  Resultados iguais: sim.
+  Bubble Sort encerra quando uma passagem inteira não faz trocas.
+  As contagens acima se referem à mesma lista original de notas.
+  Os tempos podem variar entre execuções; a amostra é pequena.
+
+COMPLEXIDADE:
+  Bubble Sort: O(n) no melhor caso; O(n²) no médio e no pior caso.
+  Selection Sort: O(n²) no melhor, médio e pior caso.
+  Espaço auxiliar de cada algoritmo: O(1).
+  A simulação usa O(n) para as cópias e os registros.
+  n é o número de notas.

@@ -1,0 +1,69 @@
+========================================================================
+PROBLEMA 16 — ORDENAÇÃO DE PRODUTOS POR PREÇO
+Algoritmo: Bubble Sort | Linguagem: Python
+========================================================================
+
+ENTRADA: 15 produtos de dados/produtos.csv
+  Silicone Cola Quente Bastao | R$ 418.36
+  Piso Antiderrapante 45x45 | R$ 533.38
+  Silicone Acetico Branco 280g | R$ 287.22
+  Parafuso Frances 10mm | R$ 90.96
+  Furadeira Bancada 500W | R$ 492.72
+  Areia Fina Ensacada 20kg | R$ 213.21
+  Fechadura Digital Biometrica | R$ 402.18
+  Piso Vinilico Clicado | R$ 449.58
+  Telha Galvanizada Trapezio | R$ 705.17
+  Registro Antivazamento | R$ 240.15
+  Fio Rigido 6mm | R$ 114.54
+  Cabo PP 3x2.5mm | R$ 621.11
+  Areia Grossa m3 | R$ 494.11
+  Torneira Bica Alta Gourmet | R$ 493.30
+  Parafuso Bucha 6mm | R$ 372.42
+
+RESULTADOS — ORDEM CRESCENTE:
+  Parafuso Frances 10mm | R$ 90.96
+  Fio Rigido 6mm | R$ 114.54
+  Areia Fina Ensacada 20kg | R$ 213.21
+  Registro Antivazamento | R$ 240.15
+  Silicone Acetico Branco 280g | R$ 287.22
+  Parafuso Bucha 6mm | R$ 372.42
+  Fechadura Digital Biometrica | R$ 402.18
+  Silicone Cola Quente Bastao | R$ 418.36
+  Piso Vinilico Clicado | R$ 449.58
+  Furadeira Bancada 500W | R$ 492.72
+  Torneira Bica Alta Gourmet | R$ 493.30
+  Areia Grossa m3 | R$ 494.11
+  Piso Antiderrapante 45x45 | R$ 533.38
+  Cabo PP 3x2.5mm | R$ 621.11
+  Telha Galvanizada Trapezio | R$ 705.17
+
+RESULTADOS — ORDEM DECRESCENTE:
+  Telha Galvanizada Trapezio | R$ 705.17
+  Cabo PP 3x2.5mm | R$ 621.11
+  Piso Antiderrapante 45x45 | R$ 533.38
+  Areia Grossa m3 | R$ 494.11
+  Torneira Bica Alta Gourmet | R$ 493.30
+  Furadeira Bancada 500W | R$ 492.72
+  Piso Vinilico Clicado | R$ 449.58
+  Silicone Cola Quente Bastao | R$ 418.36
+  Fechadura Digital Biometrica | R$ 402.18
+  Parafuso Bucha 6mm | R$ 372.42
+  Silicone Acetico Branco 280g | R$ 287.22
+  Registro Antivazamento | R$ 240.15
+  Areia Fina Ensacada 20kg | R$ 213.21
+  Fio Rigido 6mm | R$ 114.54
+  Parafuso Frances 10mm | R$ 90.96
+
+RESUMO:
+  Crescente: 95 comparações, 48 trocas, 0.000005666 segundos.
+  Decrescente: 99 comparações, 57 trocas, 0.000005458 segundos.
+  As duas ordenações partiram da mesma lista original.
+  Os tempos podem variar entre execuções.
+
+COMPLEXIDADE:
+  Bubble Sort: O(n) no melhor caso; O(n²) no médio e no pior.
+  Espaço auxiliar do algoritmo: O(1).
+  Cópias e registros dos produtos selecionados: O(n).
+  A leitura completa do CSV ocupa O(m) de tempo e espaço.
+  Simulação: O(m + n²) de tempo no pior caso e O(m + n) de espaço.
+  n é o número de produtos selecionados; m, de linhas do CSV.

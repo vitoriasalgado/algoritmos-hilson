@@ -442,6 +442,161 @@ a estrutura implementada no problema 3.
 
 ---
 
+## Situação-Problema 15 — Ordenação de Notas de uma Turma Pequena
+
+**Algoritmo principal:** Bubble Sort com parada antecipada.
+**Comparação:** Selection Sort.
+**Linguagem:** Python.
+
+### Justificativa de escolha
+
+O Bubble Sort atende ao algoritmo solicitado e permite acompanhar a ordenação de um conjunto
+pequeno de notas por comparações entre vizinhos. A otimização encerra as passagens quando
+não ocorre nenhuma troca. O Selection Sort foi usado para comparar as quantidades de operações:
+ele procura o menor valor restante e faz no máximo uma troca por passagem.
+
+### Implementação e simulação
+
+A função `problema_15()` usa 15 notas entre 0 e 10, incluindo duas notas 5,5. Cada algoritmo
+recebe uma cópia independente da mesma lista original, evitando que o segundo algoritmo
+receba dados já ordenados pelo primeiro. Ambos alteram sua cópia e retornam comparações,
+trocas e tempo em segundos. A contagem inclui somente comparações entre valores e trocas
+efetivas de pares; verificações de índices e dos laços não entram nesses contadores.
+
+### Complexidade
+
+| Algoritmo | Melhor caso | Caso médio | Pior caso | Espaço auxiliar |
+| --- | --- | --- | --- | --- |
+| Bubble Sort otimizado | O(n) | O(n²) | O(n²) | O(1) |
+| Selection Sort | O(n²) | O(n²) | O(n²) | O(1) |
+
+n representa a quantidade de notas. A simulação usa O(n) de espaço adicional para as cópias
+e os registros, considerando tamanho limitado por nota.
+
+### Exemplo de execução
+
+Entrada:
+
+```
+[7.5, 4, 9, 6.5, 8, 5, 10, 3.5, 5.5, 6, 8.5, 2, 9.5, 5.5, 7]
+```
+
+Resultado de ambos os algoritmos:
+
+```
+[2, 3.5, 4, 5, 5.5, 5.5, 6, 6.5, 7, 7.5, 8, 8.5, 9, 9.5, 10]
+```
+
+| Algoritmo | Comparações | Trocas |
+| --- | --- | --- |
+| Bubble Sort | 102 | 53 |
+| Selection Sort | 105 | 13 |
+
+O registro completo, com cabeçalho, entrada, resultados, tempos, resumo e complexidade,
+está em `saidas/problema_15.txt`. Os tempos são medições de uma execução curta e não
+permitem concluir que um algoritmo será sempre mais rápido.
+
+### Dificuldades encontradas e soluções adotadas
+
+- **Preservar condições iguais de comparação:** foram criadas cópias da entrada original
+  antes de executar os algoritmos.
+- **Exibir o resultado correto:** o rascunho repetia as notas originais na seção de resultados;
+  a versão final exibe as listas efetivamente ordenadas.
+- **Aplicar a parada antecipada:** o indicador de troca é reiniciado a cada passagem e
+  consultado somente depois de percorrer os pares dessa passagem.
+
+### Conclusão
+
+Para essas notas, ambos os algoritmos ordenaram corretamente e preservaram os valores repetidos.
+O Bubble Sort realizou três comparações a menos, enquanto o Selection Sort realizou 40 trocas
+a menos. As contagens mostram que comparar menos vezes não significa necessariamente trocar
+menos elementos. O conjunto pequeno permite observar essas diferenças de forma direta.
+
+---
+
+## Situação-Problema 16 — Ordenação de Produtos por Preço em uma Vitrine Pequena
+
+**Algoritmo:** Bubble Sort com parada antecipada.
+**Linguagem:** Python.
+
+### Justificativa de escolha
+
+O enunciado solicita Bubble Sort para uma vitrine pequena. A demonstração usa 15 produtos,
+um volume que permite observar as trocas entre vizinhos sem exigir um algoritmo voltado a
+grandes conjuntos. A comparação considera apenas o preço e preserva a ordem relativa de
+produtos com preços iguais.
+
+### Implementação e simulação
+
+A função `problema_16()` lê `dados/produtos.csv` e seleciona os primeiros 15 registros após
+o cabeçalho. Cada produto é representado por `[nome, preco]`, convertendo o preço para `float`.
+Duas cópias da lista original são usadas para demonstrar as duas opções de ordenação.
+
+A chamada com `indice_preco=1` ordena pelo preço crescente; a opção `decrescente=True`
+ordena pelo preço decrescente. O algoritmo troca registros inteiros, mantendo nome e preço
+associados. As cópias superficiais são suficientes porque somente a posição dos registros
+é alterada, não seu conteúdo. A opção é fornecida como parâmetro, e a simulação demonstra
+ambos os valores sem solicitar entrada interativa.
+
+### Complexidade
+
+O Bubble Sort usa O(n) de tempo no melhor caso, O(n²) no caso médio e no pior caso, e O(1)
+de espaço auxiliar. Aqui n é o número de produtos selecionados.
+A leitura materializa as m linhas do CSV, custando O(m) de tempo e espaço. As cópias e os
+registros da simulação usam O(n), considerando tamanho limitado por registro. Assim, a
+simulação completa tem tempo O(m + n²) no pior caso e espaço O(m + n).
+
+### Exemplo de execução
+
+Trechos dos resultados; o registro completo das duas listas está em `saidas/problema_16.txt`.
+
+```
+PROBLEMA 16 — ORDENAÇÃO DE PRODUTOS POR PREÇO
+Algoritmo: Bubble Sort | Linguagem: Python
+
+ENTRADA: 15 produtos de dados/produtos.csv
+
+RESULTADOS — ORDEM CRESCENTE:
+  Parafuso Frances 10mm | R$ 90.96
+  ...
+  Telha Galvanizada Trapezio | R$ 705.17
+
+RESULTADOS — ORDEM DECRESCENTE:
+  Telha Galvanizada Trapezio | R$ 705.17
+  ...
+  Parafuso Frances 10mm | R$ 90.96
+```
+
+| Ordem | Comparações | Trocas |
+| --- | --- | --- |
+| Crescente | 95 | 48 |
+| Decrescente | 99 | 57 |
+
+Os tempos medidos estão no arquivo de saída e variam entre execuções. Foram conferidas
+as duas ordens, a preservação dos 15 registros e a igualdade entre a saída do terminal e
+o arquivo salvo. Também foi verificada a preservação da ordem entre preços iguais e a
+compatibilidade do Bubble Sort com listas numéricas.
+
+### Dificuldades encontradas e soluções adotadas
+
+- **Distinguir posições:** o preço está na coluna 3 do CSV, mas na posição 1 do registro
+  `[nome, preco]`. A conversão numérica evita comparar preços como texto.
+- **Posicionar as cópias:** elas são criadas depois do laço de leitura, quando todos os
+  produtos já foram adicionados à lista.
+- **Separar as medições:** os sufixos `_c` e `_d` preservam os contadores e tempos de cada
+  direção, evitando que a segunda chamada sobrescreva os resultados da primeira.
+- **Adaptar a comparação:** o algoritmo seleciona os preços antes de decidir a troca,
+  mantendo o funcionamento anterior para notas quando `indice_preco` é `None`.
+
+### Conclusão
+
+As duas opções ordenaram os 15 produtos por preço sem separar os nomes dos valores.
+O Bubble Sort atende à demonstração da vitrine pequena, mantendo a parada antecipada
+e as medições de operações. Seu custo quadrático continua sendo uma limitação para
+catálogos grandes.
+
+---
+
 ## Apêndice A — Algoritmos de ordenação implementados
 
 Esta seção documenta os algoritmos reutilizáveis antes de sua aplicação às situações-problema.
@@ -451,7 +606,7 @@ estejam concluídos.
 ### Bubble Sort — Python
 
 **Arquivo:** `python/ordenacao/bubble_sort.py`
-**Função:** `bubble_sort(valores)`
+**Função:** `bubble_sort(valores, indice_preco=None, decrescente=False)`
 
 #### Justificativa de escolha
 
@@ -460,13 +615,15 @@ vitrine de 10–20 produtos, seu funcionamento simples permite acompanhar as com
 as trocas. A estabilidade preserva a ordem relativa de registros com a mesma chave quando
 a comparação considera apenas a nota ou o preço. A parada antecipada evita passagens
 desnecessárias em entradas já ordenadas. O custo quadrático, porém, o torna pouco adequado
-para grandes volumes. As aplicações a notas e produtos ainda serão implementadas.
+para grandes volumes. As aplicações a notas e produtos estão descritas nos problemas 15 e 16.
 
 #### Funcionamento e decisões de implementação
 
-A função percorre a lista comparando elementos vizinhos. Quando o elemento da esquerda é maior
-que o da direita, troca suas posições usando uma variável temporária. A cada passagem, o maior
-elemento da parte ainda não ordenada chega ao final dessa parte.
+A função percorre a lista comparando elementos vizinhos. Por padrão compara números diretamente;
+com `indice_preco=1`, compara os preços dos registros de produtos. Na ordem crescente, troca
+quando o valor à esquerda é maior; na decrescente, quando é menor. A troca usa uma variável
+temporária e move o registro inteiro. A cada passagem, um elemento chega à posição final
+da parte ainda não ordenada, conforme a direção escolhida.
 
 O laço externo realiza até n − 1 passagens. O laço interno faz n − 1 − i comparações na passagem i,
 evitando a parte final já ordenada. A variável `houve_troca` começa como `False` em cada passagem
@@ -529,7 +686,7 @@ problema 15, da comparação com outros algoritmos.
 
 #### Estado de conclusão
 
-A função otimizada e sua verificação isolada estão concluídas. No problema 15, ainda faltam
-a simulação de notas e a comparação das contagens com outros algoritmos. No problema 16,
-a aplicação deverá trabalhar com nome e preço de 10–20 produtos e oferecer ordem crescente
-e decrescente. Essas aplicações precisarão de saídas numeradas e análises específicas.
+A função otimizada e sua verificação isolada estão concluídas. O problema 15 já aplica a
+ordenação às notas e compara as contagens com o Selection Sort. O problema 16 demonstra
+15 produtos em ordem crescente e decrescente de preço. As duas aplicações possuem saídas
+numeradas e análises específicas neste relatório.
