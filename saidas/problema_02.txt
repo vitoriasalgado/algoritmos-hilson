@@ -1,4 +1,11 @@
-Impressões na fila:
+========================================================================
+PROBLEMA 02 — FILA DE IMPRESSÃO EM LABORATÓRIO DE INFORMÁTICA
+Estrutura: Fila | Linguagem: Python
+========================================================================
+
+ENTRADA: 15 trabalhos lidos de dados/impressoes.csv
+
+FILA INICIAL:
   - Aluno: Ana Beatriz Souza | Arquivo: relatorio_final.pdf | Páginas: 22
   - Aluno: Bruno Carvalho Lima | Arquivo: tcc_capitulo1.docx | Páginas: 6
   - Aluno: Carla Menezes Rocha | Arquivo: lista_exercicios.pdf | Páginas: 36
@@ -14,8 +21,11 @@ Impressões na fila:
   - Aluno: Mariana Teixeira Prado | Arquivo: manual_laboratorio.pdf | Páginas: 24
   - Aluno: Nicolas Almeida Cruz | Arquivo: referencias.docx | Páginas: 24
   - Aluno: Olivia Ribeiro Sampaio | Arquivo: poster_congresso.pdf | Páginas: 30
-Cancelamento: poster_congresso.pdf enviado por Olivia Ribeiro Sampaio (30 páginas).
-Sequência de impressão:
+
+CANCELAMENTO:
+  poster_congresso.pdf enviado por Olivia Ribeiro Sampaio (30 páginas).
+
+SEQUÊNCIA DE IMPRESSÃO:
   - Aluno: Ana Beatriz Souza | Arquivo: relatorio_final.pdf | Páginas: 22
   - Aluno: Bruno Carvalho Lima | Arquivo: tcc_capitulo1.docx | Páginas: 6
   - Aluno: Carla Menezes Rocha | Arquivo: lista_exercicios.pdf | Páginas: 36
@@ -31,11 +41,12 @@ Sequência de impressão:
   - Aluno: Mariana Teixeira Prado | Arquivo: manual_laboratorio.pdf | Páginas: 24
   - Aluno: Nicolas Almeida Cruz | Arquivo: referencias.docx | Páginas: 24
 
-=== PROBLEMA 02 — FILA DE IMPRESSÃO EM LABORATÓRIO DE INFORMÁTICA ===
-Estrutura: Fila   |   Linguagem: Python
+RESUMO:
+  14 trabalhos impressos em ordem de chegada e 1 cancelado.
+  Operações: 15 enfileiramentos, 1 listagem, 1 cancelamento
+  e 14 desenfileiramentos.
 
-[ENTRADA]    15 trabalhos lidos de dados/impressoes.csv
-[OPERAÇÕES]  15 enfileiramentos, 1 listagem, 1 cancelamento, 14 desenfileiramentos
-[SAÍDA]      14 trabalhos impressos em ordem de chegada (1 cancelado antes da impressão)
-[COMPLEX.]   enfileirar/desenfileirar/cancelar_ultimo O(1) | listar/simulação O(n) | espaço O(n)
-==========================================================
+COMPLEXIDADE:
+  Enfileirar/cancelar último: O(1) amortizado. Desenfileirar: O(1).
+  Listar: O(n). Simulação: tempo O(n) e espaço O(n).
+  n é o número de trabalhos de impressão.

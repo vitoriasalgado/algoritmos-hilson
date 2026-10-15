@@ -156,20 +156,37 @@ execução, apresenta diferença esperada — cuja análise integra o Relatório
 
 ## 7. Decisão 5 — Padronização das saídas
 
-Cada situação-problema produz um bloco de saída em formato único, gravado em arquivo próprio no
-diretório `saidas/`, nomeado de `problema_01.txt` a `problema_24.txt`. A padronização atende ao
-requisito 3 do item 1.3, relativo à apresentação de exemplos de execução com dados de entrada e
-saída.
+Cada situação-problema apresenta título numerado, estrutura e linguagem antes dos resultados,
+seguidos de entrada, execução, resumo com operações relevantes e complexidade com suas variáveis
+explicadas. Linhas em branco separam as seções. O terminal e o arquivo
+`saidas/problema_NN.txt` apresentam o mesmo conteúdo detalhado.
+
+Essa organização é uma convenção da dupla, adotada para facilitar a identificação de cada problema
+e a leitura dos exemplos de entrada e saída. Vale para Python e Java e para as próximas implementações.
 
 ```
-=== PROBLEMA 09 — ÍNDICE DE CPF PARA SISTEMA DE RH ===
-Estrutura: Árvore AVL   |   Linguagem: Java
+========================================================================
+PROBLEMA 04 — VALIDAÇÃO DE EXPRESSÕES BALANCEADAS
+Estrutura: Pilha | Linguagem: Python
+========================================================================
 
-[ENTRADA]    25 funcionários lidos de dados/funcionarios.csv
-[OPERAÇÕES]  25 inserções, 3 buscas, 2 remoções
-[SAÍDA]      altura final = 5 | fator de balanceamento máx = 1
-[COMPLEX.]   busca O(log n) | espaço O(n)
-==========================================================
+ENTRADA: 6 expressões com parênteses, colchetes e chaves
+
+RESULTADOS:
+  {[()]}   → VÁLIDA
+  ([])     → VÁLIDA
+  ((()))   → VÁLIDA
+  ([)]     → INVÁLIDA
+  ({[]})   → VÁLIDA
+  ((()     → INVÁLIDA
+
+RESUMO:
+  4 expressões válidas e 2 inválidas.
+  Operações: empilhar aberturas e conferir os fechamentos ao desempilhar.
+
+COMPLEXIDADE:
+  Tempo: O(n) por expressão no pior caso.
+  Espaço: O(n), sendo n o número de caracteres da expressão.
 ```
 
 ## 8. Decisão 6 — Organização do código
