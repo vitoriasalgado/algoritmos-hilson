@@ -1,0 +1,38 @@
+========================================================================
+VERIFICAÇÃO DO ALGORITMO — GERENCIAMENTO DE PLAYLIST
+Armazenamento: Lista simplesmente encadeada | Linguagem: Java
+========================================================================
+
+ENTRADA: Playlist com 89 músicas carregadas de dados/playlist.csv.
+
+OPERAÇÕES VERIFICADAS:
+
+  Inserção no início, no fim e em posição específica.
+  Busca e remoção de música pelo título.
+  Listagem da playlist e cálculo da duração total.
+
+RESULTADOS:
+
+  Músicas iniciais: 89
+  Após três inserções: 92
+  Após uma remoção: 91
+  Busca por título: música encontrada.
+  Duração antes da remoção: 9 min 50 s.
+  Duração após a remoção: 6 min 20 s.
+
+RESUMO:
+
+  As operações de inserção, busca e remoção foram executadas.
+  A playlist terminou com 91 músicas.
+  As músicas originais não possuem duração informada.
+  A duração total considera somente músicas com duração conhecida.
+  Resultados registrados a partir da execução do programa.
+
+COMPLEXIDADE:
+
+  Inserção no início: O(1).
+  Inserção no fim: O(n), se houver percurso da lista.
+  Inserção em posição: O(n).
+  Busca e remoção: O(n).
+  Listagem e duração total: O(n).
+  Espaço: O(n), para n músicas armazenadas.

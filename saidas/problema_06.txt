@@ -1,0 +1,40 @@
+========================================================================
+VERIFICAÇÃO DO ALGORITMO — GERENCIAMENTO DE ESTOQUE
+Armazenamento: Lista encadeada | Linguagem: Java
+========================================================================
+
+ENTRADA: Produtos cadastrados para controle de estoque.
+
+OPERAÇÕES VERIFICADAS:
+
+  Cadastro de produtos.
+  Busca por código e por nome.
+  Atualização da quantidade em estoque.
+  Remoção de produtos.
+  Listagem de produtos abaixo do estoque mínimo.
+  Simulação de movimentações semanais.
+
+RESULTADOS:
+
+  Produtos cadastrados: [quantidade].
+  Buscas por código e nome: [resultado].
+  Atualizações de estoque: [resultado].
+  Remoções: [resultado].
+  Produtos abaixo do estoque mínimo: [quantidade].
+  Movimentações semanais: [resultado].
+
+RESUMO:
+
+  O programa permite cadastrar, consultar, atualizar e remover produtos.
+  A verificação do estoque mínimo identifica produtos que precisam de reposição.
+  A simulação semanal registra as movimentações de entrada e saída.
+  Os resultados devem corresponder à execução do programa.
+
+COMPLEXIDADE:
+
+  Cadastro: O(n), se houver verificação de código duplicado.
+  Busca por código ou nome: O(n).
+  Atualização de quantidade: O(n).
+  Remoção: O(n).
+  Listagem abaixo do mínimo: O(n).
+  Espaço: O(n), para n produtos armazenados.
