@@ -1,38 +1,40 @@
 ========================================================================
-VERIFICAÇÃO DO ALGORITMO — GERENCIAMENTO DE PLAYLIST
-Armazenamento: Lista simplesmente encadeada | Linguagem: Java
+PROBLEMA 05 — GERENCIAMENTO DE PLAYLIST DE MÚSICAS
+Estrutura: Lista Encadeada | Linguagem: Java
 ========================================================================
 
-ENTRADA: Playlist com 89 músicas carregadas de dados/playlist.csv.
+ENTRADA:
+Arquivo: dados/playlist.csv
+Quantidade inicial de músicas: 89
 
-OPERAÇÕES VERIFICADAS:
+OPERAÇÕES EXECUTADAS:
+As operações realizadas durante a interação serão registradas aqui:
+- Inserções no início, no fim ou em posições específicas.
+- Buscas por título.
+- Remoções por título.
+- Consulta da duração total, quando disponível.
 
-  Inserção no início, no fim e em posição específica.
-  Busca e remoção de música pelo título.
-  Listagem da playlist e cálculo da duração total.
+ESTADO FINAL DA PLAYLIST:
+Quantidade final de músicas: [quantidade real]
 
-RESULTADOS:
-
-  Músicas iniciais: 89
-  Após três inserções: 92
-  Após uma remoção: 91
-  Busca por título: música encontrada.
-  Duração antes da remoção: 9 min 50 s.
-  Duração após a remoção: 6 min 20 s.
+[Lista final das músicas, em ordem, com título, artista e duração]
 
 RESUMO:
-
-  As operações de inserção, busca e remoção foram executadas.
-  A playlist terminou com 91 músicas.
-  As músicas originais não possuem duração informada.
-  A duração total considera somente músicas com duração conhecida.
-  Resultados registrados a partir da execução do programa.
+Quantidade inicial: [quantidade]
+Músicas adicionadas: [quantidade]
+Músicas removidas: [quantidade]
+Quantidade final: [quantidade]
+Resultado das operações: [resumo real]
 
 COMPLEXIDADE:
+Acesso por posição: O(n).
+Busca por título: O(n).
+Inserção no início: O(1).
+Inserção no fim: O(1), se a lista mantiver referência ao último nó.
+Inserção em posição específica: O(n).
+Remoção por título: O(n).
+Listagem completa: O(n).
 
-  Inserção no início: O(1).
-  Inserção no fim: O(n), se houver percurso da lista.
-  Inserção em posição: O(n).
-  Busca e remoção: O(n).
-  Listagem e duração total: O(n).
-  Espaço: O(n), para n músicas armazenadas.
+========================================================================
+FIM DO RELATÓRIO
+========================================================================

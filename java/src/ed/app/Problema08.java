@@ -18,8 +18,6 @@ public class Problema08 {
     private static final StringBuilder registro = new StringBuilder();
 
     public static void executar() {
-        registro.setLength(0);
-
         try {
             List<Produto> produtos = carregarProdutos();
 
@@ -45,38 +43,157 @@ public class Problema08 {
                 );
             }
 
-            linha("VERIFICAÇÃO DO ALGORITMO — AUTOCOMPLETE DE PRODUTOS");
-            linha("Estrutura: Árvore Binária de Busca (BST) | Linguagem: Java");
-            linha("==============================================================");
-            linha("");
-            linha("ENTRADA:");
-            linha("Arquivo: " + ENTRADA);
-            linha("Produtos lidos: " + produtos.size());
-            linha("Nomes inseridos na árvore: " + inseridos);
-            linha("");
+            java.util.Scanner scanner = new java.util.Scanner(System.in);
+            int opcao;
 
-            testarPrefixo(arvore, "Paraf");
-            testarPrefixo(arvore, "Silicone");
-            testarPrefixo(arvore, "Furadeira");
-            testarPrefixo(arvore, "xyz-inexistente");
+            do {
+                System.out.println("\n===== AUTOCOMPLETE DE PRODUTOS =====");
+                System.out.println("Produtos carregados: " + produtos.size());
+                System.out.println("Nomes distintos na BST: " + arvore.getTamanho());
+                System.out.println("1. Cadastrar produto");
+                System.out.println("2. Listar produtos");
+                System.out.println("3. Autocomplete por prefixo");
+                System.out.println("4. Executar testes e salvar relatório");
+                System.out.println("0. Voltar ao menu principal");
+                System.out.print("Escolha uma opção: ");
 
-            linha("RESUMO:");
-            linha("Base mínima de 30 produtos: atendida");
-            linha("Inserção dos nomes na BST: executada");
-            linha("Busca por prefixo: testada com resultados e sem resultados");
-            linha("Sugestões apresentadas em ordem alfabética.");
-            linha("Busca limitada aos ramos que podem conter o prefixo.");
-            linha("");
-            linha("COMPLEXIDADE:");
-            linha("Inserção: O(h) por produto.");
-            linha("Autocomplete: O(v + k), desconsiderando o custo das comparações de strings.");
-            linha("Espaço: O(n) para a árvore e O(k) para as sugestões.");
-            linha("h = altura da árvore; v = nós visitados; k = resultados encontrados.");
-            linha("No pior caso, a BST pode ficar degenerada e visitar O(n) nós.");
+                String entrada = scanner.nextLine().trim();
 
-            salvar();
-            System.out.println(registro);
-            System.out.println("Resultado salvo em " + SAIDA);
+                try {
+                    opcao = Integer.parseInt(entrada);
+                } catch (NumberFormatException e) {
+                    opcao = -1;
+                }
+
+                switch (opcao) {
+                    case 1 -> {
+                        System.out.print("Código: ");
+                        String codigo = scanner.nextLine().trim();
+
+                        boolean codigoExiste = produtos.stream()
+                                .anyMatch(p -> p.codigo.equalsIgnoreCase(codigo));
+
+                        if (codigo.isBlank() || codigoExiste) {
+                            System.out.println("Código vazio ou já cadastrado.");
+                            break;
+                        }
+
+                        System.out.print("Nome do produto: ");
+                        String nome = scanner.nextLine().trim();
+
+                        if (nome.isBlank()) {
+                            System.out.println("O nome não pode ficar vazio.");
+                            break;
+                        }
+
+                        System.out.print("Quantidade: ");
+                        int quantidade;
+                        try {
+                            quantidade = Integer.parseInt(scanner.nextLine().trim());
+                            if (quantidade < 0) {
+                                System.out.println("A quantidade não pode ser negativa.");
+                                break;
+                            }
+                        } catch (NumberFormatException e) {
+                            System.out.println("Quantidade inválida.");
+                            break;
+                        }
+
+                        System.out.print("Preço: ");
+                        double preco;
+                        try {
+                            preco = Double.parseDouble(
+                                    scanner.nextLine().trim().replace(',', '.'));
+                            if (!Double.isFinite(preco) || preco < 0) {
+                                System.out.println("Preço inválido.");
+                                break;
+                            }
+                        } catch (NumberFormatException e) {
+                            System.out.println("Preço inválido.");
+                            break;
+                        }
+
+                        Produto produto = new Produto(codigo, nome, quantidade, preco);
+
+                        if (arvore.inserir(produto)) {
+                            produtos.add(produto);
+                            System.out.println("Produto cadastrado na árvore.");
+                        } else {
+                            System.out.println(
+                                    "Já existe um produto com esse nome normalizado.");
+                        }
+                    }
+                    case 2 -> {
+                        System.out.println("\n===== PRODUTOS EM ORDEM ALFABÉTICA =====");
+                        List<Produto> ordenados = new ArrayList<>(produtos);
+                        ordenados.sort((a, b) ->
+                                ArvoreProdutos.normalizar(a.nome)
+                                        .compareTo(ArvoreProdutos.normalizar(b.nome)));
+
+                        for (Produto produto : ordenados) {
+                            System.out.printf(
+                                    "%s | %s | Quantidade: %d | Preço: R$ %.2f%n",
+                                    produto.codigo, produto.nome,
+                                    produto.quantidade, produto.preco);
+                        }
+                        System.out.println("Total: " + produtos.size());
+                    }
+                    case 3 -> {
+                        System.out.println(
+                                "Digite um prefixo (linha vazia para voltar).");
+                        while (true) {
+                            System.out.print("Prefixo: ");
+                            String prefixo = scanner.nextLine().trim();
+
+                            if (prefixo.isEmpty()) {
+                                break;
+                            }
+
+                            List<Produto> resultados = arvore.autocomplete(prefixo);
+                            System.out.println(
+                                    "Sugestões encontradas: " + resultados.size());
+
+                            if (resultados.isEmpty()) {
+                                System.out.println("Nenhum produto encontrado.");
+                            } else {
+                                for (Produto produto : resultados) {
+                                    System.out.println("  " + produto);
+                                }
+                            }
+                        }
+                    }
+                    case 4 -> {
+                        registro.setLength(0);
+                        linha("VERIFICAÇÃO DO ALGORITMO — AUTOCOMPLETE DE PRODUTOS");
+                        linha("Estrutura: Árvore Binária de Busca (BST) | Linguagem: Java");
+                        linha("Arquivo: " + ENTRADA);
+                        linha("Produtos carregados: " + produtos.size());
+                        linha("Nomes distintos na árvore: " + arvore.getTamanho());
+                        linha("");
+                        testarPrefixo(arvore, "Paraf");
+                        testarPrefixo(arvore, "Silicone");
+                        testarPrefixo(arvore, "Furadeira");
+                        testarPrefixo(arvore, "xyz-inexistente");
+                        linha("RESUMO:");
+                        linha("Base mínima de 30 nomes distintos: atendida");
+                        linha("Autocomplete com prefixos existentes e inexistentes: testado");
+                        linha("");
+                        linha("COMPLEXIDADE:");
+                        linha("Inserção: O(h) por produto.");
+                        linha("Autocomplete: O(v + k), sem contar comparações de strings.");
+                        linha("Espaço: O(n) para a árvore e O(k) para os resultados.");
+                        linha("h = altura; v = nós visitados; k = resultados encontrados.");
+                        linha("No pior caso, a BST pode visitar O(n) nós.");
+                        salvar();
+                        System.out.println(registro);
+                        System.out.println("Relatório salvo em " + SAIDA);
+                    }
+                    case 0 -> System.out.println("Voltando ao menu principal.");
+                    case -1 -> System.out.println("Digite uma opção numérica válida.");
+                    default -> System.out.println("Opção inválida.");
+                }
+            } while (opcao != 0);
+
         } catch (IOException | RuntimeException e) {
             System.err.println("Erro no Problema 08: " + e.getMessage());
         }

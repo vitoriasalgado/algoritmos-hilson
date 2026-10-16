@@ -2,12 +2,21 @@ package ed.app;
 
 import ed.naolineares.ArvoreAVL;
 import ed.naolineares.ArvoreAVL.Funcionario;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.List;
+import java.util.Scanner;
 
 public class Problema09 {
+    private static final Scanner scanner = new Scanner(System.in);
+    private static final String SAIDA = "saidas/problema_09.txt";
+
     public static void executar() {
         ArvoreAVL arvore = new ArvoreAVL();
 
-        String[][] funcionarios = {
+        String[][] iniciais = {
             {"52998224725", "Ana Souza", "Analista de RH"},
             {"11144477735", "Bruno Lima", "Desenvolvedor"},
             {"98765432100", "Carla Mendes", "Gerente"},
@@ -40,49 +49,173 @@ public class Problema09 {
             {"95125835700", "Gustavo Vieira", "Diretor"}
         };
 
-        System.out.println("=== PROBLEMA 09: ÍNDICE DE CPF COM ÁRVORE AVL ===");
-        System.out.println("\n1. Inserção de funcionários");
-
-        for (String[] funcionario : funcionarios) {
-            arvore.inserir(funcionario[0], funcionario[1], funcionario[2]);
+        for (String[] f : iniciais) {
+            arvore.inserir(f[0], f[1], f[2]);
         }
 
-        System.out.println("Funcionários inseridos: " + arvore.quantidade());
-        System.out.println("Altura da árvore: " + arvore.altura());
-        System.out.println("Fator de balanceamento da raiz: " + arvore.fatorBalanceamentoRaiz());
-        System.out.println("Árvore balanceada: " + arvore.estaBalanceada());
+        int opcao;
+        do {
+            System.out.println("\n===== ÍNDICE DE CPF — ÁRVORE AVL =====");
+            System.out.println("Funcionários no índice: " + arvore.quantidade());
+            System.out.println("1. Cadastrar funcionário");
+            System.out.println("2. Buscar funcionário por CPF");
+            System.out.println("3. Remover funcionário por CPF");
+            System.out.println("4. Listar funcionários por CPF");
+            System.out.println("5. Consultar altura e balanceamento");
+            System.out.println("6. Executar testes e salvar relatório");
+            System.out.println("0. Voltar ao menu principal");
+            System.out.print("Escolha uma opção: ");
 
-        System.out.println("\n2. Busca por CPF");
-        Funcionario encontrado = arvore.buscar("529.982.247-25");
+            opcao = lerInteiro();
 
-        if (encontrado != null) {
-            System.out.println("Funcionário encontrado: " + encontrado);
-        } else {
-            System.out.println("Funcionário não encontrado.");
+            switch (opcao) {
+                case 1 -> cadastrar(arvore);
+                case 2 -> buscar(arvore);
+                case 3 -> remover(arvore);
+                case 4 -> listar(arvore);
+                case 5 -> mostrarEstado(arvore);
+                case 6 -> testarESalvar(arvore);
+                case 0 -> System.out.println("Voltando ao menu principal.");
+                default -> System.out.println("Opção inválida.");
+            }
+        } while (opcao != 0);
+    }
+
+    private static void cadastrar(ArvoreAVL arvore) {
+        System.out.println("\n===== CADASTRO DE FUNCIONÁRIO =====");
+        System.out.print("CPF: ");
+        String cpf = scanner.nextLine().trim();
+        System.out.print("Nome: ");
+        String nome = scanner.nextLine().trim();
+        System.out.print("Cargo: ");
+        String cargo = scanner.nextLine().trim();
+
+        if (nome.isBlank() || cargo.isBlank()) {
+            System.out.println("Nome e cargo são obrigatórios.");
+            return;
         }
 
-        System.out.println("\nBusca por CPF inexistente:");
-        System.out.println(arvore.buscar("00000000000") == null
-                ? "Funcionário não encontrado, conforme esperado."
-                : "Funcionário encontrado.");
+        try {
+            int antes = arvore.quantidade();
+            arvore.inserir(cpf, nome, cargo);
 
-        System.out.println("\n3. Remoção de funcionário");
-        boolean removido = arvore.remover("11144477735");
-        System.out.println("Remoção realizada: " + removido);
-        System.out.println("Quantidade após remoção: " + arvore.quantidade());
-        System.out.println("Árvore balanceada após remoção: " + arvore.estaBalanceada());
-        System.out.println("Busca pelo CPF removido: "
-                + (arvore.buscar("11144477735") == null ? "não encontrado" : "encontrado"));
+            if (arvore.quantidade() > antes) {
+                System.out.println("Funcionário cadastrado.");
+            } else {
+                System.out.println("CPF duplicado ou funcionário não inserido.");
+            }
+        } catch (RuntimeException e) {
+            System.out.println("Não foi possível cadastrar: " + e.getMessage());
+        }
+    }
 
-        System.out.println("\n4. Funcionários em ordem crescente de CPF");
-        for (Funcionario funcionario : arvore.listarEmOrdem()) {
+    private static void buscar(ArvoreAVL arvore) {
+        System.out.print("CPF para buscar: ");
+        String cpf = scanner.nextLine().trim();
+
+        try {
+            Funcionario funcionario = arvore.buscar(cpf);
+            if (funcionario == null) {
+                System.out.println("Funcionário não encontrado.");
+            } else {
+                System.out.println("Funcionário encontrado: " + funcionario);
+            }
+        } catch (RuntimeException e) {
+            System.out.println("Erro na busca: " + e.getMessage());
+        }
+    }
+
+    private static void remover(ArvoreAVL arvore) {
+        System.out.print("CPF para remover: ");
+        String cpf = scanner.nextLine().trim();
+
+        try {
+            boolean removido = arvore.remover(cpf);
+            System.out.println(removido
+                    ? "Funcionário removido."
+                    : "CPF não encontrado.");
+            mostrarEstado(arvore);
+        } catch (RuntimeException e) {
+            System.out.println("Erro na remoção: " + e.getMessage());
+        }
+    }
+
+    private static void listar(ArvoreAVL arvore) {
+        System.out.println("\n===== FUNCIONÁRIOS EM ORDEM DE CPF =====");
+        List<Funcionario> funcionarios = arvore.listarEmOrdem();
+
+        if (funcionarios.isEmpty()) {
+            System.out.println("Nenhum funcionário cadastrado.");
+            return;
+        }
+
+        for (Funcionario funcionario : funcionarios) {
             System.out.println(funcionario);
         }
+        System.out.println("Total: " + funcionarios.size());
+    }
 
-        System.out.println("\n5. Verificação final");
-        System.out.println("Altura final: " + arvore.altura());
-        System.out.println("Fator de balanceamento da raiz: " + arvore.fatorBalanceamentoRaiz());
-        System.out.println("Todos os nós estão balanceados: " + arvore.estaBalanceada());
+    private static void mostrarEstado(ArvoreAVL arvore) {
+        System.out.println("\n===== ESTADO DA ÁRVORE AVL =====");
+        System.out.println("Quantidade: " + arvore.quantidade());
+        System.out.println("Altura: " + arvore.altura());
+        System.out.println("Fator de balanceamento da raiz: "
+                + arvore.fatorBalanceamentoRaiz());
+        System.out.println("Árvore balanceada: " + arvore.estaBalanceada());
+    }
+
+    private static void testarESalvar(ArvoreAVL arvore) {
+        StringBuilder relatorio = new StringBuilder();
+
+        relatorio.append("PROBLEMA 09 — ÍNDICE DE CPF COM ÁRVORE AVL\n");
+        relatorio.append("Funcionários no índice: ")
+                .append(arvore.quantidade()).append('\n');
+        relatorio.append("Altura: ").append(arvore.altura()).append('\n');
+        relatorio.append("Fator de balanceamento da raiz: ")
+                .append(arvore.fatorBalanceamentoRaiz()).append('\n');
+        relatorio.append("Árvore balanceada: ")
+                .append(arvore.estaBalanceada()).append("\n\n");
+
+        Funcionario encontrado = arvore.buscar("52998224725");
+        relatorio.append("Busca de CPF de teste: ")
+                .append(encontrado == null ? "não encontrado" : "encontrado")
+                .append('\n');
+
+        Funcionario inexistente = arvore.buscar("00000000000");
+        relatorio.append("Busca de CPF inexistente: ")
+                .append(inexistente == null ? "não encontrado, conforme esperado"
+                        : "encontrado inesperadamente")
+                .append('\n');
+
+        relatorio.append("\nFUNCIONÁRIOS EM ORDEM DE CPF:\n");
+        for (Funcionario funcionario : arvore.listarEmOrdem()) {
+            relatorio.append(funcionario).append('\n');
+        }
+
+        relatorio.append("\nCOMPLEXIDADE:\n");
+        relatorio.append("Busca, inserção e remoção: O(log n) em árvore AVL.\n");
+        relatorio.append("Listagem ordenada: O(n).\n");
+        relatorio.append("Espaço: O(n).\n");
+
+        try {
+            Path caminho = Path.of(SAIDA);
+            Files.createDirectories(caminho.getParent());
+            Files.writeString(caminho, relatorio.toString(),
+                    StandardCharsets.UTF_8);
+            System.out.println("\n" + relatorio);
+            System.out.println("Relatório salvo em " + SAIDA);
+        } catch (IOException e) {
+            System.out.println("Não foi possível salvar o relatório: "
+                    + e.getMessage());
+        }
+    }
+
+    private static int lerInteiro() {
+        try {
+            return Integer.parseInt(scanner.nextLine().trim());
+        } catch (NumberFormatException e) {
+            return -1;
+        }
     }
 
     public static void main(String[] args) {
