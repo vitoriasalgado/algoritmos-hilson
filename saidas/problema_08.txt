@@ -1,0 +1,50 @@
+VERIFICAÇÃO DO ALGORITMO — AUTOCOMPLETE DE PRODUTOS
+Estrutura: Árvore Binária de Busca (BST) | Linguagem: Java
+==============================================================
+
+ENTRADA:
+Arquivo: dados/produtos.csv
+Produtos lidos: 100
+Nomes inseridos na árvore: 100
+
+AUTOCOMPLETE: "Paraf"
+Quantidade de sugestões: 5
+  1085 | Parafuso Autobrocante 4.2
+  1095 | Parafuso Bucha 6mm
+  1079 | Parafuso Chipboard 4x40
+  1088 | Parafuso Frances 10mm
+  1073 | Parafuso Sextavado 8mm
+
+AUTOCOMPLETE: "Silicone"
+Quantidade de sugestões: 5
+  1389 | Silicone Acetico Branco 280g
+  1394 | Silicone Cola Quente Bastao
+  1385 | Silicone Neutro Incolor 280g
+  1395 | Silicone PU Cinza 400g
+  1400 | Silicone Veda Calha 300ml
+
+AUTOCOMPLETE: "Furadeira"
+Quantidade de sugestões: 5
+  1133 | Furadeira Bancada 500W
+  1131 | Furadeira Bateria 20V
+  1117 | Furadeira Impacto 650W
+  1124 | Furadeira Martelete 800W
+  1119 | Furadeira Parafusadeira 12V
+
+AUTOCOMPLETE: "xyz-inexistente"
+Quantidade de sugestões: 0
+Nenhum produto encontrado.
+
+RESUMO:
+Base mínima de 30 produtos: atendida
+Inserção dos nomes na BST: executada
+Busca por prefixo: testada com resultados e sem resultados
+Sugestões apresentadas em ordem alfabética.
+Busca limitada aos ramos que podem conter o prefixo.
+
+COMPLEXIDADE:
+Inserção: O(h) por produto.
+Autocomplete: O(v + k), desconsiderando o custo das comparações de strings.
+Espaço: O(n) para a árvore e O(k) para as sugestões.
+h = altura da árvore; v = nós visitados; k = resultados encontrados.
+No pior caso, a BST pode ficar degenerada e visitar O(n) nós.
