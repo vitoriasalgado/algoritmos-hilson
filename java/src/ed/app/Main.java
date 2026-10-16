@@ -1,13 +1,65 @@
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
-void main() {
-    //TIP Press <shortcut actionId="ShowIntentionActions"/> with your caret at the highlighted text
-    // to see how IntelliJ IDEA suggests fixing it.
-    IO.println(String.format("Hello and welcome!"));
 
-    for (int i = 1; i <= 5; i++) {
-        //TIP Press <shortcut actionId="Debug"/> to start debugging your code. We have set one <icon src="AllIcons.Debugger.Db_set_breakpoint"/> breakpoint
-        // for you, but you can always add more by pressing <shortcut actionId="ToggleLineBreakpoint"/>.
-        IO.println("i = " + i);
+package ed.app;
+
+import java.util.Scanner;
+
+public class Main {
+
+    public static void main(String[] args) {
+        try (Scanner scanner = new Scanner(System.in)) {
+            int opcao;
+
+            do {
+                exibirMenu();
+                System.out.print("Escolha o problema: ");
+                String entrada = scanner.nextLine().trim();
+
+                try {
+                    opcao = Integer.parseInt(entrada);
+                } catch (NumberFormatException e) {
+                    opcao = -1;
+                }
+
+                switch (opcao) {
+                    case 5 -> Problema05.executar();
+                    case 6 -> Problema06.executar();
+                    case 7 -> Problema07.executar();
+                    case 8 -> Problema08.executar();
+                    case 9 -> Problema09.executar();
+                    case 10 -> Problema10.executar();
+                    case 13 -> Problema13.executar();
+                    case 14 -> Problema14.executar();
+
+                    case 0 -> System.out.println("Encerrando o programa...");
+
+                    default -> System.out.println(
+                            "Opção inválida. Escolha um dos problemas listados."
+                    );
+                }
+
+                if (opcao != 0) {
+                    System.out.println("\nPressione ENTER para voltar ao menu...");
+                    scanner.nextLine();
+                }
+
+            } while (opcao != 0);
+        }
+    }
+
+    private static void exibirMenu() {
+        System.out.println("\n==============================================");
+        System.out.println("       ALGORITMOS E ESTRUTURAS DE DADOS I");
+        System.out.println("==============================================");
+        System.out.println(" 5  - Gerenciamento de Playlist de Músicas");
+        System.out.println(" 6  - Controle de Estoque de uma Pequena Loja");
+        System.out.println(" 7  - Cadastro e Busca de Alunos por Matrícula");
+        System.out.println(" 8  - Sistema de Autocomplete de Produtos");
+        System.out.println(" 9  - Índice de CPF para Sistema de RH");
+        System.out.println("10  - Ranking de Jogadores em um Jogo Online");
+        System.out.println("13  - Cadastro de Usuários com Login Rápido");
+        System.out.println("14  - Contagem de Frequência de Palavras");
+        System.out.println("----------------------------------------------");
+        System.out.println(" 0  - Sair");
+        System.out.println("==============================================");
     }
 }

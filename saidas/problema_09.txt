@@ -1,0 +1,55 @@
+=== PROBLEMA 09: ÍNDICE DE CPF COM ÁRVORE AVL ===
+
+1. Inserção de funcionários
+Funcionários inseridos: 30
+Altura da árvore: 6
+Fator de balanceamento da raiz: 1
+Árvore balanceada: true
+
+2. Busca por CPF
+Funcionário encontrado: CPF: 52998224725 | Nome: Ana Souza | Cargo: Analista de RH
+
+Busca por CPF inexistente:
+Funcionário não encontrado, conforme esperado.
+
+3. Remoção de funcionário
+Remoção realizada: true
+Quantidade após remoção: 29
+Árvore balanceada após remoção: true
+Busca pelo CPF removido: não encontrado
+
+4. Funcionários em ordem crescente de CPF
+CPF: 12345678909 | Nome: Daniel Costa | Cargo: Assistente Administrativo
+CPF: 14725836900 | Nome: Isabela Ribeiro | Cargo: Recrutadora
+CPF: 15925835700 | Nome: Yasmin Cardoso | Cargo: Assistente de RH
+CPF: 15935725800 | Nome: Olivia Nunes | Cargo: Assistente Financeira
+CPF: 15975325800 | Nome: Talita Moraes | Cargo: Analista de Dados
+CPF: 25815935700 | Nome: André Monteiro | Cargo: Analista de Sistemas
+CPF: 25835715900 | Nome: Débora Farias | Cargo: Analista de Qualidade
+CPF: 25836914700 | Nome: João Oliveira | Cargo: Desenvolvedor
+CPF: 32165498700 | Nome: Felipe Santos | Cargo: Técnico de Suporte
+CPF: 35715925800 | Nome: Paulo Azevedo | Cargo: Gerente de Projetos
+CPF: 35725815900 | Nome: Bianca Teixeira | Cargo: Secretária
+CPF: 35785215900 | Nome: Enzo Moreira | Cargo: Estagiário
+CPF: 35795125800 | Nome: Ubirajara Lopes | Cargo: Supervisor
+CPF: 36914725800 | Nome: Karen Ferreira | Cargo: Contadora
+CPF: 45678912300 | Nome: Eduarda Alves | Cargo: Analista Financeira
+CPF: 52998224725 | Nome: Ana Souza | Cargo: Analista de RH
+CPF: 65432198700 | Nome: Gabriela Rocha | Cargo: Coordenadora
+CPF: 74185296300 | Nome: Lucas Carvalho | Cargo: Administrador
+CPF: 75315925800 | Nome: Rafaela Dias | Cargo: Designer
+CPF: 75325815900 | Nome: Fernanda Reis | Cargo: Coordenadora de RH
+CPF: 75395125800 | Nome: Valentina Castro | Cargo: Psicóloga
+CPF: 78912345600 | Nome: Henrique Martins | Cargo: Analista de Sistemas
+CPF: 85235715900 | Nome: Caio Batista | Cargo: Engenheiro
+CPF: 85296374100 | Nome: Mariana Gomes | Cargo: Analista de RH
+CPF: 95125835700 | Nome: Gustavo Vieira | Cargo: Diretor
+CPF: 95135725800 | Nome: Wesley Pires | Cargo: Técnico de Segurança
+CPF: 95175325800 | Nome: Samuel Freitas | Cargo: Desenvolvedor
+CPF: 96374185200 | Nome: Nicolas Barros | Cargo: Técnico de Redes
+CPF: 98765432100 | Nome: Carla Mendes | Cargo: Gerente
+
+5. Verificação final
+Altura final: 5
+Fator de balanceamento da raiz: 0
+Todos os nós estão balanceados: true
