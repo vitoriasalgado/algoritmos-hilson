@@ -64,7 +64,7 @@ def problema_01():
 
     while not fila.vazia():
         paciente = fila.desenfileirar()
-        registrar(f"  Paciente: {paciente[0]} | Chegada: {paciente[1]}")
+        registrar(f"  Paciente: {paciente[0]} | Chegada: {paciente[1]} | Tipo: {paciente[2]}")
         chegada = horario_para_minutos(paciente[1])
         duracao = duracao_por_tipo[paciente[2]]
         if chegada > fim_do_atendimento: # calcula o tempo de espera e o horário de início do atendimento
@@ -294,7 +294,7 @@ def problema_16():
         leitor = csv.reader(arquivo)
         linhas = list(leitor)
         cabecalho = linhas[0]
-        dados_produtos = linhas[1:16]
+        dados_produtos = linhas[1:16]  # pula o cabeçalho e seleciona 15 produtos
 
     produtos = []
 
@@ -303,9 +303,11 @@ def problema_16():
         preco = float(linha[3])
         produtos.append([nome, preco])
         
+    # as duas ordens partem da mesma entrada original
     produtos_crescente = produtos.copy()
     produtos_decrescente = produtos.copy()
 
+    # o preço fica na posição 1 do registro [nome, preco]
     comparacoes_c, trocas_c, tempo_c = bubble_sort(
         produtos_crescente, indice_preco=1
     )
@@ -360,6 +362,147 @@ def problema_16():
     with open("saidas/problema_16.txt", "w", encoding="utf-8") as arquivo_saida:
         arquivo_saida.write("\n".join(linhas_saida) + "\n")
 
+def problema_17():
+
+    candidatos = [
+        ["Ana", 85],
+        ["Bruno", 92],
+        ["Carla", 70],
+        ["Daniel", 88],
+        ["Eduarda", 95],
+        ["Felipe", 76],
+        ["Gabriela", 90],
+        ["Henrique", 82],
+        ["Isabela", 97],
+        ["João", 68],
+        ["Edson", 91],
+        ["Lucas", 79],
+        ["Mariana", 86],
+        ["Nicolas", 73],
+        ["Maria", 94],
+    ]
+    quantidades_selecionados = 5
+    # preserva a ordem original para exibir a entrada
+    candidatos_ordenados = candidatos.copy()
+
+    # compara a pontuação na posição 1, da maior para a menor
+    comparacoes, trocas, tempo = selection_sort(
+        candidatos_ordenados,
+        indice_pontuacao=1,
+        decrescente=True,
+    )
+
+    # após ordenar, os primeiros números são os melhores colocados
+    selecionados = candidatos_ordenados[:quantidades_selecionados]
+
+    linhas_saida = []
+
+    def registrar(mensagem):
+        print(mensagem)
+        linhas_saida.append(mensagem)
+
+    registrar("=" * 72)
+    registrar("PROBLEMA 17 — SELEÇÃO DOS MELHORES CANDIDATOS")
+    registrar("Algoritmo: Selection Sort | Linguagem: Python")
+    registrar("=" * 72)
+
+    registrar(f"\nENTRADA: {len(candidatos)} candidatos")
+    for nome, pontuacao in candidatos:
+        registrar(f"  {nome} | Pontuação: {pontuacao}")
+
+    registrar("\nRESULTADOS — RANKING COMPLETO:")
+    for posicao, candidato in enumerate(candidatos_ordenados, start=1):
+        nome, pontuacao = candidato
+        registrar(f"  {posicao}. {nome} | Pontuação: {pontuacao}")
+
+    registrar(f"\nTOP {quantidades_selecionados}:")
+    for posicao, candidato in enumerate(selecionados, start=1):
+        nome, pontuacao = candidato
+        registrar(f"  {posicao}. {nome} | Pontuação: {pontuacao}")
+
+    registrar("\nRESUMO:")
+    registrar(f"  {len(selecionados)} candidatos selecionados.")
+    registrar(f"  Comparações: {comparacoes}")
+    registrar(f"  Trocas: {trocas}")
+    registrar(f"  Tempo: {tempo:.9f} segundos.")
+    registrar("  Empates não têm garantia de preservar a ordem original.")
+
+    registrar("\nCOMPLEXIDADE:")
+    registrar("  Ordenação: O(n²) de tempo e O(1) de espaço auxiliar.")
+    registrar("  Extração dos Top-N: O(k) de tempo e espaço, sendo k a quantidade selecionada.")
+    registrar("  Cópia, seleção e registros: O(n) de espaço no total, para k <= n.")
+    registrar("  n é o número de candidatos.")
+
+    with open("saidas/problema_17.txt", "w", encoding="utf-8") as arquivo_saida:
+        arquivo_saida.write("\n".join(linhas_saida) + "\n")
+
+def problema_18():
+    tarefas = [
+        ["Revisar o conteúdo da aula", 3],
+        ["Enviar trabalho com prazo para hoje", 1],
+        ["Organizar os arquivos do computador", 5],
+        ["Resolver exercícios de algoritmos", 2],
+        ["Responder mensagens do grupo", 4],
+        ["Preparar apresentação para amanhã", 1],
+        ["Ler capítulo do livro", 3],
+        ["Conferir os dados do relatório", 2],
+        ["Atualizar o calendário de estudos", 4],
+        ["Separar materiais para a aula", 3],
+        ["Fazer cópia de segurança do trabalho", 2],
+        ["Limpar a caixa de entrada", 5],
+        ["Confirmar a entrega na plataforma", 1],
+        ["Planejar os estudos da próxima semana", 4],
+        ["Revisar anotações antigas", 5],
+    ]
+
+    # preserva a entrada; 1 representa a prioridade mais alta
+    tarefas_ordenadas = tarefas.copy()
+    # o campo numérico fica na posição 1, assim como a pontuação dos candidatos
+    comparacoes, trocas, tempo = selection_sort(
+        tarefas_ordenadas, indice_pontuacao=1
+    )
+
+    linhas_saida = []
+
+    def registrar(mensagem):
+        print(mensagem)
+        linhas_saida.append(mensagem)
+
+    registrar("=" * 72)
+    registrar("PROBLEMA 18 — ORGANIZAÇÃO DE TAREFAS POR PRIORIDADE")
+    registrar("Algoritmo: Selection Sort | Linguagem: Python")
+    registrar("=" * 72)
+
+    registrar(f"\nENTRADA: {len(tarefas)} tarefas de um dia de trabalho")
+    registrar("  Prioridades de 1 (mais alta) a 5 (mais baixa).")
+    for descricao, prioridade in tarefas:
+        registrar(f"  Prioridade {prioridade} | {descricao}")
+
+    registrar("\nRESULTADOS — ORDEM DE EXECUÇÃO DO DIA:")
+    for posicao, tarefa in enumerate(tarefas_ordenadas, start=1):
+        descricao, prioridade = tarefa
+        registrar(f"  {posicao}. Prioridade {prioridade} | {descricao}")
+
+    registrar("\nSIMULAÇÃO DO DIA:")
+    for descricao, prioridade in tarefas_ordenadas:
+        registrar(f"  Concluída: {descricao} | Prioridade {prioridade}")
+
+    registrar("\nRESUMO:")
+    registrar(f"  {len(tarefas_ordenadas)} tarefas executadas em ordem de prioridade.")
+    registrar(f"  Comparações: {comparacoes}")
+    registrar(f"  Trocas: {trocas}")
+    registrar(f"  Tempo de ordenação: {tempo:.9f} segundos.")
+    registrar("  O tempo medido é do algoritmo, não da duração das tarefas.")
+    registrar("  Tarefas com a mesma prioridade não têm ordem original garantida.")
+
+    registrar("\nCOMPLEXIDADE:")
+    registrar("  Ordenação: O(n²) de tempo e O(1) de espaço auxiliar.")
+    registrar("  Simulação: O(n²) de tempo e O(n) de espaço para cópia e registros.")
+    registrar("  n é o número de tarefas.")
+
+    with open("saidas/problema_18.txt", "w", encoding="utf-8") as arquivo_saida:
+        arquivo_saida.write("\n".join(linhas_saida) + "\n")
+
 
 if __name__ == "__main__":
     problema_01()
@@ -378,3 +521,9 @@ if __name__ == "__main__":
     print("\n")
 
     problema_16()
+    print("\n")
+
+    problema_17()
+    print("\n")
+
+    problema_18()
