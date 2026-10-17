@@ -31,22 +31,20 @@ Converter para entrega com:
 
 ## 1. Apresentação
 
-Este relatório apresenta e fundamenta as decisões de projeto adotadas pela dupla para a execução do
-Trabalho Prático de Estrutura de Dados, cujo escopo compreende vinte e quatro situações-problema
-distribuídas entre estruturas lineares, estruturas não-lineares e algoritmos de ordenação.
+Este relatório apresenta a organização do trabalho: a divisão dos 24 problemas, as linguagens,
+os dados, o formato das saídas e os prazos.
 
-O documento antecede o Relatório Técnico previsto no item 5.2 do enunciado e tem finalidade
-distinta: enquanto aquele apresentará os resultados das implementações — complexidade obtida,
-exemplos de entrada e saída, dificuldades encontradas e conclusões —, este registra as escolhas
-estruturais que orientam o desenvolvimento e as razões técnicas que as sustentam.
+O documento explica as escolhas feitas para o desenvolvimento. Os resultados, a complexidade,
+os exemplos de entrada e saída e as dificuldades são apresentados no Relatório Técnico, previsto no item 5.2
+do enunciado.
 
-A submissão antecipada tem por objetivo permitir que eventuais divergências de entendimento quanto
-ao escopo sejam identificadas antes do início da implementação, e não na correção.
+O registro dessas escolhas também permite esclarecer com o professor as dúvidas sobre o trabalho
+ao longo do desenvolvimento.
 
 ## 2. Escopo e distribuição dos problemas
 
-O enunciado estabelece vinte e quatro situações-problema, organizadas em três grupos. A tabela a
-seguir consolida a distribuição e o peso atribuído a cada grupo conforme o item 5.3.
+O enunciado divide os 24 problemas em três grupos. A tabela mostra essa divisão e os pesos da
+avaliação, conforme o item 5.3.
 
 | Grupo | Estruturas | Problemas | Peso |
 | --- | --- | --- | --- |
@@ -56,34 +54,30 @@ seguir consolida a distribuição e o peso atribuído a cada grupo conforme o it
 | Justificativas e relatório | — | — | 15% |
 | Organização e testes | — | — | 10% |
 
-Todas as vinte e quatro situações serão implementadas, sem supressão ou substituição.
+O planejamento inclui a implementação dos 24 problemas.
 
 ## 3. Decisão 1 — Linguagens de programação
 
-A dupla utilizará duas linguagens: Java e Python. A adoção conjunta foi previamente autorizada pelo
-professor da disciplina, uma vez que o item 1.2 do enunciado prevê a escolha de uma linguagem entre
-as três permitidas.
+As linguagens escolhidas são Java e Python, com autorização do professor. Essa autorização foi necessária porque
+o item 1.2 do enunciado prevê a escolha de uma linguagem.
 
-A alocação não é arbitrária. Cada linguagem foi atribuída ao grupo de estruturas em que suas
-características contribuem para evidenciar o funcionamento interno das implementações, que é o foco
-declarado no item 5.4.
+A distribuição das estruturas considera as características de cada linguagem e a facilidade de
+acompanhar a lógica do código.
 
-| Linguagem | Estruturas atendidas | Fundamentação técnica |
+| Linguagem | Estruturas atendidas | Motivo da escolha |
 | --- | --- | --- |
-| Java | Listas encadeadas, Árvore Binária de Busca, Árvore AVL, Tabela Hash | A tipagem estática e a orientação a objetos tornam explícita a relação entre nó e referência, que constitui o núcleo dessas estruturas. A verificação em tempo de compilação auxilia na detecção de inconsistências nas rotações da AVL e no encadeamento da tabela hash. |
-| Python | Filas, Pilhas, Grafos, Algoritmos de Ordenação | A sintaxe reduzida mantém legível o código dos algoritmos de Dijkstra e de busca em largura, bem como dos cinco algoritmos de ordenação, nos quais a avaliação recai sobre a lógica e sobre a contagem de operações. |
+| Java | Listas encadeadas, Árvore Binária de Busca, Árvore AVL, Tabela Hash | As classes e os tipos ajudam a representar os nós e suas referências. O compilador também ajuda a identificar erros de tipo nas estruturas. |
+| Python | Filas, Pilhas, Grafos, Algoritmos de Ordenação | A sintaxe mais curta facilita a leitura dos percursos em grafos e dos algoritmos de ordenação, incluindo a contagem das operações. |
 
-Como consequência da adoção conjunta, e considerando que ambas as implementações processam
-exatamente os mesmos arquivos de entrada, o projeto incorpora uma análise comparativa de desempenho
-sobre dados idênticos, apresentada na seção 6 deste relatório.
+Os arquivos de entrada serão os mesmos nas duas linguagens. O planejamento também prevê a comparação
+de desempenho com os mesmos dados, como descrito na seção 6.
 
 ## 4. Decisão 2 — Divisão de responsabilidades
 
-A divisão adotada é por bloco de estrutura, e não por problema isolado. Cada integrante assume um
-conjunto coerente de estruturas, o que permite o reaproveitamento de código entre problemas
-correlatos e evita a edição simultânea dos mesmos arquivos.
+O trabalho está dividido por estrutura. Assim, cada integrante pode reaproveitar o código nos problemas
+do seu bloco, evitando a edição dos mesmos arquivos ao mesmo tempo.
 
-| Bloco | Problemas | Responsável | Fundamento da alocação |
+| Bloco | Problemas | Responsável | Motivo da divisão |
 | --- | --- | --- | --- |
 | Listas encadeadas | 5 e 6 | João Guilherme | Estrutura de nó reaproveitada nos blocos seguintes |
 | Árvore Binária de Busca | 7 e 8 | João Guilherme | Evolução direta da estrutura de nó da lista |
@@ -94,28 +88,24 @@ correlatos e evita a edição simultânea dos mesmos arquivos.
 | Grafos | 11 e 12 | Vitória | Algoritmos de percurso e caminho mínimo |
 | Algoritmos de ordenação | 15 a 24 | Vitória | Dez problemas apoiados em cinco implementações |
 
-A divisão refere-se exclusivamente à responsabilidade de implementação. Ambos os integrantes
-acompanham o desenvolvimento integral do projeto e estão aptos a apresentar qualquer das estruturas.
+A tabela define o responsável pela implementação de cada bloco. Ambos acompanham o projeto completo e devem saber
+explicar as estruturas usadas.
 
 ## 5. Decisão 3 — Fonte única de dados
 
-Os dados de entrada exigidos pelo enunciado não serão codificados no interior dos programas. Foram
-organizados em arquivos CSV mantidos no diretório `dados/` e lidos por ambas as implementações.
+As bases compartilhadas estão organizadas em arquivos na pasta `dados/`, para leitura em Java e Python.
 
-A decisão atende a três finalidades: garante que as duas linguagens processem exatamente o mesmo
-conjunto de entrada, viabilizando a comparação descrita na seção 6; evita a duplicação dos dados em
-dois formatos distintos; e permite a inspeção direta dos valores utilizados nos testes, sem
-necessidade de leitura do código-fonte.
+Essa organização evita manter duas cópias diferentes dos dados, permite usar a mesma entrada nas
+comparações e facilita a consulta aos valores sem depender da leitura do código.
 
-### 5.1 Especificação dos arquivos
+### 5.1 Formato dos arquivos
 
-- codificação UTF-8, sem marca de ordem de byte;
+- codificação UTF-8, sem BOM;
 - separador de campos: vírgula;
-- **separador decimal: ponto**, em conformidade com o comportamento do método `Double.parseDouble`
-  na leitura pelo lado Java;
+- **separador decimal: ponto**, necessário para a leitura com `Double.parseDouble` em Java;
 - cabeçalho fixo na primeira linha, com identificadores de coluna idênticos nas duas implementações;
-- os arquivos são gerados uma única vez e mantidos sob controle de versão, não sendo regerados a
-  cada execução, de modo a assegurar a reprodutibilidade dos resultados.
+- os arquivos são gerados uma vez e salvos no repositório. Cada execução usa os mesmos dados,
+  permitindo repetir os testes.
 
 | Arquivo | Colunas | Registros | Problemas atendidos |
 | --- | --- | --- | --- |
@@ -131,28 +121,27 @@ necessidade de leitura do código-fonte.
 | `usuarios.csv` | email, senha_hash | 20 | 13 |
 | `texto.txt` | texto corrido | notícia real | 14 |
 
-Os dados das situações 15, 17, 18, 19 e 20 são construídos no próprio código, por serem de pequeno
-volume e específicos da simulação descrita em cada enunciado.
+Nos problemas 15, 17, 18, 19 e 20, os dados são definidos no próprio código, pois são poucos e específicos
+de cada simulação.
 
-## 6. Decisão 4 — Instrumentação e validação cruzada
+## 6. Decisão 4 — Contagem de operações e comparação dos resultados
 
-Os cinco algoritmos de ordenação são implementados com instrumentação que registra, a cada execução,
-o número de comparações, o número de trocas e o tempo decorrido.
+Os cinco algoritmos de ordenação registram o número de comparações, o número de trocas e o tempo
+de cada execução.
 
-A medida atende diretamente a três exigências do enunciado, conforme a tabela abaixo, e fundamenta a
-análise de complexidade requerida no item 5.2.
+Essas medidas apoiam as comparações solicitadas nos problemas abaixo e a discussão da complexidade
+do item 5.2.
 
 | Situação | Exigência do enunciado | Atendimento |
 | --- | --- | --- |
 | 15 | Comparação do número de comparações e trocas entre algoritmos | Contadores apresentados ao final de cada ordenação |
 | 20 | Comparação de desempenho entre lista ordenada e lista aleatória | Mesma implementação aplicada às duas entradas |
-| 23 | Comparação de tempo entre Quick Sort e Merge Sort | Medição de tempo integrada à instrumentação |
+| 23 | Comparação de tempo entre Quick Sort e Merge Sort | Cronômetro em cada algoritmo |
 
-**Validação cruzada entre as linguagens.** Para uma mesma entrada, a contagem de comparações
-produzida pela implementação em Java e pela implementação em Python deve ser idêntica, uma vez que o
-número de comparações é determinado pelo algoritmo e não pela linguagem. Divergência nesse valor
-indica erro de implementação em um dos lados. O tempo de execução, por depender do ambiente de
-execução, apresenta diferença esperada — cuja análise integra o Relatório Técnico.
+**Comparação entre as linguagens.** Para a mesma entrada, a contagem esperada de comparações é a mesma
+em Java e Python. Uma diferença nessa contagem será tratada como sinal de erro a revisar.
+O tempo pode variar conforme o ambiente de execução. Essas diferenças serão discutidas
+no Relatório Técnico.
 
 ## 7. Decisão 5 — Padronização das saídas
 
@@ -161,8 +150,9 @@ seguidos de entrada, execução, resumo com operações relevantes e complexidad
 explicadas. Linhas em branco separam as seções. O terminal e o arquivo
 `saidas/problema_NN.txt` apresentam o mesmo conteúdo detalhado.
 
-Essa organização é uma convenção da dupla, adotada para facilitar a identificação de cada problema
-e a leitura dos exemplos de entrada e saída. Vale para Python e Java e para as próximas implementações.
+Esse formato foi definido pela dupla para facilitar a identificação de cada problema
+e a leitura dos exemplos de entrada e saída. O padrão se aplica às implementações atuais e futuras
+em Python e Java.
 
 ```
 ========================================================================
@@ -191,9 +181,8 @@ COMPLEXIDADE:
 
 ## 8. Decisão 6 — Organização do código
 
-A estrutura do repositório separa as implementações por linguagem e por natureza da estrutura,
-atendendo ao item 5.1 do enunciado, que determina a separação de cada estrutura em módulos, classes
-ou arquivos distintos.
+O código é organizado por linguagem e tipo de estrutura. Cada estrutura tem seu módulo, classe
+ou arquivo, conforme o item 5.1 do enunciado.
 
 ```
 dados/          arquivos de entrada compartilhados
@@ -212,34 +201,32 @@ relatorio/      relatórios do projeto
 
 ### 8.1 Convenções adotadas
 
-- identificadores em português, coerentes com a terminologia do enunciado;
-- nomenclatura espelhada entre as linguagens: um método denominado `inserir` em Python recebe a
-  mesma denominação em Java;
-- comentários explicativos nas seções principais de cada implementação;
-- tratamento explícito das condições de erro previstas no item 5.1: estrutura vazia, chave
-  inexistente e índice fora de faixa.
+- nomes em português;
+- mesmos nomes nas duas linguagens: um método chamado `inserir` em Python também se chama
+  `inserir` em Java;
+- comentários nas partes principais do código;
+- tratamento dos erros previstos no item 5.1: estrutura vazia, chave inexistente e índice
+  fora do intervalo.
 
-## 9. Aderência ao item 5.4 — implementação do zero
+## 9. Implementação do zero — item 5.4
 
-O item 5.4 do enunciado determina que as estruturas sejam implementadas integralmente, admitindo o
-uso de arrays e listas nativas apenas como área de armazenamento. A dupla estabeleceu previamente a
-relação de recursos vedados em cada linguagem, de modo a evitar o emprego involuntário de
-implementações prontas.
+O item 5.4 exige que as estruturas sejam implementadas do zero. Arrays e listas nativas podem ser
+usados para armazenar os dados, mas a lógica das operações deve ser implementada pela dupla.
+A tabela apresenta os recursos que não serão utilizados para substituir essas implementações.
 
-| Linguagem | Recursos vedados | Recursos admitidos como base |
+| Linguagem | Recursos não utilizados | Recursos permitidos como base |
 | --- | --- | --- |
 | Python | `sorted`, `list.sort`, `dict` e `collections.Counter` empregados como tabela hash, `collections.deque`, `heapq`, `bisect` | `list` como área de armazenamento; estruturas de controle e recursão da linguagem |
 | Java | `HashMap`, `TreeMap`, `LinkedList`, `ArrayDeque`, `PriorityQueue`, `Collections.sort`, `Arrays.sort` | arrays nativos e `ArrayList` exclusivamente como área de armazenamento |
 
-**Situação 11 — Dijkstra.** Em coerência com a restrição acima, o algoritmo de caminho mínimo não
-empregará fila de prioridade fornecida pela biblioteca padrão. A dupla adotará a implementação com
-varredura linear do vértice de menor distância, de complexidade O(V²), suficiente para o volume de
-dez vértices exigido pelo enunciado, ou implementará estrutura de heap própria.
+**Problema 11 — Dijkstra.** A implementação não utilizará uma fila de prioridade pronta. As opções
+são procurar o vértice de menor distância com uma varredura linear, com complexidade O(V²), suficiente
+para os dez vértices solicitados, ou implementar um heap próprio.
 
 ## 10. Requisitos de execução
 
-O projeto não possui dependências externas: utiliza exclusivamente a biblioteca padrão de ambas as
-linguagens, sem necessidade de gerenciadores de pacotes ou de ferramentas de construção.
+O projeto usa apenas a biblioteca padrão de Java e Python. Não é necessário instalar bibliotecas
+extras nem usar gerenciadores de pacotes.
 
 | Componente | Requisito |
 | --- | --- |
@@ -247,18 +234,17 @@ linguagens, sem necessidade de gerenciadores de pacotes ou de ferramentas de con
 | Java | JDK 26 ou superior |
 | Dependências | nenhuma — sem Maven, sem Gradle, sem instalação de bibliotecas |
 
-**Consulta ao professor.** A implementação em Java foi desenvolvida em JDK 26.0.2. Como o bytecode
-gerado não é executável em versões anteriores da plataforma, solicita-se a confirmação de que o
-ambiente utilizado na correção atende a esse requisito. Em caso negativo, a dupla providenciará a
-compilação com bytecode compatível com a versão indicada pelo professor, mediante ajuste na
-configuração de compilação, sem alteração do código-fonte.
+**Ponto a confirmar com o professor.** O código Java foi desenvolvido no JDK 26.0.2. Os arquivos
+compilados nessa versão não são executados em versões anteriores. É necessário confirmar qual versão
+será usada na correção. Caso seja anterior, o ajuste previsto é gerar arquivos compatíveis por meio
+da configuração de compilação, sem alterar o código-fonte.
 
 ## 11. Cronograma de execução
 
-O desenvolvimento foi replanejado para execução paralela entre os integrantes, a partir de 21 de
-setembro. A conclusão das implementações está prevista para 25 de outubro; as duas semanas seguintes
-são reservadas para integração, testes, relatório técnico e organização da entrega. Os dias 9 e 10 de
-novembro permanecem como margem antes da entrega em 11 de novembro.
+O cronograma foi reorganizado para que os integrantes trabalhem em paralelo a partir de 21 de setembro.
+A previsão é concluir as implementações em 25 de outubro. As duas semanas seguintes estão reservadas
+para integração, testes, relatório técnico e organização da entrega. Os dias 9 e 10 de novembro servem como margem
+para ajustes antes da entrega em 11 de novembro.
 
 | Sem. | Período | João Guilherme — Java | Vitória — Python |
 | --- | --- | --- | --- |
@@ -271,28 +257,27 @@ novembro permanecem como margem antes da entrega em 11 de novembro.
 | 7 | 02/11 a 08/11 | Revisão final, testes e organização do arquivo `.zip` | Revisão final, testes e organização do arquivo `.zip` |
 | — | 11/11 | Entrega pela plataforma iCEV Digital | Entrega pela plataforma iCEV Digital |
 
-## 12. Entregáveis
+## 12. Documentos e arquivos para entrega
 
-Conforme os itens 1.3 e 5.2 do enunciado, a entrega compreenderá:
+A entrega reunirá os seguintes arquivos, considerando os itens 1.3 e 5.2 do enunciado:
 
-- ficha de identificação devidamente preenchida;
-- código-fonte completo e funcional das vinte e quatro implementações;
+- ficha de identificação preenchida;
+- código completo e funcional dos 24 problemas;
 - Relatório Técnico com justificativa de cada estrutura e algoritmo, análise de complexidade de
   tempo e espaço, exemplos de entrada e saída, dificuldades encontradas e conclusão sobre a
   aplicabilidade das estruturas;
 - registros de execução de todas as situações-problema;
-- documentação de instruções de execução;
-- o presente Relatório de Decisões de Projeto.
+- instruções para executar o projeto;
+- este Relatório de Decisões de Projeto.
 
-A submissão será realizada pela plataforma iCEV Digital, conforme determinado no enunciado.
+A entrega será feita pela plataforma iCEV Digital, conforme o enunciado.
 
 ## 13. Considerações finais
 
-As decisões registradas neste relatório orientam-se pelo objetivo declarado no enunciado: a
-compreensão do funcionamento interno das estruturas de dados, em detrimento do uso de soluções
-prontas. A organização proposta procura assegurar que cada estrutura seja implementada, testada e
-justificada de forma independente, e que os resultados sejam verificáveis a partir de dados de
-entrada explícitos.
+O objetivo do trabalho é compreender o funcionamento de cada estrutura por meio da implementação
+e dos testes de suas operações.
+Os dados e os registros de execução ajudam a conferir os resultados, e o Relatório Técnico explica
+as escolhas e as dificuldades de cada problema.
 
-A dupla permanece à disposição para os ajustes que o professor entender necessários, especialmente
-quanto ao escopo e aos requisitos de execução tratados na seção 10.
+O planejamento pode ser ajustado conforme a orientação do professor, incluindo os requisitos
+de execução da seção 10.

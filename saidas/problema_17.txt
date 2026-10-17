@@ -1,0 +1,58 @@
+========================================================================
+PROBLEMA 17 — SELEÇÃO DOS MELHORES CANDIDATOS
+Algoritmo: Selection Sort | Linguagem: Python
+========================================================================
+
+ENTRADA: 15 candidatos
+  Ana | Pontuação: 85
+  Bruno | Pontuação: 92
+  Carla | Pontuação: 70
+  Daniel | Pontuação: 88
+  Eduarda | Pontuação: 95
+  Felipe | Pontuação: 76
+  Gabriela | Pontuação: 90
+  Henrique | Pontuação: 82
+  Isabela | Pontuação: 97
+  João | Pontuação: 68
+  Edson | Pontuação: 91
+  Lucas | Pontuação: 79
+  Mariana | Pontuação: 86
+  Nicolas | Pontuação: 73
+  Maria | Pontuação: 94
+
+RESULTADOS — RANKING COMPLETO:
+  1. Isabela | Pontuação: 97
+  2. Eduarda | Pontuação: 95
+  3. Maria | Pontuação: 94
+  4. Bruno | Pontuação: 92
+  5. Edson | Pontuação: 91
+  6. Gabriela | Pontuação: 90
+  7. Daniel | Pontuação: 88
+  8. Mariana | Pontuação: 86
+  9. Ana | Pontuação: 85
+  10. Henrique | Pontuação: 82
+  11. Lucas | Pontuação: 79
+  12. Felipe | Pontuação: 76
+  13. Nicolas | Pontuação: 73
+  14. Carla | Pontuação: 70
+  15. João | Pontuação: 68
+
+TOP 5:
+  1. Isabela | Pontuação: 97
+  2. Eduarda | Pontuação: 95
+  3. Maria | Pontuação: 94
+  4. Bruno | Pontuação: 92
+  5. Edson | Pontuação: 91
+
+RESUMO:
+  5 candidatos selecionados.
+  Comparações: 105
+  Trocas: 12
+  Tempo: 0.000007292 segundos.
+  Empates não têm garantia de preservar a ordem original.
+
+COMPLEXIDADE:
+  Ordenação: O(n²) de tempo e O(1) de espaço auxiliar.
+  Extração dos Top-N: O(k) de tempo e espaço, sendo k a quantidade selecionada.
+  Cópia, seleção e registros: O(n) de espaço no total, para k <= n.
+  n é o número de candidatos.

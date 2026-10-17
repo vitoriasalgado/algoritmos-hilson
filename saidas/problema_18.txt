@@ -1,0 +1,69 @@
+========================================================================
+PROBLEMA 18 — ORGANIZAÇÃO DE TAREFAS POR PRIORIDADE
+Algoritmo: Selection Sort | Linguagem: Python
+========================================================================
+
+ENTRADA: 15 tarefas de um dia de trabalho
+  Prioridades de 1 (mais alta) a 5 (mais baixa).
+  Prioridade 3 | Revisar o conteúdo da aula
+  Prioridade 1 | Enviar trabalho com prazo para hoje
+  Prioridade 5 | Organizar os arquivos do computador
+  Prioridade 2 | Resolver exercícios de algoritmos
+  Prioridade 4 | Responder mensagens do grupo
+  Prioridade 1 | Preparar apresentação para amanhã
+  Prioridade 3 | Ler capítulo do livro
+  Prioridade 2 | Conferir os dados do relatório
+  Prioridade 4 | Atualizar o calendário de estudos
+  Prioridade 3 | Separar materiais para a aula
+  Prioridade 2 | Fazer cópia de segurança do trabalho
+  Prioridade 5 | Limpar a caixa de entrada
+  Prioridade 1 | Confirmar a entrega na plataforma
+  Prioridade 4 | Planejar os estudos da próxima semana
+  Prioridade 5 | Revisar anotações antigas
+
+RESULTADOS — ORDEM DE EXECUÇÃO DO DIA:
+  1. Prioridade 1 | Enviar trabalho com prazo para hoje
+  2. Prioridade 1 | Preparar apresentação para amanhã
+  3. Prioridade 1 | Confirmar a entrega na plataforma
+  4. Prioridade 2 | Resolver exercícios de algoritmos
+  5. Prioridade 2 | Conferir os dados do relatório
+  6. Prioridade 2 | Fazer cópia de segurança do trabalho
+  7. Prioridade 3 | Ler capítulo do livro
+  8. Prioridade 3 | Separar materiais para a aula
+  9. Prioridade 3 | Revisar o conteúdo da aula
+  10. Prioridade 4 | Responder mensagens do grupo
+  11. Prioridade 4 | Atualizar o calendário de estudos
+  12. Prioridade 4 | Planejar os estudos da próxima semana
+  13. Prioridade 5 | Organizar os arquivos do computador
+  14. Prioridade 5 | Limpar a caixa de entrada
+  15. Prioridade 5 | Revisar anotações antigas
+
+SIMULAÇÃO DO DIA:
+  Concluída: Enviar trabalho com prazo para hoje | Prioridade 1
+  Concluída: Preparar apresentação para amanhã | Prioridade 1
+  Concluída: Confirmar a entrega na plataforma | Prioridade 1
+  Concluída: Resolver exercícios de algoritmos | Prioridade 2
+  Concluída: Conferir os dados do relatório | Prioridade 2
+  Concluída: Fazer cópia de segurança do trabalho | Prioridade 2
+  Concluída: Ler capítulo do livro | Prioridade 3
+  Concluída: Separar materiais para a aula | Prioridade 3
+  Concluída: Revisar o conteúdo da aula | Prioridade 3
+  Concluída: Responder mensagens do grupo | Prioridade 4
+  Concluída: Atualizar o calendário de estudos | Prioridade 4
+  Concluída: Planejar os estudos da próxima semana | Prioridade 4
+  Concluída: Organizar os arquivos do computador | Prioridade 5
+  Concluída: Limpar a caixa de entrada | Prioridade 5
+  Concluída: Revisar anotações antigas | Prioridade 5
+
+RESUMO:
+  15 tarefas executadas em ordem de prioridade.
+  Comparações: 105
+  Trocas: 8
+  Tempo de ordenação: 0.000008291 segundos.
+  O tempo medido é do algoritmo, não da duração das tarefas.
+  Tarefas com a mesma prioridade não têm ordem original garantida.
+
+COMPLEXIDADE:
+  Ordenação: O(n²) de tempo e O(1) de espaço auxiliar.
+  Simulação: O(n²) de tempo e O(n) de espaço para cópia e registros.
+  n é o número de tarefas.

@@ -97,12 +97,12 @@ Estrutura: Fila | Linguagem: Python
 ENTRADA: 15 pacientes lidos de dados/pacientes.csv
 
 ATENDIMENTOS:
-  Paciente: Ana Beatriz Souza | Chegada: 08:04
+  Paciente: Ana Beatriz Souza | Chegada: 08:04 | Tipo: Retorno
   Espera: 0 min | Início: 08:04 | Fim: 08:14
 
   ...
 
-  Paciente: Olivia Ribeiro Sampaio | Chegada: 09:57
+  Paciente: Olivia Ribeiro Sampaio | Chegada: 09:57 | Tipo: Consulta
   Espera: 263 min | Início: 14:20 | Fim: 14:35
 
 RESUMO:
@@ -132,10 +132,11 @@ COMPLEXIDADE:
 
 ### Conclusão
 
-A fila resolveu o problema sem precisar de nenhuma operação fora do que ela já faz naturalmente
-(inserir no fim, remover do início). A parte mais difícil não foi a estrutura de dados em si, mas montar
-a simulação — decidir como estimar a duração de um atendimento a partir de um dado que o CSV não
-fornece, e fazer o atraso se propagar corretamente ao longo do dia.
+A fila manteve a ordem de chegada dos 15 pacientes. Na simulação, a duração de cada atendimento
+afetou a espera dos seguintes, resultando em uma média de 117,7 minutos. Esse resultado depende
+das durações estimadas para cada tipo de atendimento, já que o CSV não fornece esse dado.
+A aplicação mostra como uma fila pode organizar um atendimento sequencial e permitir a análise
+do tempo de espera sob condições definidas.
 
 ---
 
@@ -238,10 +239,10 @@ na sequência final de impressão — foi o trabalho cancelado, que era o últim
 
 ### Conclusão
 
-Reaproveitar a `Fila` do Problema 1 e só adicionar dois métodos novos mostrou que a estrutura já
-estava bem pensada desde o início — não precisou refazer nada, só completar. A parte mais difícil não
-foi o FIFO em si, que já estava resolvido, e sim entender qual ponta da fila cada operação nova
-precisava mexer, e decidir se isso cabia dentro da própria classe ou exigia outra coisa.
+A simulação processou 14 trabalhos na ordem de envio após cancelar o último dos 15 trabalhos
+recebidos. A estrutura do problema 1 foi reaproveitada com a inclusão da listagem e do cancelamento.
+Essas operações permitem consultar os trabalhos pendentes e retirar o último envio sem alterar
+a ordem dos demais, mantendo o comportamento esperado de uma fila de impressão.
 
 ---
 
@@ -346,9 +347,10 @@ COMPLEXIDADE:
 
 ### Conclusão
 
-A pilha modela a função de desfazer de forma direta: cada ação é registrada quando ocorre e a mais
-recente é recuperada primeiro. A simulação com dez ações termina no mesmo estado inicial, sem usar
-estruturas prontas além da lista que serve de armazenamento interno.
+As dez ações de digitação foram desfeitas na ordem inversa à execução, até o texto retornar ao
+estado inicial vazio. Esse comportamento demonstra a relação entre a pilha e a função de desfazer:
+a última ação registrada é a primeira a ser revertida. A demonstração se limita à digitação;
+outras ações de edição exigem registrar as informações necessárias para restaurar o estado anterior.
 
 ---
 
@@ -436,9 +438,10 @@ COMPLEXIDADE:
 
 ### Conclusão
 
-A pilha permite verificar tanto o tipo quanto a ordem dos delimitadores. A simulação distingue
-expressões balanceadas de fechamentos incompatíveis e de aberturas sem fechamento, reaproveitando
-a estrutura implementada no problema 3.
+Das seis expressões verificadas, quatro foram classificadas como válidas e duas como inválidas.
+A pilha permitiu conferir se cada fechamento correspondia à abertura mais recente e identificar
+aberturas que permaneceram sem fechamento. A mesma estrutura usada para desfazer ações no problema 3
+foi aplicada à validação de delimitadores, que também depende da ordem inversa dos elementos.
 
 ---
 
@@ -507,10 +510,11 @@ permitem concluir que um algoritmo será sempre mais rápido.
 
 ### Conclusão
 
-Para essas notas, ambos os algoritmos ordenaram corretamente e preservaram os valores repetidos.
-O Bubble Sort realizou três comparações a menos, enquanto o Selection Sort realizou 40 trocas
-a menos. As contagens mostram que comparar menos vezes não significa necessariamente trocar
-menos elementos. O conjunto pequeno permite observar essas diferenças de forma direta.
+Os dois algoritmos produziram a mesma sequência de notas, preservando os valores repetidos.
+Nessa entrada, o Bubble Sort realizou três comparações a menos, enquanto o Selection Sort realizou
+40 trocas a menos. Portanto, a redução de comparações não veio acompanhada de uma redução de trocas.
+O resultado permite comparar o trabalho realizado por cada algoritmo nesse conjunto, mas não
+estabelece qual deles será mais rápido para qualquer entrada.
 
 ---
 
@@ -590,10 +594,176 @@ compatibilidade do Bubble Sort com listas numéricas.
 
 ### Conclusão
 
-As duas opções ordenaram os 15 produtos por preço sem separar os nomes dos valores.
-O Bubble Sort atende à demonstração da vitrine pequena, mantendo a parada antecipada
-e as medições de operações. Seu custo quadrático continua sendo uma limitação para
-catálogos grandes.
+Os 15 produtos foram apresentados em ordem crescente e decrescente de preço, mantendo cada nome
+associado ao seu valor. A mudança do sentido da comparação permitiu oferecer as duas opções
+com a mesma função de ordenação. O Bubble Sort é suficiente para a vitrine pequena proposta;
+em um catálogo maior, seu custo O(n²) no pior caso motivaria a escolha de outro algoritmo.
+
+---
+
+## Situação-Problema 17 — Seleção dos Melhores Candidatos em um Processo Seletivo
+
+**Algoritmo:** Selection Sort.
+**Linguagem:** Python.
+
+### Justificativa de escolha
+
+O Selection Sort permite procurar sucessivamente a maior pontuação restante e colocá-la
+na próxima posição do ranking. Esse funcionamento atende ao algoritmo solicitado pelo
+enunciado e facilita selecionar os melhores candidatos depois de ordenar a lista.
+Em cada passagem, realiza no máximo uma troca, embora mantenha custo quadrático de tempo.
+
+### Implementação e simulação
+
+A função `problema_17()` define no próprio código 15 candidatos no formato `[nome, pontuacao]`,
+conforme o planejamento dos dados do projeto. Uma cópia preserva a ordem original para
+exibir a entrada. A chamada `selection_sort(candidatos_ordenados, indice_pontuacao=1,
+decrescente=True)` compara as pontuações e troca os registros inteiros, mantendo nomes
+e pontuações associados.
+
+A quantidade selecionada é definida como 5. Depois da ordenação, a fatia
+`candidatos_ordenados[:quantidades_selecionados]` recupera os cinco primeiros colocados.
+A execução mostra a entrada, o ranking completo, o Top 5 e as medições, salvando o mesmo
+conteúdo em `saidas/problema_17.txt`.
+
+### Complexidade
+
+| Etapa | Tempo | Espaço auxiliar |
+| --- | --- | --- |
+| Selection Sort | O(n²) em todos os casos | O(1) |
+| Cópia da entrada | O(n) | O(n) |
+| Extração dos Top-N | O(k) | O(k) |
+| Simulação completa, com k ≤ n | O(n²) | O(n) |
+
+n representa a quantidade de candidatos e k a quantidade selecionada. A análise dos
+registros considera tamanho limitado por nome e pontuação. O algoritmo faz n(n − 1)/2
+comparações entre valores; para 15 candidatos, são 105 comparações.
+
+### Exemplo de execução
+
+Trecho do resultado; a entrada e o ranking completos estão em `saidas/problema_17.txt`.
+
+```
+PROBLEMA 17 — SELEÇÃO DOS MELHORES CANDIDATOS
+Algoritmo: Selection Sort | Linguagem: Python
+
+ENTRADA: 15 candidatos
+
+TOP 5:
+  1. Isabela | Pontuação: 97
+  2. Eduarda | Pontuação: 95
+  3. Maria | Pontuação: 94
+  4. Bruno | Pontuação: 92
+  5. Edson | Pontuação: 91
+
+RESUMO:
+  5 candidatos selecionados.
+  Comparações: 105
+  Trocas: 12
+```
+
+Foram conferidos a ordem decrescente do ranking, a presença dos 15 candidatos com suas
+pontuações originais, a seleção dos cinco primeiros e a igualdade entre terminal e arquivo.
+Os tempos observados estão no arquivo e variam entre execuções.
+
+### Dificuldades encontradas e soluções adotadas
+
+- **Escolher o campo antes de comparar:** as variáveis com a pontuação atual e a pontuação
+  escolhida são definidas antes da condição de comparação.
+- **Preservar o problema 15:** os padrões `indice_pontuacao=None` e `decrescente=False`
+  mantêm a ordenação numérica crescente; as opções específicas são passadas na chamada
+  do problema 17.
+- **Criar a cópia:** usar `copy()` com parênteses para obter uma lista, em vez de guardar
+  o método `copy`.
+- **Separar argumentos:** inserir a vírgula entre `indice_pontuacao=1` e `decrescente=True`.
+
+### Conclusão
+
+A ordenação dos 15 candidatos por pontuação permitiu selecionar os cinco primeiros colocados.
+Como a entrada não contém empates, a pontuação foi suficiente para definir esse resultado.
+Em uma seleção com notas iguais, seria necessário estabelecer um critério de desempate, pois
+o Selection Sort utilizado não garante a manutenção da ordem original entre candidatos empatados.
+
+---
+
+## Situação-Problema 18 — Organização de Tarefas por Prioridade (Valor Numérico)
+
+**Algoritmo:** Selection Sort.
+**Linguagem:** Python.
+
+### Justificativa de escolha
+
+O Selection Sort atende ao algoritmo solicitado e permite selecionar sucessivamente a
+tarefa de maior prioridade restante. Foi adotada a convenção de que 1 é a prioridade
+mais alta e 5 a mais baixa; portanto, os números são ordenados de forma crescente.
+Para as 15 tarefas da demonstração, o funcionamento simples permite acompanhar a
+organização de um dia de trabalho, embora o custo seja quadrático.
+
+### Implementação e simulação
+
+A função `problema_18()` define 15 registros `[descricao, prioridade]` no próprio código,
+conforme o planejamento do projeto. Uma cópia mantém a entrada original disponível para
+exibição. A chamada `selection_sort(tarefas_ordenadas, indice_pontuacao=1)` usa o campo
+numérico na posição 1 para ordenar. O nome do parâmetro vem da aplicação aos candidatos,
+mas representa o índice do campo comparado; nesta aplicação, esse campo é a prioridade.
+
+A saída mostra a lista original e a ordem de execução. Depois, a simulação percorre a
+lista ordenada e registra cada tarefa como concluída. É uma demonstração sequencial,
+sem medir a duração real das atividades. O tempo apresentado é somente o da ordenação.
+O mesmo conteúdo é mostrado no terminal e salvo em `saidas/problema_18.txt`.
+
+### Complexidade
+
+O Selection Sort faz n(n − 1)/2 comparações e usa O(n²) de tempo em todos os casos,
+com O(1) de espaço auxiliar. A cópia, a exibição e o percurso das tarefas custam O(n).
+A simulação completa tem tempo O(n²) e espaço O(n), incluindo cópia e registros,
+considerando tamanho limitado por descrição. n é o número de tarefas.
+
+### Exemplo de execução
+
+Trecho do resultado; a lista completa e a simulação estão em `saidas/problema_18.txt`.
+
+```
+PROBLEMA 18 — ORGANIZAÇÃO DE TAREFAS POR PRIORIDADE
+Algoritmo: Selection Sort | Linguagem: Python
+
+ENTRADA: 15 tarefas de um dia de trabalho
+  Prioridades de 1 (mais alta) a 5 (mais baixa).
+
+RESULTADOS — ORDEM DE EXECUÇÃO DO DIA:
+  1. Prioridade 1 | Enviar trabalho com prazo para hoje
+  2. Prioridade 1 | Preparar apresentação para amanhã
+  3. Prioridade 1 | Confirmar a entrega na plataforma
+  ...
+  15. Prioridade 5 | Revisar anotações antigas
+
+RESUMO:
+  15 tarefas executadas em ordem de prioridade.
+  Comparações: 105
+  Trocas: 8
+```
+
+Foram verificados a quantidade de tarefas, os valores de prioridade entre 1 e 5,
+a preservação dos registros, a ordenação crescente das prioridades e o percurso da
+simulação na mesma ordem. O arquivo gerado corresponde à saída do terminal.
+
+### Cuidados de implementação e soluções adotadas
+
+- **Definir o sentido da prioridade:** a convenção numérica é informada na entrada para
+  deixar claro por que a ordenação é crescente.
+- **Preservar descrição e prioridade:** o algoritmo troca o registro inteiro, mantendo
+  as duas informações associadas.
+- **Tratar empates com transparência:** existem tarefas com prioridades iguais. A troca
+  direta do Selection Sort pode mudar a ordem relativa delas, o que é informado na saída.
+  Nenhum critério adicional de desempate foi exigido ou aplicado.
+
+### Conclusão
+
+As 15 tarefas foram organizadas e executadas na simulação conforme a prioridade, considerando
+1 como a mais alta e 5 como a mais baixa. A ordenação permite definir uma sequência de atendimento
+a partir desse critério. Entretanto, tarefas com a mesma prioridade podem mudar de posição entre
+si, pois a implementação não é estável. Se a ordem de chegada também fosse um requisito,
+seria necessário considerá-la na solução.
 
 ---
 
@@ -678,11 +848,10 @@ reiniciado a cada passagem.
 
 #### Conclusão sobre a aplicabilidade
 
-A verificação isolada confirma a ordenação crescente e a contagem de operações. A versão
-otimizada reconhece uma lista ordenada após uma passagem sem trocas, mas continua com custo
-O(n²) no pior caso. É uma base apropriada para estudar ordenação em conjuntos pequenos;
-a avaliação nos cenários de notas e produtos depende das simulações específicas e, no
-problema 15, da comparação com outros algoritmos.
+A verificação isolada mostrou o funcionamento da ordenação e dos contadores. A parada após uma
+passagem sem trocas evita percursos desnecessários quando a lista já está ordenada, embora o pior
+caso continue sendo O(n²). As aplicações dos problemas 15 e 16 mostram seu uso em conjuntos pequenos
+de notas e produtos, nos quais é possível acompanhar as comparações e trocas realizadas.
 
 #### Estado de conclusão
 
@@ -690,3 +859,83 @@ A função otimizada e sua verificação isolada estão concluídas. O problema 
 ordenação às notas e compara as contagens com o Selection Sort. O problema 16 demonstra
 15 produtos em ordem crescente e decrescente de preço. As duas aplicações possuem saídas
 numeradas e análises específicas neste relatório.
+
+### Selection Sort — Python
+
+**Arquivo:** `python/ordenacao/selection_sort.py`
+**Função:** `selection_sort(valores, indice_pontuacao=None, decrescente=False)`
+
+#### Justificativa de escolha
+
+O Selection Sort é solicitado nos problemas 17 e 18 e também participa da comparação de
+operações do problema 15. Seu funcionamento permite observar a busca do menor elemento
+restante e limita as trocas a, no máximo, uma por passagem. Essa característica é útil
+para discutir situações em que mover registros tem um custo elevado, embora a busca
+continue exigindo uma quantidade quadrática de comparações.
+
+#### Funcionamento e decisões de implementação
+
+A função modifica a lista recebida. Por padrão, ordena números em ordem crescente.
+Com `indice_pontuacao=1`, compara o campo de pontuação dos registros, e com
+`decrescente=True`, escolhe o maior valor restante. Para cada posição `i`, começa com
+`menor = i` e percorre as posições seguintes. Apesar do nome, `menor` guarda a posição
+escolhida conforme a direção: menor na crescente ou maior na decrescente.
+
+Depois de terminar a busca, se `menor != i`, o algoritmo troca os dois elementos usando uma
+variável temporária. Caso o elemento escolhido já esteja na posição correta, não realiza troca.
+A função retorna `comparacoes, trocas, tempo`, com o tempo em segundos medido por
+`perf_counter()`. São contadas apenas comparações entre valores e trocas efetivas de pares.
+
+#### Complexidade e propriedades
+
+| Aspecto | Resultado |
+| --- | --- |
+| Comparações, para n ≥ 1 | n(n − 1)/2 |
+| Tempo no melhor, médio e pior caso | O(n²) |
+| Número de trocas, para n ≥ 1 | No máximo n − 1 |
+| Espaço auxiliar | O(1) |
+| Estabilidade | A implementação com troca direta não garante estabilidade |
+
+n representa a quantidade de elementos. Mesmo uma lista já ordenada passa por todas as
+comparações, mas realiza zero trocas. Listas vazias ou com um elemento são aceitas e
+realizam zero comparações e zero trocas. A troca direta pode alterar a ordem relativa de
+registros com chaves iguais; essa propriedade deverá ser considerada nas aplicações.
+
+#### Verificação por execução
+
+| Entrada | Resultado | Comparações | Trocas |
+| --- | --- | --- | --- |
+| [5, 3, 8, 1] | [1, 3, 5, 8] | 6 | 2 |
+| [] | [] | 0 | 0 |
+| [7] | [7] | 0 | 0 |
+| [1, 2, 3] | [1, 2, 3] | 3 | 0 |
+| [3, 2, 1] | [1, 2, 3] | 3 | 1 |
+| [2, -1, 2, 0] | [-1, 0, 2, 2] | 6 | 2 |
+
+Os seis casos produziram a ordenação e os contadores esperados. O registro da execução,
+incluindo os tempos observados, está em `saidas/selection_sort.txt`. Os tempos variam entre
+execuções e não sustentam conclusões de desempenho geral para entradas tão pequenas.
+
+#### Dificuldades encontradas e soluções adotadas
+
+- **Chamar o relógio:** usar `perf_counter()` com parênteses para obter uma leitura numérica,
+  em vez de guardar a própria função.
+- **Atualizar a posição do menor:** colocar a atribuição `menor = j` dentro do `if`,
+  evitando atualizar a posição em toda comparação.
+- **Trocar depois da busca:** posicionar o bloco de troca fora do laço interno, para
+  realizar uma única troca depois de examinar toda a parte restante.
+- **Evitar atribuição duplicada:** remover a linha antiga `inicio = perf_counter`,
+  mantendo somente a chamada que registra o tempo inicial.
+
+#### Conclusão sobre a aplicabilidade
+
+Nas entradas verificadas, o Selection Sort ordenou os elementos procurando o menor valor da parte
+restante a cada passagem. Essa busca mantém o número de comparações mesmo quando a entrada já está
+ordenada, enquanto as trocas dependem das posições dos elementos. A comparação do problema 15
+e as aplicações dos problemas 17 e 18 mostram essas características em contextos diferentes.
+
+#### Estado de conclusão
+
+A função e sua verificação numérica isolada estão concluídas. Ela é usada na comparação
+do problema 15, na ordenação dos candidatos do problema 17 e na organização das tarefas
+do problema 18. As aplicações possuem saídas numeradas e documentação própria.
