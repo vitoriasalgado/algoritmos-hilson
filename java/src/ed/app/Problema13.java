@@ -13,6 +13,7 @@ import java.util.Scanner;
 public class Problema13 {
 
     private static final String ARQUIVO = "saidas/problema_13.txt";
+    private static final Path ARQUIVO_TESTES = Path.of("dados", "usuarios_teste.csv");
 
     private static class Usuario {
         private final String nome;
@@ -54,13 +55,7 @@ public class Problema13 {
     private static final TabelaHash<String, Usuario> usuarios =
             new TabelaHash<>(11);
 
-    private static final String[] NOMES = {
-        "Ana Silva", "Bruno Costa", "Carla Souza", "Daniel Lima",
-        "Eduarda Alves", "Felipe Santos", "Gabriela Rocha", "Henrique Martins",
-        "Isabela Ferreira", "João Oliveira", "Karen Ribeiro", "Lucas Carvalho",
-        "Mariana Gomes", "Nicolas Barros", "Olivia Mendes", "Paulo Azevedo",
-        "Rafaela Dias", "Samuel Freitas", "Tatiane Castro", "Vitor Almeida"
-    };
+
 
     private static void cadastrar(String nome, String email, String senha) {
         String chave = email.trim().toLowerCase();
@@ -155,6 +150,31 @@ public class Problema13 {
         }
     }
 
+    private static String[][] carregarUsuariosTeste() {
+        try {
+            var linhas = Files.readAllLines(ARQUIVO_TESTES, StandardCharsets.UTF_8);
+            String[][] usuarios = new String[Math.max(0, linhas.size() - 1)][3];
+
+            for (int i = 1; i < linhas.size(); i++) {
+                String[] campos = linhas.get(i).split(",", -1);
+
+                if (campos.length != 3) {
+                    throw new IllegalArgumentException(
+                        "Linha inválida em " + ARQUIVO_TESTES + ": " + linhas.get(i)
+                    );
+                }
+
+                usuarios[i - 1] = campos;
+            }
+
+            return usuarios;
+        } catch (IOException e) {
+            throw new IllegalStateException(
+                "Não foi possível ler " + ARQUIVO_TESTES + ".", e
+            );
+        }
+    }
+
     private static void executarTestes() {
         TabelaHash<String, Usuario> backup = new TabelaHash<>(11);
 
@@ -163,9 +183,20 @@ public class Problema13 {
         int aprovados = 0;
         int total = 6;
 
-        for (int i = 0; i < NOMES.length; i++) {
-            String email = "usuario" + i + "@exemplo.com";
-            teste.inserir(email, new Usuario(NOMES[i], email, "Senha" + i));
+        String[][] usuariosIniciais = carregarUsuariosTeste();
+
+        for (String[] dados : usuariosIniciais) {
+            String nome = dados[0].trim();
+            String email = dados[1].trim().toLowerCase();
+            String senha = dados[2];
+
+            if (nome.isBlank() || email.isBlank() || senha.isBlank()) {
+                throw new IllegalArgumentException(
+                    "Nome, e-mail e senha devem estar preenchidos no CSV."
+                );
+            }
+
+            teste.inserir(email, new Usuario(nome, email, senha));
         }
 
         boolean cadastro = teste.tamanho() == 20;

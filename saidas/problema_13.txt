@@ -1,27 +1,11 @@
 PROBLEMA 13 - CADASTRO DE USUÁRIOS COM LOGIN RÁPIDO
-Estrutura: Tabela Hash com encadeamento
-Linguagem: Java
+Estrutura: Tabela Hash com encadeamento | Linguagem: Java
 
 TESTES AUTOMATIZADOS
-
-[APROVADO] Cadastro de 20 usuários
-[APROVADO] Tratamento de colisões
-[APROVADO] Autenticação com senha correta
-[APROVADO] Rejeição de senha incorreta
-[APROVADO] Atualização de chave sem duplicar entradas
-[APROVADO] Remoção de conta
-
-RESULTADO DOS TESTES
 Usuários cadastrados na simulação inicial: 20
 Colisões registradas pela tabela de teste: 11
 Testes aprovados: 6/6
 
-ANÁLISE DE COMPLEXIDADE
-Cadastro: O(1) em média; O(n) no pior caso.
-Busca e autenticação: O(1) em média; O(n) no pior caso.
-Remoção: O(1) em média; O(n) no pior caso.
+COMPLEXIDADE MÉDIA
+Cadastro/busca/remoção: O(1) em média; O(n) no pior caso.
 Espaço: O(n), sendo n a quantidade de usuários.
-
-OBSERVAÇÃO
-Os testes automatizados foram executados em uma tabela de teste independente.
-Por isso, a listagem inicial do menu principal apresentou zero usuários.

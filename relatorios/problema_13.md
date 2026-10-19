@@ -2,68 +2,64 @@
 
 ## 1. Objetivo
 
-Desenvolver um sistema de cadastro de usuários com autenticação por e-mail e senha, utilizando uma tabela hash para armazenar e localizar as contas de maneira eficiente.
+Implementar um sistema de cadastro e autenticação de usuários utilizando uma tabela hash, permitindo cadastrar, consultar e autenticar usuários de maneira eficiente.
 
-O sistema permite cadastrar usuários, realizar login, remover contas e listar os usuários cadastrados. Também possui testes automatizados para verificar o funcionamento das operações principais.
+O programa foi desenvolvido em Java e utiliza arquivos CSV para manter os dados de teste separados do código-fonte.
 
-## 2. Estrutura de dados utilizada
+## 2. Estrutura de dados
 
-Foi utilizada uma tabela hash com tratamento de colisões por encadeamento separado (*separate chaining*).
+A principal estrutura utilizada é uma tabela hash, implementada pela classe `TabelaHash<K, V>`.
 
-A tabela é organizada em posições calculadas a partir do código hash da chave. Neste projeto, o e-mail normalizado é utilizado como chave de identificação do usuário.
+A tabela permite armazenar e localizar registros por meio de chaves, utilizando o código hash da chave para determinar a posição de armazenamento.
 
-Quando duas chaves são direcionadas à mesma posição, as entradas são armazenadas em uma lista vinculada naquela posição. Dessa forma, uma colisão não impede o armazenamento nem a recuperação dos registros.
+A implementação também contabiliza colisões, que ocorrem quando chaves diferentes são direcionadas à mesma posição da tabela.
 
-A implementação foi desenvolvida na classe `TabelaHash<K,V>`, que oferece operações de inserção, busca, verificação de existência, remoção e listagem.
+No problema, a tabela é utilizada para armazenar usuários identificados por seus e-mails.
 
 ## 3. Funcionalidades implementadas
 
-- Cadastro de usuários com nome, e-mail e senha.
-- Normalização do e-mail para reduzir duplicidades causadas por diferenças entre letras maiúsculas e minúsculas.
-- Verificação de e-mails já cadastrados.
-- Autenticação por e-mail e senha.
-- Remoção de contas cadastradas.
-- Listagem dos usuários registrados.
-- Contagem de entradas e registro de colisões.
-- Execução de testes automatizados.
+O sistema contempla as seguintes funcionalidades:
 
-As senhas não são armazenadas diretamente em texto puro. A implementação utiliza um resumo criptográfico SHA-256 para compará-las durante a autenticação. Essa abordagem atende ao propósito didático do exercício, mas sistemas reais devem utilizar algoritmos específicos para armazenamento de senhas, como Argon2id, scrypt ou bcrypt, com salt apropriado.
+- Cadastro de usuários.
+- Consulta de usuários.
+- Autenticação por e-mail e senha.
+- Armazenamento de senhas por meio de resumo criptográfico SHA-256.
+- Utilização de tabela hash para organizar e localizar os registros.
+- Execução de testes automatizados das operações.
+- Carregamento dos usuários de teste a partir de um arquivo CSV externo.
+
+### Arquivo de dados
+
+Os usuários utilizados nos testes são mantidos em:
+
+`dados/usuarios_teste.csv`
+
+O arquivo possui as colunas `nome`, `email` e `senha`. Dessa forma, os dados iniciais de teste ficam separados da implementação Java, facilitando sua manutenção e alteração sem a necessidade de editar o código-fonte.
+
+Esses dados são destinados ao ambiente acadêmico de testes. O uso de SHA-256 isoladamente não é recomendado para armazenamento de senhas em sistemas reais de produção.
 
 ## 4. Testes realizados
 
-Foram executados seis testes automatizados:
+O relatório original registra seis testes, com resultado de 6/6 aprovados, e 11 colisões contabilizadas.
 
-1. **Cadastro de 20 usuários:** verifica a inserção de pelo menos 20 registros na tabela de teste.
-2. **Tratamento de colisões:** verifica se chaves diferentes que compartilham uma posição podem ser armazenadas e recuperadas.
-3. **Autenticação com senha correta:** confirma que a senha correspondente permite a autenticação.
-4. **Rejeição de senha incorreta:** verifica se uma senha diferente é rejeitada.
-5. **Atualização de chave sem duplicar entradas:** verifica se inserir novamente uma chave existente atualiza seu valor sem aumentar a quantidade de chaves.
-6. **Remoção de conta:** confirma que um registro removido deixa de ser encontrado.
-
-### Resultado
-
-Os seis testes foram aprovados, totalizando **6 de 6 testes**. Na execução registrada, a tabela de teste contabilizou 11 colisões durante as operações realizadas.
-
-Os usuários utilizados na simulação automatizada pertencem a uma tabela independente daquela usada pelo menu interativo. Por esse motivo, a listagem do menu pode apresentar zero usuários antes de um cadastro feito durante a própria sessão.
+Os resultados registrados devem ser entendidos como os resultados da execução documentada anteriormente. A alteração para carregar os usuários pelo CSV não confirma, por si só, que todos os testes continuam passando.
 
 ## 5. Análise de complexidade
 
-Considerando `n` como o número de usuários armazenados:
-
-| Operação | Caso médio esperado | Pior caso |
+| Operação | Caso médio | Pior caso |
 |---|---|---|
-| Cadastro/inserção | O(1) | O(n) |
-| Busca | O(1) | O(n) |
-| Autenticação | O(1), além do cálculo do resumo da senha | O(n), além do cálculo do resumo da senha |
-| Remoção | O(1) | O(n) |
-| Listagem | O(n) | O(n) |
+| Inserção na tabela hash | O(1) | O(n) |
+| Busca na tabela hash | O(1) | O(n) |
+| Remoção na tabela hash | O(1) | O(n) |
 
-As operações básicas apresentam custo médio constante quando as chaves estão bem distribuídas e o fator de carga permanece adequado. No pior caso, muitas chaves podem ocupar o mesmo encadeamento, tornando a busca linear.
+As complexidades dependem da distribuição das chaves, da quantidade de colisões e da estratégia utilizada para resolvê-las.
 
-O espaço utilizado pela estrutura é O(n), pois cada usuário armazenado corresponde a uma entrada na tabela.
+No caso médio, as operações de inserção, busca e remoção podem apresentar custo constante. No pior caso, quando muitas chaves colidem, o custo pode crescer linearmente com a quantidade de elementos.
 
 ## 6. Conclusão
 
-O projeto demonstra a aplicação de uma tabela hash para o gerenciamento de contas de usuários. O encadeamento separado permite tratar colisões, enquanto a utilização do e-mail como chave facilita as operações de cadastro, autenticação, busca e remoção.
+O problema demonstra a utilização de uma tabela hash para implementar operações de cadastro e autenticação de usuários. A estrutura oferece acesso eficiente aos registros no caso médio e permite observar o impacto das colisões no desempenho.
 
-Os testes executados indicaram o funcionamento esperado das operações verificadas. Assim, a solução atende aos objetivos didáticos de implementar uma tabela hash, tratar colisões e demonstrar suas aplicações em um sistema de cadastro e login.
+A separação dos usuários de teste no arquivo `dados/usuarios_teste.csv` também melhora a organização do projeto, reduzindo a dependência entre os dados de teste e o código-fonte.
+
+A validação final deve ser realizada após a compilação e a execução dos testes, para confirmar que o carregamento dos dados externos funciona corretamente.
