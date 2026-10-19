@@ -1,0 +1,32 @@
+RELATÓRIO - PROBLEMA 10: RANKING DE JOGADORES
+============================================
+Estrutura: Árvore AVL ordenada por pontuação e nome
+Jogadores na simulação principal: 30
+Altura da AVL principal: 6
+AVL principal balanceada: true
+
+TESTES AUTOMATIZADOS
+Inserção de 30 jogadores: APROVADO
+Atualização sem duplicar jogador: APROVADO
+Ordenação decrescente do ranking: APROVADO
+Consulta Top-5: APROVADO
+Balanceamento AVL: APROVADO
+
+TOP 10 DA SIMULAÇÃO PRINCIPAL
+1º - Beatriz - 1876 pontos
+2º - Karen - 1870 pontos
+3º - Amanda - 1739 pontos
+4º - João - 1733 pontos
+5º - Vitor - 1602 pontos
+6º - Isabela - 1596 pontos
+7º - Julia - 1471 pontos
+8º - Tatiane - 1465 pontos
+9º - Henrique - 1459 pontos
+10º - Igor - 1334 pontos
+
+COMPLEXIDADE
+Busca: O(log n) em árvore AVL balanceada
+Inserção: O(log n) em árvore AVL balanceada
+Remoção/atualização: O(log n) para as operações na árvore
+Ranking completo: O(n)
+Top-K: O(n + k) nesta implementação
