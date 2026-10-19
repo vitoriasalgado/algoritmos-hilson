@@ -12,10 +12,17 @@ import java.util.Scanner;
 public class Problema05 {
     private static final Lista playlist = new Lista();
     private static final StringBuilder saida = new StringBuilder();
+    private static int quantidadeInicial;
+    private static int adicionadas;
+    private static int removidas;
 
     public static void executar() {
-        Scanner scanner = new Scanner(System.in);
+        Scanner scanner = Main.scanner;
+        saida.setLength(0);
+        adicionadas = 0;
+        removidas = 0;
         carregarPlaylist();
+        quantidadeInicial = playlist.getTamanho();
 
         registrar("GERENCIAMENTO DE PLAYLIST DE MÚSICAS");
         registrar("Playlist inicializada com " + playlist.getTamanho() + " músicas.");
@@ -65,6 +72,7 @@ public class Problema05 {
 
 
     private static void carregarPlaylist() {
+        playlist.limpar();
         Path caminho = Path.of("dados", "playlist.csv");
 
         try {
@@ -133,6 +141,7 @@ public class Problema05 {
                 playlist.inserirNaPosicao(musica, posicao);
             }
 
+            adicionadas++;
             registrar("Música inserida: " + musica);
         } catch (IllegalArgumentException | IndexOutOfBoundsException e) {
             registrar("Não foi possível inserir a música: " + e.getMessage());
@@ -156,6 +165,7 @@ public class Problema05 {
         String titulo = scanner.nextLine().trim();
 
         if (playlist.removerPorTitulo(titulo)) {
+            removidas++;
             registrar("Música removida: " + titulo);
         } else {
             registrar("Música não encontrada: " + titulo);
@@ -173,10 +183,32 @@ public class Problema05 {
 
     private static void salvarArquivo() {
         try {
+            registrar("");
+            registrar("========================================");
+            registrar("RELATÓRIO FINAL — PROBLEMA 05");
+            registrar("========================================");
+            registrar("Quantidade inicial: " + quantidadeInicial);
+            registrar("Músicas adicionadas: " + adicionadas);
+            registrar("Músicas removidas: " + removidas);
+            registrar("Quantidade final: " + playlist.getTamanho());
+            registrar("");
+            registrar("PLAYLIST FINAL:");
+            registrar(playlist.listar());
+            int total = playlist.calcularDuracaoTotal();
+            registrar("Duração total: " + formatarDuracao(total));
+            registrar("");
+            registrar("COMPLEXIDADE:");
+            registrar("Busca por título: O(n)");
+            registrar("Inserção no início: O(1)");
+            registrar("Inserção no fim: O(n) na implementação atual, se não houver referência ao último nó.");
+            registrar("Inserção em posição: O(n)");
+            registrar("Remoção por título: O(n)");
+            registrar("Listagem completa: O(n)");
+
             Path caminho = Path.of("saidas", "problema_05.txt");
             Files.createDirectories(caminho.getParent());
             Files.writeString(caminho, saida.toString(), StandardCharsets.UTF_8);
-            System.out.println("Resultado salvo em " + caminho);
+            System.out.println("Relatório atualizado em " + caminho);
         } catch (IOException e) {
             System.out.println("Erro ao salvar o arquivo: " + e.getMessage());
         }

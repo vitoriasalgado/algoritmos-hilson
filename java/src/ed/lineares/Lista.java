@@ -12,6 +12,11 @@ public class Lista {
         tamanho = 0;
     }
 
+    public void limpar() {
+        inicio = null;
+        tamanho = 0;
+    }
+
     public boolean estaVazia() {
         return inicio == null;
     }

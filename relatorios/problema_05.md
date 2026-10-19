@@ -1,63 +1,68 @@
 # Problema 05 — Gerenciamento de Playlist de Músicas
 
-**Linguagem:** Java  
-**Estrutura de dados:** Lista simplesmente encadeada
-
 ## 1. Objetivo
 
-Desenvolver uma aplicação para gerenciar uma playlist de músicas utilizando uma lista simplesmente encadeada implementada no próprio projeto. O programa demonstra operações de inserção, busca, remoção e listagem de músicas.
+O objetivo deste problema é desenvolver um sistema de gerenciamento de playlist utilizando uma lista simplesmente encadeada em Java. O programa permite inserir, buscar, remover e listar músicas, além de calcular a duração total da playlist.
 
-## 2. Estrutura de dados utilizada
+## 2. Estrutura de Dados Utilizada
 
-A lista encadeada é formada por nós que armazenam os dados de cada música e uma referência para o próximo nó. Cada música possui título, artista e duração em segundos.
+A solução utiliza uma lista simplesmente encadeada, implementada na classe `Lista`, localizada no pacote `ed.lineares`.
 
-A implementação utiliza uma classe para representar as músicas e outra para gerenciar a lista, separando os dados das operações realizadas sobre a estrutura.
+A estrutura é composta por nós, representados pela classe `No`. Cada nó armazena uma música e uma referência para o próximo nó da lista.
 
-## 3. Operações implementadas
+A classe `Lista` mantém uma referência para o primeiro nó (`inicio`) e um contador de elementos (`tamanho`). A lista não mantém uma referência direta para o último nó.
 
-- Inserção de músicas no início da lista.
-- Inserção de músicas no final da lista.
-- Inserção em uma posição específica.
-- Busca de músicas pelo título.
-- Remoção de músicas pelo título.
-- Listagem das músicas cadastradas.
-- Consulta da quantidade de músicas e da duração total da playlist.
-- Tratamento de situações inválidas, como posições inexistentes e tentativas de remoção de elementos que não estão na lista.
+Cada música é representada pela classe `Musica`, que contém informações como título, artista e duração em segundos.
 
-A demonstração utiliza músicas previamente definidas no código e executa diferentes operações para verificar o comportamento da estrutura.
+As músicas iniciais são carregadas do arquivo `dados/playlist.csv`, utilizando ponto e vírgula como separador.
 
-## 4. Exemplo de utilização
+## 3. Funcionalidades Implementadas
 
-Uma música pode ser representada pelos seguintes dados:
+O programa apresenta um menu interativo com as seguintes operações:
 
-- Título: A Sky Full of Stars
-- Artista: Coldplay
-- Duração: 268 segundos
+- Listar todas as músicas da playlist.
+- Inserir uma música no início da lista.
+- Inserir uma música no final da lista.
+- Inserir uma música em uma posição específica, considerando a primeira posição como índice zero.
+- Buscar uma música pelo título.
+- Remover uma música pelo título.
+- Calcular e exibir a duração total da playlist.
+- Encerrar o programa e salvar o registro das operações em `saidas/problema_05.txt`.
 
-Após o cadastro, a música pode ser exibida na playlist, localizada por seu título ou removida da estrutura.
+A busca e a remoção comparam os títulos sem diferenciar letras maiúsculas de minúsculas.
 
-Os resultados específicos devem ser conferidos na saída real da execução do programa.
+O programa também trata entradas inválidas e posições fora dos limites da lista durante a inserção.
 
-## 5. Análise de complexidade
+## 4. Carregamento e Registro de Dados
 
-Considerando n como a quantidade de músicas armazenadas:
+A playlist inicial é carregada a partir do arquivo `dados/playlist.csv`. O programa verifica se o arquivo possui pelo menos 12 músicas e interrompe o carregamento caso essa condição não seja atendida.
 
-| Operação | Complexidade de tempo |
-|---|---|
-| Inserção no início | O(1) |
-| Inserção no final | O(1), quando a lista mantém referência ao último nó |
-| Inserção em posição específica | O(n) |
-| Busca por título | O(n) |
-| Remoção por título | O(n) |
-| Listagem | O(n) |
-| Cálculo da duração total | O(n) |
+Durante a execução, as mensagens apresentadas pelo programa são registradas em um objeto `StringBuilder`. Ao encerrar o programa, esse conteúdo é gravado em `saidas/problema_05.txt`.
 
-O espaço total utilizado pela lista é O(n), pois cada música armazenada possui um nó correspondente.
+O arquivo de saída registra as mensagens e os resultados das operações executadas. A implementação atual não grava as alterações da playlist de volta no arquivo CSV; portanto, as inserções e remoções feitas durante a execução não são persistidas nesse arquivo.
 
-A complexidade da inserção no final depende da implementação da lista. Quando não existe uma referência direta ao último nó, essa operação pode exigir uma travessia e apresentar complexidade O(n).
+## 5. Análise de Complexidade
 
-## 6. Conclusão
+Considere `n` como o número de músicas armazenadas na lista.
 
-O Problema 05 demonstra a utilização de listas simplesmente encadeadas para organizar uma coleção dinâmica de músicas. As operações implementadas permitem modificar a playlist, localizar elementos e percorrer a estrutura.
+| Operação | Complexidade | Justificativa |
+|---|---|---|
+| Verificar se a lista está vazia | O(1) | Consulta a referência inicial. |
+| Consultar o tamanho | O(1) | Retorna o contador de elementos. |
+| Inserir no início | O(1) | Atualiza as referências do primeiro nó. |
+| Inserir no fim | O(n) | Percorre a lista até o último nó. |
+| Inserir em posição específica | O(n) | Pode percorrer a lista até a posição desejada. |
+| Buscar por título | O(n) | Pode examinar todos os nós. |
+| Remover por título | O(n) | Pode percorrer a lista para localizar a música. |
+| Listar músicas | O(n) | Percorre todos os nós. |
+| Calcular duração total | O(n) | Soma a duração de todas as músicas. |
 
-A atividade contribui para compreender o funcionamento dos nós e das referências entre elementos, além de evidenciar as diferenças de custo entre inserções, buscas e remoções.
+A complexidade espacial da lista é O(n), pois cada música armazenada ocupa um nó adicional.
+
+## 6. Considerações Finais
+
+A implementação demonstra o uso de uma lista simplesmente encadeada para organizar e manipular uma playlist. A estrutura permite realizar operações de inserção, busca, remoção e consulta, evidenciando a importância das referências entre nós.
+
+A solução também permite observar como a escolha da estrutura de dados influencia o custo das operações. Como a lista não possui uma referência direta para o último nó, a inserção no final exige uma busca sequencial, apresentando complexidade O(n).
+
+Por fim, o carregamento inicial por CSV separa os dados da implementação do programa, enquanto o arquivo de saída permite registrar as mensagens geradas durante a execução.
