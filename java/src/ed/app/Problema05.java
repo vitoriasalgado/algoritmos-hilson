@@ -30,6 +30,8 @@ public class Problema05 {
         int opcao;
 
         do {
+            Main.limparTela();
+
             System.out.println("\n=== MENU DA PLAYLIST ===");
             System.out.println("1. Listar músicas");
             System.out.println("2. Inserir música no início");

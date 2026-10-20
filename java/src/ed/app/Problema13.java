@@ -85,6 +85,8 @@ public class Problema13 {
             int opcao;
 
             do {
+            Main.limparTela();
+
                 System.out.println("\n======================================");
                 System.out.println(" PROBLEMA 13 - CADASTRO DE USUÁRIOS");
                 System.out.println("======================================");

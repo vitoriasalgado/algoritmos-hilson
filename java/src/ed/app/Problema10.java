@@ -18,6 +18,8 @@ public class Problema10{
         carregarJogadores();
 
         while (true) {
+            Main.limparTela();
+
             System.out.println("\n=== RANKING DE JOGADORES ===");
             System.out.println("Jogadores cadastrados: " + arvore.quantidade());
             System.out.println("1 - Cadastrar jogador");

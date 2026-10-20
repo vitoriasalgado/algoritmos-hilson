@@ -47,6 +47,8 @@ public class Problema08 {
             int opcao;
 
             do {
+            Main.limparTela();
+
                 System.out.println("\n===== AUTOCOMPLETE DE PRODUTOS =====");
                 System.out.println("Produtos carregados: " + produtos.size());
                 System.out.println("Nomes distintos na BST: " + arvore.getTamanho());

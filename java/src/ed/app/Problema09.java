@@ -55,6 +55,8 @@ public class Problema09 {
 
         int opcao;
         do {
+            Main.limparTela();
+
             System.out.println("\n===== ÍNDICE DE CPF — ÁRVORE AVL =====");
             System.out.println("Funcionários no índice: " + arvore.quantidade());
             System.out.println("1. Cadastrar funcionário");

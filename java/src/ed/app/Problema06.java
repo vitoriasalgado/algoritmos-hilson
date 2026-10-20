@@ -3,13 +3,15 @@ package ed.app;
 import java.util.Scanner;
 
 public class Problema06 {
-    private static final Scanner scanner = new Scanner(System.in);
+    private static final Scanner scanner = Main.scanner;
     private static final ListaProdutos estoque = new ListaProdutos();
 
     public static void executar() {
         int opcao;
 
         do {
+            Main.limparTela();
+
             System.out.println("\n===== CONTROLE DE ESTOQUE =====");
             System.out.println("1. Cadastrar produto");
             System.out.println("2. Listar produtos");

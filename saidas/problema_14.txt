@@ -1,0 +1,28 @@
+PROBLEMA 14 - CONTAGEM DE FREQUÊNCIA DE PALAVRAS
+Estrutura: Tabela Hash com encadeamento | Linguagem: Java
+Texto analisado: dados/noitesbrancas.csv
+
+RESUMO
+Total de palavras: 23963
+Palavras distintas: 3855
+Colisões registradas: 3754
+
+PALAVRAS MAIS FREQUENTES
+1. que: 1069
+2. e: 1065
+3. a: 855
+4. de: 790
+5. nao: 546
+6. o: 466
+7. me: 450
+8. se: 413
+9. eu: 312
+10. por: 292
+
+TESTES AUTOMATIZADOS
+Testes aprovados: 5/5
+
+COMPLEXIDADE
+Contagem: O(n) esperado; O(n²) no pior caso.
+Ranking: O(d log d), sendo d o número de palavras distintas.
+Espaço: O(d).

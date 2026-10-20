@@ -31,6 +31,8 @@ public class Problema07 {
             System.out.println("Alunos carregados do CSV: " + arvore.getTamanho());
 
             do {
+            Main.limparTela();
+
                 System.out.println("\n1. Cadastrar aluno");
                 System.out.println("2. Listar alunos por matrícula");
                 System.out.println("3. Buscar aluno por matrícula");
