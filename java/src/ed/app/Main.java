@@ -1,53 +1,72 @@
 
 package ed.app;
 
+import java.io.IOException;
 import java.util.Scanner;
 
 public class Main {
+    public static final Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) {
-        try (Scanner scanner = new Scanner(System.in)) {
-            int opcao;
+        int opcao;
 
-            do {
-                exibirMenu();
-                System.out.print("Escolha o problema: ");
-                String entrada = scanner.nextLine().trim();
+        do {
+            limparTela();
+            exibirMenu();
+            System.out.print("Escolha o problema: ");
+            String entrada = scanner.nextLine().trim();
 
-                try {
-                    opcao = Integer.parseInt(entrada);
-                } catch (NumberFormatException e) {
-                    opcao = -1;
-                }
+            try {
+                opcao = Integer.parseInt(entrada);
+            } catch (NumberFormatException e) {
+                opcao = -1;
+            }
 
-                switch (opcao) {
-                    case 5 -> Problema05.executar();
-                    case 6 -> Problema06.executar();
-                    case 7 -> Problema07.executar();
-                    case 8 -> Problema08.executar();
-                    case 9 -> Problema09.executar();
-                    case 10 -> Problema10.executar();
-                    case 13 -> Problema13.executar();
-                    case 14 -> Problema14.executar();
+            limparTela();
 
-                    case 0 -> System.out.println("Encerrando o programa...");
+            switch (opcao) {
+                case 5 -> Problema05.executar();
+                case 6 -> Problema06.executar();
+                case 7 -> Problema07.executar();
+                case 8 -> Problema08.executar();
+                case 9 -> Problema09.executar();
+                case 10 -> Problema10.executar();
+                case 13 -> Problema13.executar();
+                case 14 -> Problema14.executar();
+                case 0 -> System.out.println("Encerrando o programa...");
+                default -> System.out.println(
+                        "Opção inválida. Escolha um dos problemas listados."
+                );
+            }
 
-                    default -> System.out.println(
-                            "Opção inválida. Escolha um dos problemas listados."
-                    );
-                }
-
-                if (opcao != 0) {
-                    System.out.println("\nPressione ENTER para voltar ao menu...");
+            if (opcao != 0) {
+                System.out.println("\nPressione ENTER para voltar ao menu...");
+                if (scanner.hasNextLine()) {
                     scanner.nextLine();
+                } else {
+                    opcao = 0;
                 }
+            }
 
-            } while (opcao != 0);
+        } while (opcao != 0);
+    }
+
+    public static void limparTela() {
+        try {
+            new ProcessBuilder("clear")
+                    .inheritIO()
+                    .start()
+                    .waitFor();
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        } catch (IOException e) {
+            System.out.print("\033[H\033[2J\033[3J");
+            System.out.flush();
         }
     }
 
     private static void exibirMenu() {
-        System.out.println("\n==============================================");
+        System.out.println("==============================================");
         System.out.println("       ALGORITMOS E ESTRUTURAS DE DADOS I");
         System.out.println("==============================================");
         System.out.println(" 5  - Gerenciamento de Playlist de Músicas");

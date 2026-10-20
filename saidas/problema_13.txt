@@ -1,0 +1,11 @@
+PROBLEMA 13 - CADASTRO DE USUÁRIOS COM LOGIN RÁPIDO
+Estrutura: Tabela Hash com encadeamento | Linguagem: Java
+
+TESTES AUTOMATIZADOS
+Usuários cadastrados na simulação inicial: 20
+Colisões registradas pela tabela de teste: 11
+Testes aprovados: 6/6
+
+COMPLEXIDADE MÉDIA
+Cadastro/busca/remoção: O(1) em média; O(n) no pior caso.
+Espaço: O(n), sendo n a quantidade de usuários.

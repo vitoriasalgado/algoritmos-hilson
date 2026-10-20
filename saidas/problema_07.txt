@@ -1,4 +1,5 @@
-VERIFICAÇÃO DO ALGORITMO — CADASTRO E BUSCA DE ALUNOS
+========================================================================
+PROBLEMA 07 — CADASTRO E BUSCA DE ALUNOS
 Estrutura: Árvore Binária de Busca (BST) | Linguagem: Java
 ========================================================================
 
@@ -7,22 +8,18 @@ Arquivo: dados/alunos.csv
 Registros lidos: 20
 Alunos cadastrados na árvore: 20
 
-BUSCA:
-Matrícula 202816: aluno encontrado — Ana Beatriz Souza
-Matrícula inexistente -2147483648: não encontrada, conforme esperado
+TESTES DE BUSCA:
+Busca de matrícula existente: aprovada
+Busca de matrícula inexistente: aprovada
 
-REMOÇÃO:
-Matrícula 202816: removida com sucesso
-Busca após remoção: matrícula não encontrada, conforme esperado
-Total após remoção: 19 alunos
-
-PERCURSO EM ORDEM — MATRÍCULAS CRESCENTES:
+LISTAGEM EM ORDEM CRESCENTE:
 202646 | Bruno Carvalho Lima | Medicina
 202659 | Gabriela Torres Dias | Engenharia de Software
 202732 | Olivia Ribeiro Sampaio | Ciencias Contabeis
 202803 | Mariana Teixeira Prado | Direito
 202804 | Carla Menezes Rocha | Direito
 202815 | Paulo Cesar Bastos | Ciencias Contabeis
+202816 | Ana Beatriz Souza | Engenharia de Software
 202817 | Henrique Barbosa Melo | Medicina
 202845 | Rafael Coelho Bezerra | Administracao
 202851 | Lucas Vieira Guedes | Ciencias Contabeis
@@ -37,17 +34,28 @@ PERCURSO EM ORDEM — MATRÍCULAS CRESCENTES:
 202907 | Karina Lopes Ferreira | Direito
 202984 | Joao Pedro Antunes | Ciencias Contabeis
 
+TESTE DE REMOÇÃO:
+Remoção de matrícula existente: aprovada
+Busca após remoção: aprovada
+Aluno restaurado após o teste: matrícula original reinserida
+Quantidade após restauração: 20
+
 RESUMO:
 Cadastro de pelo menos 20 alunos: atendido
-Busca de matrícula existente e inexistente: testadas
-Remoção e verificação após remoção: testadas
-Percurso em ordem: executado
-A listagem é apresentada em ordem crescente de matrícula.
+Busca de matrícula existente e inexistente: testada
+Remoção e busca após remoção: testadas
+Restauração do aluno de teste: realizada
+Percurso em ordem crescente: executado
 
 COMPLEXIDADE:
-Inserção: O(h).
+Inserção: O(h) por operação.
 Busca: O(h).
 Remoção: O(h).
 Percurso em ordem: O(n).
-Espaço: O(n), para n alunos.
-h representa a altura da árvore; no pior caso, h = n.
+Espaço: O(n).
+h = altura da árvore; n = número de alunos.
+No pior caso, h = n.
+
+========================================================================
+FIM DO RELATÓRIO
+========================================================================

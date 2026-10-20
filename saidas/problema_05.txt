@@ -1,38 +1,110 @@
-========================================================================
-VERIFICAÇÃO DO ALGORITMO — GERENCIAMENTO DE PLAYLIST
-Armazenamento: Lista simplesmente encadeada | Linguagem: Java
-========================================================================
+GERENCIAMENTO DE PLAYLIST DE MÚSICAS
+Playlist inicializada com 88 músicas.
+Programa encerrado.
 
-ENTRADA: Playlist com 89 músicas carregadas de dados/playlist.csv.
+========================================
+RELATÓRIO FINAL — PROBLEMA 05
+========================================
+Quantidade inicial: 88
+Músicas adicionadas: 0
+Músicas removidas: 0
+Quantidade final: 88
 
-OPERAÇÕES VERIFICADAS:
-
-  Inserção no início, no fim e em posição específica.
-  Busca e remoção de música pelo título.
-  Listagem da playlist e cálculo da duração total.
-
-RESULTADOS:
-
-  Músicas iniciais: 89
-  Após três inserções: 92
-  Após uma remoção: 91
-  Busca por título: música encontrada.
-  Duração antes da remoção: 9 min 50 s.
-  Duração após a remoção: 6 min 20 s.
-
-RESUMO:
-
-  As operações de inserção, busca e remoção foram executadas.
-  A playlist terminou com 91 músicas.
-  As músicas originais não possuem duração informada.
-  A duração total considera somente músicas com duração conhecida.
-  Resultados registrados a partir da execução do programa.
+PLAYLIST FINAL:
+0. Lover - You Should've Come Over — Jeff Buckley (6:44)
+1. Forget Her — Jeff Buckley (4:43)
+2. Everybody Here Wants You — Jeff Buckley (5:15)
+3. I Want Someone Badly — Jeff Buckley & Shudder To Think (4:30)
+4. I Know It's Over — Jeff Buckley (5:21)
+5. Quando Bate Aquela Saudade — Rubel (3:50)
+6. Pearl — Rubel (3:24)
+7. Ben — Rubel (3:38)
+8. Quadro Verde — Rubel (3:58)
+9. Não Vá Embora (2004 Digital Remaster) — Marisa Monte (4:32)
+10. Ainda Bem — Marisa Monte (3:41)
+11. A Sua (Ao Vivo) — Marisa Monte (3:15)
+12. Carinhoso — Marisa Monte & Paulinho Da Viola (3:50)
+13. Beija Eu — Marisa Monte (3:33)
+14. Infinito Particular — Marisa Monte (4:01)
+15. Bem Que Se Quis (Ao Vivo) — Marisa Monte (4:30)
+16. O Que Se Quer — Marisa Monte & Rodrigo Amarante (3:50)
+17. Gentileza (2004 Digital Remaster) — Marisa Monte (3:34)
+18. Não É Fácil (2004 Digital Remaster) — Marisa Monte (3:57)
+19. Pra Ser Sincero — Marisa Monte (3:10)
+20. A Primeira Pedra — Marisa Monte (4:10)
+21. Totalmente Seu — Marisa Monte (3:26)
+22. Ainda Lembro — Marisa Monte & Ed Motta (3:47)
+23. O Que Me Importa (2004 Digital Remaster) — Marisa Monte (4:08)
+24. Perdão Você (2004 Digital Remaster) — Marisa Monte (3:09)
+25. Último Romance — Los Hermanos (3:19)
+26. Veja Bem Meu Bem — Los Hermanos (3:35)
+27. Morena — Los Hermanos (3:42)
+28. Os Pássaros — Los Hermanos (3:58)
+29. A Flor — Los Hermanos (3:53)
+30. O Vento — Los Hermanos (3:56)
+31. A Outra — Los Hermanos (4:08)
+32. Do Sétimo Andar — Los Hermanos (3:13)
+33. Sentimental — Los Hermanos (3:50)
+34. Condicional — Los Hermanos (3:23)
+35. Ainda Gosto de Você — Armandinho (3:12)
+36. Cowpoke — Isaiah Sheffield (3:17)
+37. Sparks — Coldplay (3:47)
+38. Aliança — Tribalistas (3:26)
+39. Velha Infância (2004 Digital Remaster) — Tribalistas (3:34)
+40. É Você (2004 Digital Remaster) — Tribalistas (3:27)
+41. Oceano — Djavan (4:00)
+42. Um Amor Puro (Ao Vivo) — Djavan (4:20)
+43. Eu Te Devoro — Djavan (3:57)
+44. Flor de Lis — Djavan (3:42)
+45. Eternamente — Gal Costa (3:12)
+46. Folhetim — Gal Costa (3:20)
+47. Palavras No Corpo — Gal Costa (3:34)
+48. Quase Um Segundo — Gal Costa (3:24)
+49. Apaixonada — Gal Costa (3:25)
+50. Motor (Ao Vivo) — Gal Costa (3:30)
+51. Cheiro De Amor — Maria Bethânia (3:50)
+52. As Canções Que Você Fez Pra Mim — Maria Bethânia (4:22)
+53. Olha — Maria Bethânia (4:15)
+54. Só Nós Dois — Tim Bernardes (3:40)
+55. Eu Sei Que Vou Te Amar — Vinicius de Moraes (3:25)
+56. Só Sei Dançar Com Você — Tulipa Ruiz (3:30)
+57. Amado — Vanessa Da Mata (3:46)
+58. Dois Rios — Skank (3:56)
+59. Resposta — Skank (3:42)
+60. Take On Me (2017 Acoustic) — a-ha (3:56)
+61. Mia & Sebastian's Theme — Justin Hurwitz (3:20)
+62. Falando De Amor — MPB4 & Quarteto Em Cy (3:20)
+63. Você Não Me Ensinou a Te Esquecer — Caetano Veloso (3:45)
+64. Pensando Em Você — Paulinho Moska (3:50)
+65. Olhos certos — Detonautas (3:30)
+66. Aonde Quer Que Eu Vá — Os Paralamas Do Sucesso (3:44)
+67. Nada por Mim (Ao Vivo) — Paula Toller (4:00)
+68. Tempo Perdido — Legião Urbana (5:00)
+69. Dezembro — Arthur Diniz (3:30)
+70. Preciso Dizer Que Te Amo — Cazuza & Bebel Gilberto (4:12)
+71. Amor Meu Grande Amor — Ângela Ro Ro (3:20)
+72. City Of Stars (From La La Land Soundtrack) — Ryan Gosling & Emma Stone (2:30)
+73. Eu Preciso de Você — Validuaté (3:50)
+74. Aqueles Olhos — Dom M (3:30)
+75. Mia & Sebastian's Theme (arr. for Piano) — Leiki Ueda (3:20)
+76. A Paz (Leila IV) — Zizi Possi (3:45)
+77. Wicked Game — Chris Isaak (4:46)
+78. Nothing's Changed — Chris Isaak (3:45)
+79. Águas De Março — Elis Regina & Antônio Carlos Jobim (3:48)
+80. Linda Demais — Roupa Nova (4:10)
+81. Deusa do Amor — Moreno Veloso (3:25)
+82. Bem — Chapéu de Palha (3:30)
+83. All Star — Nando Reis (4:10)
+84. Pra Você Guardei o Amor — Nando Reis & Marisa Monte (3:50)
+85. Eu e ela — Nando Reis (4:07)
+86. Vambora (Ao Vivo) — Adriana Calcanhotto (4:20)
+87. Vambora — Adriana Calcanhotto (3:45)
+Duração total: 336 min 24 s
 
 COMPLEXIDADE:
-
-  Inserção no início: O(1).
-  Inserção no fim: O(n), se houver percurso da lista.
-  Inserção em posição: O(n).
-  Busca e remoção: O(n).
-  Listagem e duração total: O(n).
-  Espaço: O(n), para n músicas armazenadas.
+Busca por título: O(n)
+Inserção no início: O(1)
+Inserção no fim: O(n) na implementação atual, se não houver referência ao último nó.
+Inserção em posição: O(n)
+Remoção por título: O(n)
+Listagem completa: O(n)

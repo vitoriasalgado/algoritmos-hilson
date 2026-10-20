@@ -1,24 +1,22 @@
-=== PROBLEMA 09: ÍNDICE DE CPF COM ÁRVORE AVL ===
+========================================================================
+PROBLEMA 09 — ÍNDICE DE CPF COM ÁRVORE AVL
+Estrutura: Árvore AVL | Linguagem: Java
+========================================================================
 
-1. Inserção de funcionários
-Funcionários inseridos: 30
+ENTRADA E INICIALIZAÇÃO:
+Funcionários inseridos no índice: 30
+
+VERIFICAÇÃO DO BALANCEAMENTO:
 Altura da árvore: 6
 Fator de balanceamento da raiz: 1
 Árvore balanceada: true
 
-2. Busca por CPF
-Funcionário encontrado: CPF: 52998224725 | Nome: Ana Souza | Cargo: Analista de RH
+TESTES DE BUSCA:
+Busca de CPF existente: aprovada
+Busca de CPF inexistente: aprovada
 
-Busca por CPF inexistente:
-Funcionário não encontrado, conforme esperado.
-
-3. Remoção de funcionário
-Remoção realizada: true
-Quantidade após remoção: 29
-Árvore balanceada após remoção: true
-Busca pelo CPF removido: não encontrado
-
-4. Funcionários em ordem crescente de CPF
+FUNCIONÁRIOS EM ORDEM CRESCENTE DE CPF:
+CPF: 11144477735 | Nome: Bruno Lima | Cargo: Desenvolvedor
 CPF: 12345678909 | Nome: Daniel Costa | Cargo: Assistente Administrativo
 CPF: 14725836900 | Nome: Isabela Ribeiro | Cargo: Recrutadora
 CPF: 15925835700 | Nome: Yasmin Cardoso | Cargo: Assistente de RH
@@ -49,7 +47,20 @@ CPF: 95175325800 | Nome: Samuel Freitas | Cargo: Desenvolvedor
 CPF: 96374185200 | Nome: Nicolas Barros | Cargo: Técnico de Redes
 CPF: 98765432100 | Nome: Carla Mendes | Cargo: Gerente
 
-5. Verificação final
-Altura final: 5
-Fator de balanceamento da raiz: 0
-Todos os nós estão balanceados: true
+RESUMO:
+Total de funcionários cadastrados: 30
+Busca de CPF existente e inexistente: testada
+Listagem em ordem crescente de CPF: realizada
+Balanceamento da árvore: verificado
+
+COMPLEXIDADE:
+Busca: O(log n).
+Inserção: O(log n).
+Remoção: O(log n).
+Listagem ordenada: O(n).
+Espaço: O(n).
+n = quantidade de funcionários.
+
+========================================================================
+FIM DO RELATÓRIO
+========================================================================

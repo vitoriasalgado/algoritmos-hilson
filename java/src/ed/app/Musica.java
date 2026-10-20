@@ -1,10 +1,9 @@
-
 package ed.app;
 
 public class Musica {
-    private String titulo;
-    private String artista;
-    private int duracao;
+    private final String titulo;
+    private final String artista;
+    private final int duracao;
 
     public Musica(String titulo, String artista, int duracao) {
         if (titulo == null || titulo.isBlank()) {
@@ -36,7 +35,10 @@ public class Musica {
 
     @Override
     public String toString() {
-        String tempo = duracao == 0 ? "duração desconhecida" : duracao + " segundos";
-        return titulo + " — " + artista + " (" + tempo + ")";
+        int minutos = duracao / 60;
+        int segundos = duracao % 60;
+
+        return String.format("%s — %s (%d:%02d)",
+            titulo, artista, minutos, segundos);
     }
 }
