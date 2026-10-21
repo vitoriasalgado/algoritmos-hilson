@@ -1,0 +1,182 @@
+========================================================================
+PROBLEMA 20 — ATUALIZAÇÃO DO RANKING DE VENDEDORES
+Algoritmo: Insertion Sort | Linguagem: Python
+========================================================================
+
+ENTRADA: 8 vendedores e 7 dias de atualizações
+  Valores armazenados em centavos para evitar erros decimais.
+  Ana: R$ 800.00
+  Bruno: R$ 700.00
+  Carla: R$ 600.00
+  Daniel: R$ 500.00
+  Elisa: R$ 400.00
+  Felipe: R$ 300.00
+  Gabriela: R$ 200.00
+  Henrique: R$ 100.00
+
+ATUALIZAÇÕES — DIA 1:
+  Ana: +R$ 411.00
+  Bruno: +R$ 548.00
+  Carla: +R$ 685.00
+  Daniel: +R$ 822.00
+  Elisa: +R$ 959.00
+  Felipe: +R$ 1096.00
+  Gabriela: +R$ 1233.00
+  Henrique: +R$ 1370.00
+  Ranking atualizado:
+    1. Henrique: R$ 1470.00
+    2. Gabriela: R$ 1433.00
+    3. Felipe: R$ 1396.00
+    4. Elisa: R$ 1359.00
+    5. Daniel: R$ 1322.00
+    6. Carla: R$ 1285.00
+    7. Bruno: R$ 1248.00
+    8. Ana: R$ 1211.00
+  Comparações: 28 | Trocas: 28
+  Tempo de ordenação: 0.000005084 segundos.
+
+ATUALIZAÇÕES — DIA 2:
+  Ana: +R$ 822.00
+  Bruno: +R$ 1096.00
+  Carla: +R$ 1370.00
+  Daniel: +R$ 244.00
+  Elisa: +R$ 518.00
+  Felipe: +R$ 792.00
+  Gabriela: +R$ 1066.00
+  Henrique: +R$ 1340.00
+  Ranking atualizado:
+    1. Henrique: R$ 2810.00
+    2. Carla: R$ 2655.00
+    3. Gabriela: R$ 2499.00
+    4. Bruno: R$ 2344.00
+    5. Felipe: R$ 2188.00
+    6. Ana: R$ 2033.00
+    7. Elisa: R$ 1877.00
+    8. Daniel: R$ 1566.00
+  Comparações: 16 | Trocas: 9
+  Tempo de ordenação: 0.000002167 segundos.
+
+ATUALIZAÇÕES — DIA 3:
+  Ana: +R$ 1233.00
+  Bruno: +R$ 244.00
+  Carla: +R$ 655.00
+  Daniel: +R$ 1066.00
+  Elisa: +R$ 77.00
+  Felipe: +R$ 488.00
+  Gabriela: +R$ 899.00
+  Henrique: +R$ 1310.00
+  Ranking atualizado:
+    1. Henrique: R$ 4120.00
+    2. Gabriela: R$ 3398.00
+    3. Carla: R$ 3310.00
+    4. Ana: R$ 3266.00
+    5. Felipe: R$ 2676.00
+    6. Daniel: R$ 2632.00
+    7. Bruno: R$ 2588.00
+    8. Elisa: R$ 1954.00
+  Comparações: 13 | Trocas: 6
+  Tempo de ordenação: 0.000001584 segundos.
+
+ATUALIZAÇÕES — DIA 4:
+  Ana: +R$ 244.00
+  Bruno: +R$ 792.00
+  Carla: +R$ 1340.00
+  Daniel: +R$ 488.00
+  Elisa: +R$ 1036.00
+  Felipe: +R$ 184.00
+  Gabriela: +R$ 732.00
+  Henrique: +R$ 1280.00
+  Ranking atualizado:
+    1. Henrique: R$ 5400.00
+    2. Carla: R$ 4650.00
+    3. Gabriela: R$ 4130.00
+    4. Ana: R$ 3510.00
+    5. Bruno: R$ 3380.00
+    6. Daniel: R$ 3120.00
+    7. Elisa: R$ 2990.00
+    8. Felipe: R$ 2860.00
+  Comparações: 12 | Trocas: 5
+  Tempo de ordenação: 0.000001542 segundos.
+
+ATUALIZAÇÕES — DIA 5:
+  Ana: +R$ 655.00
+  Bruno: +R$ 1340.00
+  Carla: +R$ 625.00
+  Daniel: +R$ 1310.00
+  Elisa: +R$ 595.00
+  Felipe: +R$ 1280.00
+  Gabriela: +R$ 565.00
+  Henrique: +R$ 1250.00
+  Ranking atualizado:
+    1. Henrique: R$ 6650.00
+    2. Carla: R$ 5275.00
+    3. Bruno: R$ 4720.00
+    4. Gabriela: R$ 4695.00
+    5. Daniel: R$ 4430.00
+    6. Ana: R$ 4165.00
+    7. Felipe: R$ 4140.00
+    8. Elisa: R$ 3585.00
+  Comparações: 11 | Trocas: 4
+  Tempo de ordenação: 0.000001333 segundos.
+
+ATUALIZAÇÕES — DIA 6:
+  Ana: +R$ 1066.00
+  Bruno: +R$ 488.00
+  Carla: +R$ 1310.00
+  Daniel: +R$ 732.00
+  Elisa: +R$ 154.00
+  Felipe: +R$ 976.00
+  Gabriela: +R$ 398.00
+  Henrique: +R$ 1220.00
+  Ranking atualizado:
+    1. Henrique: R$ 7870.00
+    2. Carla: R$ 6585.00
+    3. Ana: R$ 5231.00
+    4. Bruno: R$ 5208.00
+    5. Daniel: R$ 5162.00
+    6. Felipe: R$ 5116.00
+    7. Gabriela: R$ 5093.00
+    8. Elisa: R$ 3739.00
+  Comparações: 12 | Trocas: 5
+  Tempo de ordenação: 0.000001375 segundos.
+
+ATUALIZAÇÕES — DIA 7:
+  Ana: +R$ 77.00
+  Bruno: +R$ 1036.00
+  Carla: +R$ 595.00
+  Daniel: +R$ 154.00
+  Elisa: +R$ 1113.00
+  Felipe: +R$ 672.00
+  Gabriela: +R$ 231.00
+  Henrique: +R$ 1190.00
+  Ranking atualizado:
+    1. Henrique: R$ 9060.00
+    2. Carla: R$ 7180.00
+    3. Bruno: R$ 6244.00
+    4. Felipe: R$ 5788.00
+    5. Gabriela: R$ 5324.00
+    6. Daniel: R$ 5316.00
+    7. Ana: R$ 5308.00
+    8. Elisa: R$ 4852.00
+  Comparações: 13 | Trocas: 6
+  Tempo de ordenação: 0.000001500 segundos.
+
+COMPARAÇÃO — MESMOS VENDEDORES E TOTAIS:
+  Já ordenada — entrada: [['Henrique', 906000], ['Carla', 718000], ['Bruno', 624400], ['Felipe', 578800], ['Gabriela', 532400], ['Daniel', 531600], ['Ana', 530800], ['Elisa', 485200]]
+  Resultado: [['Henrique', 906000], ['Carla', 718000], ['Bruno', 624400], ['Felipe', 578800], ['Gabriela', 532400], ['Daniel', 531600], ['Ana', 530800], ['Elisa', 485200]]
+  Comparações: 7 | Trocas: 0
+  Tempo: 0.000000875 segundos.
+  Aleatória — entrada: [['Carla', 718000], ['Gabriela', 532400], ['Felipe', 578800], ['Ana', 530800], ['Henrique', 906000], ['Daniel', 531600], ['Elisa', 485200], ['Bruno', 624400]]
+  Resultado: [['Henrique', 906000], ['Carla', 718000], ['Bruno', 624400], ['Felipe', 578800], ['Gabriela', 532400], ['Daniel', 531600], ['Ana', 530800], ['Elisa', 485200]]
+  Comparações: 17 | Trocas: 11
+  Tempo: 0.000002458 segundos.
+
+RESUMO:
+  56 atualizações, 7 rankings diários e 2 execuções comparativas.
+  Semana: 105 comparações e 63 trocas.
+  Tempos de uma execução curta; não garantem superioridade geral.
+
+COMPLEXIDADE:
+  Por ordenação: O(n) no melhor caso e O(n²) no pior.
+  Semana: O(d*n²) no pior caso, para d dias e n vendedores.
+  Algoritmo: O(1) auxiliar; cópias: O(n); registros: O(d*n).

@@ -1,0 +1,100 @@
+========================================================================
+PROBLEMA 22 — MESCLAGEM DE LISTAS DE CONTATOS
+Algoritmo: Intercalação do Merge Sort | Linguagem: Python
+========================================================================
+
+ENTRADA: 20 contatos A e 20 contatos B
+
+LISTA A:
+  Amanda Rezende Vasconcelos | (86) 91430-6791
+  Ana Beatriz Souza | (86) 99519-3725
+  Bernardo Siqueira Pontes | (86) 99689-3001
+  Carla Menezes Rocha | (86) 97037-4552
+  Daniel Freitas Alves | (86) 92244-3786
+  Diego Marques Bittencourt | (86) 98492-7642
+  Elisa Fontenele Macedo | (86) 92819-2731
+  Fabio Quirino Andrade | (86) 97814-7568
+  Gabriela Torres Dias | (86) 91094-5002
+  Hugo Valente Mesquita | (86) 94221-1837
+  Lucas Vieira Guedes | (86) 95303-3768
+  Marcelo Aragao Pessoa | (86) 99597-5364
+  Mariana Teixeira Prado | (86) 97131-2385
+  Natalia Correia Vilar | (86) 95183-3746
+  Olivia Ribeiro Sampaio | (86) 91595-4580
+  Paulo Cesar Bastos | (86) 92895-8330
+  Quezia Martins Duarte | (86) 91582-6827
+  Rafael Coelho Bezerra | (86) 98650-9445
+  Thiago Nogueira Pires | (86) 91567-4113
+  Ursula Amaral Fontes | (86) 98888-1770
+
+LISTA B:
+  Amanda Rezende Vasconcelos | (86) 95772-2492
+  Bernardo Siqueira Pontes | (86) 93758-2073
+  Eduarda Nunes Pinto | (86) 95573-4352
+  Felipe Moreira Castro | (86) 91119-5700
+  Giovana Serpa Lacerda | (86) 91714-8723
+  Henrique Barbosa Melo | (86) 95249-2168
+  Hugo Valente Mesquita | (86) 99954-3745
+  Ingrid Sales Portela | (86) 99969-9465
+  Isabela Cardoso Ramos | (86) 99850-4899
+  Joao Pedro Antunes | (86) 99114-1872
+  Karina Lopes Ferreira | (86) 99874-6767
+  Larissa Bonfim Cavalcanti | (86) 94740-9794
+  Nicolas Almeida Cruz | (86) 97438-8602
+  Otavio Pimentel Rangel | (86) 92432-4969
+  Paulo Cesar Bastos | (86) 91515-1247
+  Priscila Xavier Drummond | (86) 97774-7321
+  Sabrina Farias Monteiro | (86) 92464-8227
+  Ursula Amaral Fontes | (86) 93924-3811
+  Vinicius Peixoto Braga | (86) 94881-3696
+  Zeca Miranda Bandeira | (86) 94266-9271
+
+RESULTADOS — LISTA ÚNICA:
+  Amanda Rezende Vasconcelos | (86) 91430-6791
+  Ana Beatriz Souza | (86) 99519-3725
+  Bernardo Siqueira Pontes | (86) 99689-3001
+  Carla Menezes Rocha | (86) 97037-4552
+  Daniel Freitas Alves | (86) 92244-3786
+  Diego Marques Bittencourt | (86) 98492-7642
+  Eduarda Nunes Pinto | (86) 95573-4352
+  Elisa Fontenele Macedo | (86) 92819-2731
+  Fabio Quirino Andrade | (86) 97814-7568
+  Felipe Moreira Castro | (86) 91119-5700
+  Gabriela Torres Dias | (86) 91094-5002
+  Giovana Serpa Lacerda | (86) 91714-8723
+  Henrique Barbosa Melo | (86) 95249-2168
+  Hugo Valente Mesquita | (86) 94221-1837
+  Ingrid Sales Portela | (86) 99969-9465
+  Isabela Cardoso Ramos | (86) 99850-4899
+  Joao Pedro Antunes | (86) 99114-1872
+  Karina Lopes Ferreira | (86) 99874-6767
+  Larissa Bonfim Cavalcanti | (86) 94740-9794
+  Lucas Vieira Guedes | (86) 95303-3768
+  Marcelo Aragao Pessoa | (86) 99597-5364
+  Mariana Teixeira Prado | (86) 97131-2385
+  Natalia Correia Vilar | (86) 95183-3746
+  Nicolas Almeida Cruz | (86) 97438-8602
+  Olivia Ribeiro Sampaio | (86) 91595-4580
+  Otavio Pimentel Rangel | (86) 92432-4969
+  Paulo Cesar Bastos | (86) 92895-8330
+  Priscila Xavier Drummond | (86) 97774-7321
+  Quezia Martins Duarte | (86) 91582-6827
+  Rafael Coelho Bezerra | (86) 98650-9445
+  Sabrina Farias Monteiro | (86) 92464-8227
+  Thiago Nogueira Pires | (86) 91567-4113
+  Ursula Amaral Fontes | (86) 98888-1770
+  Vinicius Peixoto Braga | (86) 94881-3696
+  Zeca Miranda Bandeira | (86) 94266-9271
+
+RESUMO:
+  35 contatos únicos.
+  5 duplicatas removidas.
+  Duplicidade por nome exato; prevalece o primeiro telefone da lista A.
+  Se o nome só existir em B, prevalece a primeira ocorrência em B.
+  Comparações de nomes, incluindo validação: 114
+  Tempo: 0.000014875 segundos.
+
+COMPLEXIDADE:
+  Validação e mesclagem: O(a + b) de tempo.
+  Resultado e registros: O(a + b) de espaço.
+  a e b são os tamanhos das listas; nomes têm tamanho limitado.

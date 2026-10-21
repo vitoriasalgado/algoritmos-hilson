@@ -1,0 +1,332 @@
+========================================================================
+PROBLEMA 23 — ORDENAÇÃO DO CATÁLOGO DE PRODUTOS
+Algoritmo: Quick Sort e Merge Sort | Linguagem: Python
+========================================================================
+
+ENTRADA: 100 produtos de dados/produtos.csv
+  1394 | Silicone Cola Quente Bastao | Estoque: 173 | R$ 418.36
+  1186 | Piso Antiderrapante 45x45 | Estoque: 52 | R$ 533.38
+  1389 | Silicone Acetico Branco 280g | Estoque: 55 | R$ 287.22
+  1088 | Parafuso Frances 10mm | Estoque: 191 | R$ 90.96
+  1133 | Furadeira Bancada 500W | Estoque: 121 | R$ 492.72
+  1195 | Areia Fina Ensacada 20kg | Estoque: 181 | R$ 213.21
+  1258 | Fechadura Digital Biometrica | Estoque: 134 | R$ 402.18
+  1179 | Piso Vinilico Clicado | Estoque: 119 | R$ 449.58
+  1283 | Telha Galvanizada Trapezio | Estoque: 217 | R$ 705.17
+  1243 | Registro Antivazamento | Estoque: 127 | R$ 240.15
+  1363 | Fio Rigido 6mm | Estoque: 175 | R$ 114.54
+  1066 | Cabo PP 3x2.5mm | Estoque: 200 | R$ 621.11
+  1196 | Areia Grossa m3 | Estoque: 8 | R$ 494.11
+  1111 | Torneira Bica Alta Gourmet | Estoque: 68 | R$ 493.30
+  1095 | Parafuso Bucha 6mm | Estoque: 115 | R$ 372.42
+  1144 | Lampada LED Tubular 18W | Estoque: 21 | R$ 455.97
+  1334 | Vaso Valvula Descarga | Estoque: 205 | R$ 323.17
+  1219 | Chuveiro Gas Inox | Estoque: 5 | R$ 611.54
+  1037 | Tinta Acrilica Gelo 3.6L | Estoque: 125 | R$ 472.22
+  1057 | Cabo Flexivel 2.5mm | Estoque: 232 | R$ 503.49
+  1385 | Silicone Neutro Incolor 280g | Estoque: 236 | R$ 554.75
+  1230 | Registro Gaveta 3/4 | Estoque: 216 | R$ 147.97
+  1379 | Fio Telefonico 2 pares | Estoque: 167 | R$ 547.69
+  1314 | Massa Adesiva PU 400g | Estoque: 145 | R$ 658.35
+  1102 | Torneira Jardim 1/2 | Estoque: 50 | R$ 550.26
+  1062 | Cabo Coaxial RG6 | Estoque: 25 | R$ 824.59
+  1274 | Telha Ceramica Portuguesa | Estoque: 23 | R$ 8.89
+  1352 | Broca Escalonada Metal | Estoque: 221 | R$ 16.91
+  1124 | Furadeira Martelete 800W | Estoque: 237 | R$ 518.20
+  1298 | Massa Corrida 18L | Estoque: 202 | R$ 619.16
+  1171 | Porta Rolete Correr | Estoque: 6 | R$ 840.45
+  1241 | Registro Bruto Metal 1 | Estoque: 88 | R$ 277.24
+  1166 | Porta Camarao Aluminio | Estoque: 3 | R$ 180.45
+  1290 | Telha PVC Colonial | Estoque: 6 | R$ 604.17
+  1359 | Broca Serra Copo 50mm | Estoque: 3 | R$ 234.42
+  1006 | Cimento CP II 50kg | Estoque: 140 | R$ 897.41
+  1272 | Fechadura Banheiro Cromada | Estoque: 54 | R$ 89.09
+  1250 | Fechadura Interna Rolete | Estoque: 73 | R$ 733.51
+  1150 | Lampada LED Dicroica 5W | Estoque: 234 | R$ 705.29
+  1101 | Torneira Lavatorio Cromada | Estoque: 214 | R$ 493.43
+  1213 | Chuveiro Ducha Cromada | Estoque: 123 | R$ 577.74
+  1148 | Lampada Fluorescente 20W | Estoque: 239 | R$ 602.52
+  1178 | Piso Porcelanato Polido | Estoque: 83 | R$ 276.13
+  1400 | Silicone Veda Calha 300ml | Estoque: 236 | R$ 614.02
+  1159 | Porta Madeira 80cm | Estoque: 133 | R$ 727.25
+  1058 | Cabo Flexivel 4mm | Estoque: 81 | R$ 748.19
+  1030 | Tinta Acrilica Branca 18L | Estoque: 117 | R$ 793.49
+  1167 | Porta Sanfonada PVC | Estoque: 18 | R$ 352.77
+  1406 | Escada Aluminio 7 Degraus | Estoque: 183 | R$ 56.05
+  1046 | Tinta Latex Fosca 18L | Estoque: 130 | R$ 438.84
+  1368 | Fio Nylon Rocadeira | Estoque: 239 | R$ 520.16
+  1254 | Fechadura Externa Reforcada | Estoque: 132 | R$ 162.79
+  1119 | Furadeira Parafusadeira 12V | Estoque: 170 | R$ 9.09
+  1395 | Silicone PU Cinza 400g | Estoque: 220 | R$ 618.54
+  1155 | Lampada Refletor LED 50W | Estoque: 105 | R$ 278.22
+  1085 | Parafuso Autobrocante 4.2 | Estoque: 127 | R$ 242.85
+  1237 | Registro Esfera PVC 25mm | Estoque: 20 | R$ 374.90
+  1013 | Cimento CP IV 50kg | Estoque: 178 | R$ 583.12
+  1375 | Fio Terra Verde 4mm | Estoque: 199 | R$ 317.85
+  1053 | Tinta Spray Preto 400ml | Estoque: 206 | R$ 743.51
+  1265 | Fechadura Tetra Chave | Estoque: 70 | R$ 473.84
+  1348 | Broca Widia 8mm | Estoque: 238 | R$ 61.67
+  1232 | Registro Pressao 1/2 | Estoque: 108 | R$ 353.33
+  1206 | Chuveiro Eletrico 5500W | Estoque: 222 | R$ 47.60
+  1327 | Vaso Assento Termofixo | Estoque: 15 | R$ 99.35
+  1104 | Torneira Eletrica 5500W | Estoque: 11 | R$ 112.57
+  1322 | Vaso Sanitario Convencional | Estoque: 200 | R$ 123.13
+  1131 | Furadeira Bateria 20V | Estoque: 184 | R$ 444.58
+  1309 | Massa Rejunte Cinza 1kg | Estoque: 192 | R$ 255.38
+  1138 | Lampada LED Bulbo 9W | Estoque: 153 | R$ 121.87
+  1198 | Areia Brita 1 m3 | Estoque: 44 | R$ 583.45
+  1199 | Areia Pedrisco 20kg | Estoque: 238 | R$ 584.34
+  1410 | Escada Fibra 3m | Estoque: 72 | R$ 790.24
+  1341 | Broca Aco Rapido 6mm | Estoque: 150 | R$ 284.97
+  1351 | Broca Concreto 10mm | Estoque: 65 | R$ 148.86
+  1403 | Escada Aluminio 5 Degraus | Estoque: 209 | R$ 352.50
+  1228 | Chuveiro Articulado 20cm | Estoque: 229 | R$ 794.05
+  1021 | Cimento Refratario 20kg | Estoque: 212 | R$ 185.66
+  1423 | Escada Plataforma 4 Degraus | Estoque: 31 | R$ 719.96
+  1325 | Vaso Sanitario Caixa Acoplada | Estoque: 111 | R$ 90.76
+  1190 | Areia Media Lavada m3 | Estoque: 117 | R$ 562.08
+  1278 | Telha Fibrocimento 2m | Estoque: 104 | R$ 582.06
+  1079 | Parafuso Chipboard 4x40 | Estoque: 16 | R$ 433.10
+  1024 | Cimento Colante AC1 | Estoque: 38 | R$ 12.80
+  1360 | Fio Rigido 1.5mm | Estoque: 5 | R$ 90.77
+  1073 | Parafuso Sextavado 8mm | Estoque: 215 | R$ 869.72
+  1336 | Vaso Caixa Acoplada 6L | Estoque: 27 | R$ 582.30
+  1096 | Torneira Cozinha Bica Movel | Estoque: 115 | R$ 86.94
+  1071 | Cabo Rede Cat6 | Estoque: 236 | R$ 236.02
+  1040 | Tinta Esmalte Sintetico 900ml | Estoque: 66 | R$ 828.79
+  1303 | Massa Acrilica 25kg | Estoque: 158 | R$ 198.20
+  1117 | Furadeira Impacto 650W | Estoque: 91 | R$ 682.23
+  1184 | Piso Laminado Carvalho | Estoque: 43 | R$ 557.84
+  1293 | Telha Translucida 1.5m | Estoque: 90 | R$ 761.73
+  1017 | Cimento Branco 25kg | Estoque: 102 | R$ 724.48
+  1317 | Massa Niveladora 20kg | Estoque: 171 | R$ 507.95
+  1172 | Piso Ceramico 60x60 | Estoque: 83 | R$ 461.04
+  1221 | Chuveiro Higienico Metal | Estoque: 55 | R$ 582.04
+  1416 | Escada Extensiva 8m | Estoque: 186 | R$ 300.18
+  1168 | Porta Batente Angelim | Estoque: 165 | R$ 750.33
+
+RESULTADOS:
+
+ORDEM CRESCENTE POR PREÇO:
+  1274 | Telha Ceramica Portuguesa | Estoque: 23 | R$ 8.89
+  1119 | Furadeira Parafusadeira 12V | Estoque: 170 | R$ 9.09
+  1024 | Cimento Colante AC1 | Estoque: 38 | R$ 12.80
+  1352 | Broca Escalonada Metal | Estoque: 221 | R$ 16.91
+  1206 | Chuveiro Eletrico 5500W | Estoque: 222 | R$ 47.60
+  1406 | Escada Aluminio 7 Degraus | Estoque: 183 | R$ 56.05
+  1348 | Broca Widia 8mm | Estoque: 238 | R$ 61.67
+  1096 | Torneira Cozinha Bica Movel | Estoque: 115 | R$ 86.94
+  1272 | Fechadura Banheiro Cromada | Estoque: 54 | R$ 89.09
+  1325 | Vaso Sanitario Caixa Acoplada | Estoque: 111 | R$ 90.76
+  1360 | Fio Rigido 1.5mm | Estoque: 5 | R$ 90.77
+  1088 | Parafuso Frances 10mm | Estoque: 191 | R$ 90.96
+  1327 | Vaso Assento Termofixo | Estoque: 15 | R$ 99.35
+  1104 | Torneira Eletrica 5500W | Estoque: 11 | R$ 112.57
+  1363 | Fio Rigido 6mm | Estoque: 175 | R$ 114.54
+  1138 | Lampada LED Bulbo 9W | Estoque: 153 | R$ 121.87
+  1322 | Vaso Sanitario Convencional | Estoque: 200 | R$ 123.13
+  1230 | Registro Gaveta 3/4 | Estoque: 216 | R$ 147.97
+  1351 | Broca Concreto 10mm | Estoque: 65 | R$ 148.86
+  1254 | Fechadura Externa Reforcada | Estoque: 132 | R$ 162.79
+  1166 | Porta Camarao Aluminio | Estoque: 3 | R$ 180.45
+  1021 | Cimento Refratario 20kg | Estoque: 212 | R$ 185.66
+  1303 | Massa Acrilica 25kg | Estoque: 158 | R$ 198.20
+  1195 | Areia Fina Ensacada 20kg | Estoque: 181 | R$ 213.21
+  1359 | Broca Serra Copo 50mm | Estoque: 3 | R$ 234.42
+  1071 | Cabo Rede Cat6 | Estoque: 236 | R$ 236.02
+  1243 | Registro Antivazamento | Estoque: 127 | R$ 240.15
+  1085 | Parafuso Autobrocante 4.2 | Estoque: 127 | R$ 242.85
+  1309 | Massa Rejunte Cinza 1kg | Estoque: 192 | R$ 255.38
+  1178 | Piso Porcelanato Polido | Estoque: 83 | R$ 276.13
+  1241 | Registro Bruto Metal 1 | Estoque: 88 | R$ 277.24
+  1155 | Lampada Refletor LED 50W | Estoque: 105 | R$ 278.22
+  1341 | Broca Aco Rapido 6mm | Estoque: 150 | R$ 284.97
+  1389 | Silicone Acetico Branco 280g | Estoque: 55 | R$ 287.22
+  1416 | Escada Extensiva 8m | Estoque: 186 | R$ 300.18
+  1375 | Fio Terra Verde 4mm | Estoque: 199 | R$ 317.85
+  1334 | Vaso Valvula Descarga | Estoque: 205 | R$ 323.17
+  1403 | Escada Aluminio 5 Degraus | Estoque: 209 | R$ 352.50
+  1167 | Porta Sanfonada PVC | Estoque: 18 | R$ 352.77
+  1232 | Registro Pressao 1/2 | Estoque: 108 | R$ 353.33
+  1095 | Parafuso Bucha 6mm | Estoque: 115 | R$ 372.42
+  1237 | Registro Esfera PVC 25mm | Estoque: 20 | R$ 374.90
+  1258 | Fechadura Digital Biometrica | Estoque: 134 | R$ 402.18
+  1394 | Silicone Cola Quente Bastao | Estoque: 173 | R$ 418.36
+  1079 | Parafuso Chipboard 4x40 | Estoque: 16 | R$ 433.10
+  1046 | Tinta Latex Fosca 18L | Estoque: 130 | R$ 438.84
+  1131 | Furadeira Bateria 20V | Estoque: 184 | R$ 444.58
+  1179 | Piso Vinilico Clicado | Estoque: 119 | R$ 449.58
+  1144 | Lampada LED Tubular 18W | Estoque: 21 | R$ 455.97
+  1172 | Piso Ceramico 60x60 | Estoque: 83 | R$ 461.04
+  1037 | Tinta Acrilica Gelo 3.6L | Estoque: 125 | R$ 472.22
+  1265 | Fechadura Tetra Chave | Estoque: 70 | R$ 473.84
+  1133 | Furadeira Bancada 500W | Estoque: 121 | R$ 492.72
+  1111 | Torneira Bica Alta Gourmet | Estoque: 68 | R$ 493.30
+  1101 | Torneira Lavatorio Cromada | Estoque: 214 | R$ 493.43
+  1196 | Areia Grossa m3 | Estoque: 8 | R$ 494.11
+  1057 | Cabo Flexivel 2.5mm | Estoque: 232 | R$ 503.49
+  1317 | Massa Niveladora 20kg | Estoque: 171 | R$ 507.95
+  1124 | Furadeira Martelete 800W | Estoque: 237 | R$ 518.20
+  1368 | Fio Nylon Rocadeira | Estoque: 239 | R$ 520.16
+  1186 | Piso Antiderrapante 45x45 | Estoque: 52 | R$ 533.38
+  1379 | Fio Telefonico 2 pares | Estoque: 167 | R$ 547.69
+  1102 | Torneira Jardim 1/2 | Estoque: 50 | R$ 550.26
+  1385 | Silicone Neutro Incolor 280g | Estoque: 236 | R$ 554.75
+  1184 | Piso Laminado Carvalho | Estoque: 43 | R$ 557.84
+  1190 | Areia Media Lavada m3 | Estoque: 117 | R$ 562.08
+  1213 | Chuveiro Ducha Cromada | Estoque: 123 | R$ 577.74
+  1221 | Chuveiro Higienico Metal | Estoque: 55 | R$ 582.04
+  1278 | Telha Fibrocimento 2m | Estoque: 104 | R$ 582.06
+  1336 | Vaso Caixa Acoplada 6L | Estoque: 27 | R$ 582.30
+  1013 | Cimento CP IV 50kg | Estoque: 178 | R$ 583.12
+  1198 | Areia Brita 1 m3 | Estoque: 44 | R$ 583.45
+  1199 | Areia Pedrisco 20kg | Estoque: 238 | R$ 584.34
+  1148 | Lampada Fluorescente 20W | Estoque: 239 | R$ 602.52
+  1290 | Telha PVC Colonial | Estoque: 6 | R$ 604.17
+  1219 | Chuveiro Gas Inox | Estoque: 5 | R$ 611.54
+  1400 | Silicone Veda Calha 300ml | Estoque: 236 | R$ 614.02
+  1395 | Silicone PU Cinza 400g | Estoque: 220 | R$ 618.54
+  1298 | Massa Corrida 18L | Estoque: 202 | R$ 619.16
+  1066 | Cabo PP 3x2.5mm | Estoque: 200 | R$ 621.11
+  1314 | Massa Adesiva PU 400g | Estoque: 145 | R$ 658.35
+  1117 | Furadeira Impacto 650W | Estoque: 91 | R$ 682.23
+  1283 | Telha Galvanizada Trapezio | Estoque: 217 | R$ 705.17
+  1150 | Lampada LED Dicroica 5W | Estoque: 234 | R$ 705.29
+  1423 | Escada Plataforma 4 Degraus | Estoque: 31 | R$ 719.96
+  1017 | Cimento Branco 25kg | Estoque: 102 | R$ 724.48
+  1159 | Porta Madeira 80cm | Estoque: 133 | R$ 727.25
+  1250 | Fechadura Interna Rolete | Estoque: 73 | R$ 733.51
+  1053 | Tinta Spray Preto 400ml | Estoque: 206 | R$ 743.51
+  1058 | Cabo Flexivel 4mm | Estoque: 81 | R$ 748.19
+  1168 | Porta Batente Angelim | Estoque: 165 | R$ 750.33
+  1293 | Telha Translucida 1.5m | Estoque: 90 | R$ 761.73
+  1410 | Escada Fibra 3m | Estoque: 72 | R$ 790.24
+  1030 | Tinta Acrilica Branca 18L | Estoque: 117 | R$ 793.49
+  1228 | Chuveiro Articulado 20cm | Estoque: 229 | R$ 794.05
+  1062 | Cabo Coaxial RG6 | Estoque: 25 | R$ 824.59
+  1040 | Tinta Esmalte Sintetico 900ml | Estoque: 66 | R$ 828.79
+  1171 | Porta Rolete Correr | Estoque: 6 | R$ 840.45
+  1073 | Parafuso Sextavado 8mm | Estoque: 215 | R$ 869.72
+  1006 | Cimento CP II 50kg | Estoque: 140 | R$ 897.41
+  Quick: 737 comparações | 399 trocas | 0.000142042 s
+  Merge: 544 comparações | 0 trocas de pares | 0.000111875 s
+  Sequências de chaves iguais: True
+
+ORDEM CRESCENTE POR NOME:
+  1198 | Areia Brita 1 m3 | Estoque: 44 | R$ 583.45
+  1195 | Areia Fina Ensacada 20kg | Estoque: 181 | R$ 213.21
+  1196 | Areia Grossa m3 | Estoque: 8 | R$ 494.11
+  1190 | Areia Media Lavada m3 | Estoque: 117 | R$ 562.08
+  1199 | Areia Pedrisco 20kg | Estoque: 238 | R$ 584.34
+  1341 | Broca Aco Rapido 6mm | Estoque: 150 | R$ 284.97
+  1351 | Broca Concreto 10mm | Estoque: 65 | R$ 148.86
+  1352 | Broca Escalonada Metal | Estoque: 221 | R$ 16.91
+  1359 | Broca Serra Copo 50mm | Estoque: 3 | R$ 234.42
+  1348 | Broca Widia 8mm | Estoque: 238 | R$ 61.67
+  1062 | Cabo Coaxial RG6 | Estoque: 25 | R$ 824.59
+  1057 | Cabo Flexivel 2.5mm | Estoque: 232 | R$ 503.49
+  1058 | Cabo Flexivel 4mm | Estoque: 81 | R$ 748.19
+  1066 | Cabo PP 3x2.5mm | Estoque: 200 | R$ 621.11
+  1071 | Cabo Rede Cat6 | Estoque: 236 | R$ 236.02
+  1228 | Chuveiro Articulado 20cm | Estoque: 229 | R$ 794.05
+  1213 | Chuveiro Ducha Cromada | Estoque: 123 | R$ 577.74
+  1206 | Chuveiro Eletrico 5500W | Estoque: 222 | R$ 47.60
+  1219 | Chuveiro Gas Inox | Estoque: 5 | R$ 611.54
+  1221 | Chuveiro Higienico Metal | Estoque: 55 | R$ 582.04
+  1017 | Cimento Branco 25kg | Estoque: 102 | R$ 724.48
+  1006 | Cimento CP II 50kg | Estoque: 140 | R$ 897.41
+  1013 | Cimento CP IV 50kg | Estoque: 178 | R$ 583.12
+  1024 | Cimento Colante AC1 | Estoque: 38 | R$ 12.80
+  1021 | Cimento Refratario 20kg | Estoque: 212 | R$ 185.66
+  1403 | Escada Aluminio 5 Degraus | Estoque: 209 | R$ 352.50
+  1406 | Escada Aluminio 7 Degraus | Estoque: 183 | R$ 56.05
+  1416 | Escada Extensiva 8m | Estoque: 186 | R$ 300.18
+  1410 | Escada Fibra 3m | Estoque: 72 | R$ 790.24
+  1423 | Escada Plataforma 4 Degraus | Estoque: 31 | R$ 719.96
+  1272 | Fechadura Banheiro Cromada | Estoque: 54 | R$ 89.09
+  1258 | Fechadura Digital Biometrica | Estoque: 134 | R$ 402.18
+  1254 | Fechadura Externa Reforcada | Estoque: 132 | R$ 162.79
+  1250 | Fechadura Interna Rolete | Estoque: 73 | R$ 733.51
+  1265 | Fechadura Tetra Chave | Estoque: 70 | R$ 473.84
+  1368 | Fio Nylon Rocadeira | Estoque: 239 | R$ 520.16
+  1360 | Fio Rigido 1.5mm | Estoque: 5 | R$ 90.77
+  1363 | Fio Rigido 6mm | Estoque: 175 | R$ 114.54
+  1379 | Fio Telefonico 2 pares | Estoque: 167 | R$ 547.69
+  1375 | Fio Terra Verde 4mm | Estoque: 199 | R$ 317.85
+  1133 | Furadeira Bancada 500W | Estoque: 121 | R$ 492.72
+  1131 | Furadeira Bateria 20V | Estoque: 184 | R$ 444.58
+  1117 | Furadeira Impacto 650W | Estoque: 91 | R$ 682.23
+  1124 | Furadeira Martelete 800W | Estoque: 237 | R$ 518.20
+  1119 | Furadeira Parafusadeira 12V | Estoque: 170 | R$ 9.09
+  1148 | Lampada Fluorescente 20W | Estoque: 239 | R$ 602.52
+  1138 | Lampada LED Bulbo 9W | Estoque: 153 | R$ 121.87
+  1150 | Lampada LED Dicroica 5W | Estoque: 234 | R$ 705.29
+  1144 | Lampada LED Tubular 18W | Estoque: 21 | R$ 455.97
+  1155 | Lampada Refletor LED 50W | Estoque: 105 | R$ 278.22
+  1303 | Massa Acrilica 25kg | Estoque: 158 | R$ 198.20
+  1314 | Massa Adesiva PU 400g | Estoque: 145 | R$ 658.35
+  1298 | Massa Corrida 18L | Estoque: 202 | R$ 619.16
+  1317 | Massa Niveladora 20kg | Estoque: 171 | R$ 507.95
+  1309 | Massa Rejunte Cinza 1kg | Estoque: 192 | R$ 255.38
+  1085 | Parafuso Autobrocante 4.2 | Estoque: 127 | R$ 242.85
+  1095 | Parafuso Bucha 6mm | Estoque: 115 | R$ 372.42
+  1079 | Parafuso Chipboard 4x40 | Estoque: 16 | R$ 433.10
+  1088 | Parafuso Frances 10mm | Estoque: 191 | R$ 90.96
+  1073 | Parafuso Sextavado 8mm | Estoque: 215 | R$ 869.72
+  1186 | Piso Antiderrapante 45x45 | Estoque: 52 | R$ 533.38
+  1172 | Piso Ceramico 60x60 | Estoque: 83 | R$ 461.04
+  1184 | Piso Laminado Carvalho | Estoque: 43 | R$ 557.84
+  1178 | Piso Porcelanato Polido | Estoque: 83 | R$ 276.13
+  1179 | Piso Vinilico Clicado | Estoque: 119 | R$ 449.58
+  1168 | Porta Batente Angelim | Estoque: 165 | R$ 750.33
+  1166 | Porta Camarao Aluminio | Estoque: 3 | R$ 180.45
+  1159 | Porta Madeira 80cm | Estoque: 133 | R$ 727.25
+  1171 | Porta Rolete Correr | Estoque: 6 | R$ 840.45
+  1167 | Porta Sanfonada PVC | Estoque: 18 | R$ 352.77
+  1243 | Registro Antivazamento | Estoque: 127 | R$ 240.15
+  1241 | Registro Bruto Metal 1 | Estoque: 88 | R$ 277.24
+  1237 | Registro Esfera PVC 25mm | Estoque: 20 | R$ 374.90
+  1230 | Registro Gaveta 3/4 | Estoque: 216 | R$ 147.97
+  1232 | Registro Pressao 1/2 | Estoque: 108 | R$ 353.33
+  1389 | Silicone Acetico Branco 280g | Estoque: 55 | R$ 287.22
+  1394 | Silicone Cola Quente Bastao | Estoque: 173 | R$ 418.36
+  1385 | Silicone Neutro Incolor 280g | Estoque: 236 | R$ 554.75
+  1395 | Silicone PU Cinza 400g | Estoque: 220 | R$ 618.54
+  1400 | Silicone Veda Calha 300ml | Estoque: 236 | R$ 614.02
+  1274 | Telha Ceramica Portuguesa | Estoque: 23 | R$ 8.89
+  1278 | Telha Fibrocimento 2m | Estoque: 104 | R$ 582.06
+  1283 | Telha Galvanizada Trapezio | Estoque: 217 | R$ 705.17
+  1290 | Telha PVC Colonial | Estoque: 6 | R$ 604.17
+  1293 | Telha Translucida 1.5m | Estoque: 90 | R$ 761.73
+  1030 | Tinta Acrilica Branca 18L | Estoque: 117 | R$ 793.49
+  1037 | Tinta Acrilica Gelo 3.6L | Estoque: 125 | R$ 472.22
+  1040 | Tinta Esmalte Sintetico 900ml | Estoque: 66 | R$ 828.79
+  1046 | Tinta Latex Fosca 18L | Estoque: 130 | R$ 438.84
+  1053 | Tinta Spray Preto 400ml | Estoque: 206 | R$ 743.51
+  1111 | Torneira Bica Alta Gourmet | Estoque: 68 | R$ 493.30
+  1096 | Torneira Cozinha Bica Movel | Estoque: 115 | R$ 86.94
+  1104 | Torneira Eletrica 5500W | Estoque: 11 | R$ 112.57
+  1102 | Torneira Jardim 1/2 | Estoque: 50 | R$ 550.26
+  1101 | Torneira Lavatorio Cromada | Estoque: 214 | R$ 493.43
+  1327 | Vaso Assento Termofixo | Estoque: 15 | R$ 99.35
+  1336 | Vaso Caixa Acoplada 6L | Estoque: 27 | R$ 582.30
+  1325 | Vaso Sanitario Caixa Acoplada | Estoque: 111 | R$ 90.76
+  1322 | Vaso Sanitario Convencional | Estoque: 200 | R$ 123.13
+  1334 | Vaso Valvula Descarga | Estoque: 205 | R$ 323.17
+  Quick: 696 comparações | 315 trocas | 0.000136917 s
+  Merge: 544 comparações | 0 trocas de pares | 0.000114667 s
+  Sequências de chaves iguais: True
+
+RESUMO:
+  Duas ordenações por algoritmo, sempre partindo da entrada original.
+  Quick Sort usa mediana de três; conta comparações da seleção do pivô.
+  Trocas contam pares em posições distintas; Merge faz cópias auxiliares.
+  Critérios: preço e nome. O CSV não contém popularidade.
+  Quick não é estável; nomes são comparados na ordem textual do Python.
+  Os tempos podem variar e não garantem vantagem para todo catálogo.
+
+COMPLEXIDADE:
+  Quick: O(n log n) médio e O(n²) pior; pilha auxiliar O(log n).
+  A menor partição usa recursão e a maior usa um laço.
+  Merge: O(n log n) em todos os casos e O(n) auxiliar.
+  Simulação, cópias e registros: O(n) de espaço, para n produtos.

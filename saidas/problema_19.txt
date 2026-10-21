@@ -1,0 +1,73 @@
+========================================================================
+PROBLEMA 19 — INSERÇÃO DE NOVAS CARTAS EM UMA MÃO ORDENADA
+Algoritmo: Insertion Sort | Linguagem: Python
+========================================================================
+
+ENTRADA: 12 cartas recebidas
+  Ordem de recebimento: [7, 3, 9, 5, 1, 12, 8, 4, 10, 2, 6, 11]
+
+RECEBIMENTO DAS CARTAS:
+  1. Carta recebida: 7
+     Mão ordenada: [7]
+     Comparações: 0 | Trocas: 0
+
+  2. Carta recebida: 3
+     Mão ordenada: [3, 7]
+     Comparações: 1 | Trocas: 1
+
+  3. Carta recebida: 9
+     Mão ordenada: [3, 7, 9]
+     Comparações: 2 | Trocas: 0
+
+  4. Carta recebida: 5
+     Mão ordenada: [3, 5, 7, 9]
+     Comparações: 5 | Trocas: 2
+
+  5. Carta recebida: 1
+     Mão ordenada: [1, 3, 5, 7, 9]
+     Comparações: 7 | Trocas: 4
+
+  6. Carta recebida: 12
+     Mão ordenada: [1, 3, 5, 7, 9, 12]
+     Comparações: 5 | Trocas: 0
+
+  7. Carta recebida: 8
+     Mão ordenada: [1, 3, 5, 7, 8, 9, 12]
+     Comparações: 8 | Trocas: 2
+
+  8. Carta recebida: 4
+     Mão ordenada: [1, 3, 4, 5, 7, 8, 9, 12]
+     Comparações: 12 | Trocas: 5
+
+  9. Carta recebida: 10
+     Mão ordenada: [1, 3, 4, 5, 7, 8, 9, 10, 12]
+     Comparações: 9 | Trocas: 1
+
+  10. Carta recebida: 2
+     Mão ordenada: [1, 2, 3, 4, 5, 7, 8, 9, 10, 12]
+     Comparações: 17 | Trocas: 8
+
+  11. Carta recebida: 6
+     Mão ordenada: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12]
+     Comparações: 15 | Trocas: 5
+
+  12. Carta recebida: 11
+     Mão ordenada: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+     Comparações: 12 | Trocas: 1
+
+RESUMO:
+  12 cartas inseridas.
+  Mão final: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+  Total de comparações: 93
+  Total de trocas: 29
+  Tempo total de ordenação: 0.000009916 segundos.
+  O tempo soma as chamadas do algoritmo e pode variar.
+
+COMPLEXIDADE:
+  Uma chamada: O(m) no melhor caso e O(m²) no pior caso.
+  Nesta simulação, a mão anterior já está ordenada:
+  cada chamada custa O(m), incluindo inserir a nova carta.
+  Recebimento das n cartas: O(n²) de tempo no total.
+  Espaço auxiliar do algoritmo: O(1). Mão: O(n).
+  Histórico das mãos exibidas: O(n²) valores registrados.
+  m é o tamanho da mão atual; n, o total de cartas.

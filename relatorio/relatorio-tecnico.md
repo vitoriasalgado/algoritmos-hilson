@@ -507,8 +507,9 @@ O arquivo completo registra todos os locais, ruas, trechos percorridos, resumo e
 
 A consulta demonstrada encontra uma rota de 10 km, mais curta que a ligação direta de 15 km.
 A saída foi gerada por execução e conferida com o conteúdo exibido no terminal.
-A simulação atual consulta somente Casa e Universidade; a demonstração de rotas entre diferentes
-pares de pontos, solicitada no enunciado, ainda precisa ser acrescentada.
+A simulação também consulta Mercado e Centro, com rota de 7 km por Hospital e Terminal,
+e Escola e Hospital, com rota de 7 km por Praça e Mercado. Assim, demonstra três pares de pontos
+com os mesmos 10 vértices e 13 ruas, conforme solicitado no enunciado.
 
 ---
 
@@ -907,6 +908,409 @@ As 15 tarefas foram organizadas e executadas na simulação conforme a prioridad
 a partir desse critério. Entretanto, tarefas com a mesma prioridade podem mudar de posição entre
 si, pois a implementação não é estável. Se a ordem de chegada também fosse um requisito,
 seria necessário considerá-la na solução.
+
+---
+
+## Situação-Problema 19 — Inserção de Novas Cartas em um Jogo de Cartas Ordenado
+
+**Algoritmo:** Insertion Sort, `python/ordenacao/insertion_sort.py`.
+**Linguagem:** Python.
+
+### Justificativa de escolha
+
+O jogador recebe uma carta por vez e precisa manter a mão ordenada por valor. O Insertion Sort
+se adapta a esse cenário porque insere cada elemento na parte já ordenada da lista.
+A simulação usa 12 cartas, dentro do intervalo de 10 a 13 solicitado no enunciado, e mostra
+a mão após cada recebimento.
+
+### Implementação e simulação
+
+A função `problema_19()` começa com uma mão vazia e recebe os valores na ordem
+`[7, 3, 9, 5, 1, 12, 8, 4, 10, 2, 6, 11]`. Cada carta é adicionada ao final da mão
+com `append()`, e a função `insertion_sort()` é chamada sobre a lista atual.
+
+A implementação usa trocas entre vizinhos. O laço externo começa no índice 1; para cada
+posição, o laço interno compara a carta com a anterior e troca o par quando estiver fora
+de ordem. A carta avança para a esquerda até encontrar uma anterior menor ou igual,
+ou chegar ao início da lista. A parada diante de valores iguais preserva a estabilidade.
+Não são utilizadas funções prontas de ordenação.
+
+O algoritmo recebe novamente a mão inteira a cada chamada, incluindo a parte já ordenada.
+Portanto, os contadores também incluem as comparações que conferem esse prefixo; eles não
+representam somente as comparações da carta recém-recebida. A função retorna comparações
+entre valores, trocas efetivas e tempo em segundos, medido com `perf_counter()`.
+A simulação soma as medições das 12 chamadas, sem incluir a escrita das mensagens nesse tempo.
+
+### Complexidade
+
+Uma chamada geral do Insertion Sort, para m cartas, custa O(m) no melhor caso e O(m²)
+no caso médio e no pior caso, com O(1) de espaço auxiliar.
+Nesta simulação, apenas a última carta pode estar fora de posição: conferir o prefixo ordenado
+e inserir essa carta custa O(m) por chamada. As n chamadas acumulam O(n²) de tempo,
+inclusive quando as cartas chegam em ordem crescente, pois o prefixo é conferido novamente.
+
+A mão ocupa O(n). O histórico registra mãos de tamanhos 1, 2, até n, totalizando
+n(n + 1)/2 valores exibidos e O(n²) de armazenamento nos registros, considerando tamanho
+limitado por valor. Esse custo pertence à demonstração, não ao espaço auxiliar da ordenação.
+
+### Exemplo de execução
+
+Trechos de `saidas/problema_19.txt`:
+
+```text
+1. Carta recebida: 7
+   Mão ordenada: [7]
+   Comparações: 0 | Trocas: 0
+
+2. Carta recebida: 3
+   Mão ordenada: [3, 7]
+   Comparações: 1 | Trocas: 1
+
+4. Carta recebida: 5
+   Mão ordenada: [3, 5, 7, 9]
+   Comparações: 5 | Trocas: 2
+
+RESUMO:
+  12 cartas inseridas.
+  Mão final: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+  Total de comparações: 93
+  Total de trocas: 29
+```
+
+O arquivo completo contém os 12 recebimentos, as mãos intermediárias e as medições.
+O tempo pode variar entre execuções; as contagens se referem à entrada e à implementação
+descritas nesta seção.
+
+### Dificuldades encontradas e soluções adotadas
+
+- **Entender a posição da nova carta:** a comparação começa pela anterior e move a carta
+  para a esquerda enquanto houver um valor maior antes dela.
+- **Contar trocas efetivas:** foi adotada a variação com trocas entre vizinhos, permitindo
+  usar a mesma definição de troca dos outros algoritmos do projeto.
+- **Preservar cada estado da mão:** a conversão da lista em texto ocorre no momento do registro,
+  antes de receber a próxima carta, mantendo o histórico das inserções.
+- **Separar custos:** o relatório distingue a ordenação, o recebimento incremental e o histórico
+  de saída, que guarda todas as mãos exibidas.
+
+### Conclusão
+
+As 12 cartas foram inseridas e a mão permaneceu ordenada após cada recebimento.
+A verificação conferiu o tamanho de cada mão, a preservação das cartas recebidas e a ordem
+crescente dos valores. A execução registrou 93 comparações e 29 trocas, e o conteúdo salvo
+foi conferido com a saída exibida no terminal. O algoritmo atende ao conjunto pequeno e
+incremental, com o custo adicional de conferir o prefixo a cada nova chamada.
+
+---
+
+## Situação-Problema 20 — Atualização de Ranking de Vendedores do Mês
+
+**Algoritmo:** Insertion Sort, `python/ordenacao/insertion_sort.py`.
+**Linguagem:** Python.
+
+### Justificativa de escolha
+
+O ranking do dia anterior já está ordenado. Após atualizar os totais de vendas, o Insertion Sort
+reorganiza os vendedores deslocando cada registro até sua posição correta. Quando as mudanças
+de posição são pequenas, são necessárias poucas trocas. A simulação permite comparar essa
+característica com a mesma lista em ordem aleatória.
+
+### Implementação e simulação
+
+A função `problema_20()` utiliza oito vendedores e sete dias de atualizações determinísticas.
+Os totais são inteiros em centavos; a conversão para reais ocorre somente na apresentação.
+A cada dia, são acrescentadas vendas aos oito registros e a lista do ranking é ordenada pelo
+total decrescente, usando `indice_chave=1` e `decrescente=True`.
+
+O cadastro e o ranking compartilham os registros internos, mas possuem listas externas distintas.
+Assim, os totais atualizados aparecem no ranking sem perder a ordem fixa do cadastro utilizada
+para gerar os acréscimos. O Insertion Sort troca registros inteiros e mantém a ordem dos empates.
+
+Após a semana, duas cópias do ranking final recebem os mesmos nomes e totais. Uma começa
+ordenada e a outra é embaralhada com semente 20. `Random.shuffle()` apenas prepara a entrada
+aleatória; a ordenação é realizada pelo algoritmo próprio. A comparação de valores é contada
+uma vez por par examinado, e as trocas contam somente movimentações efetivas de pares.
+
+### Complexidade
+
+Para n vendedores, uma ordenação custa O(n) no melhor caso, O(n²) no pior e O(1) de espaço
+auxiliar. Em d dias, a simulação custa O(d*n²) no pior caso. As cópias ocupam O(n), e os
+registros das atualizações e rankings ocupam O(d*n), considerando nomes de tamanho limitado.
+
+### Exemplo de execução
+
+O registro completo está em `saidas/problema_20.txt`.
+
+| Execução | Comparações | Trocas |
+| --- | --- | --- |
+| Sete rankings diários, acumulados | 105 | 63 |
+| Ranking final já ordenado | 7 | 0 |
+| Mesmos registros em ordem aleatória | 17 | 11 |
+
+No último dia, Henrique terminou em primeiro com R$ 9.060,00, seguido de Carla, com
+R$ 7.180,00, e Bruno, com R$ 6.244,00. O arquivo inclui os 56 acréscimos, os sete rankings,
+as duas entradas comparativas, os resultados e os tempos medidos.
+
+### Dificuldades encontradas e soluções adotadas
+
+- **Reutilizar a ordenação das cartas:** o algoritmo passou a aceitar índice da chave e direção,
+  preservando o comportamento padrão usado na questão 19.
+- **Atualizar sem perder a identidade dos vendedores:** os registros são compartilhados entre
+  cadastro e ranking, enquanto a posição de cada lista externa pode variar.
+- **Comparar condições equivalentes:** as entradas ordenada e aleatória possuem exatamente
+  os mesmos totais finais, e cada execução recebe uma cópia independente.
+
+### Conclusão
+
+A simulação atualizou os oito vendedores durante sete dias e apresentou os rankings completos.
+Na comparação final, a entrada ordenada exigiu menos comparações e nenhuma troca.
+Os tempos são medições de uma execução curta e não permitem generalizar a vantagem para
+todos os cenários. A igualdade entre arquivo e terminal foi conferida por execução.
+
+---
+
+## Situação-Problema 21 — Ordenação de Histórico de Transações Bancárias
+
+**Algoritmo:** Merge Sort, `python/ordenacao/merge_sort.py`.
+**Linguagem:** Python.
+
+### Justificativa de escolha
+
+O histórico deve ser ordenado por data e hora, preservando a ordem de registro das transações
+que tenham o mesmo instante. O Merge Sort oferece estabilidade e tempo O(n log n), inclusive
+no pior caso, sendo adequado a um histórico que pode crescer.
+
+### Implementação e simulação
+
+A função `problema_21()` lê as 50 transações de `dados/transacoes.csv`. Cada registro possui
+data e hora, valor convertido para número e descrição. A chave de ordenação é a data no
+formato fixo `AAAA-MM-DD HH:MM:SS`, cuja ordem textual corresponde à cronológica.
+
+O algoritmo divide a lista recursivamente e intercala as duas metades usando um vetor auxiliar
+reutilizado. Quando as chaves são iguais, escolhe o registro da metade esquerda primeiro,
+preservando a estabilidade. Ao terminar cada intercalação, copia o trecho auxiliar para a lista
+original. Não utiliza funções prontas de ordenação.
+
+As comparações contam confrontos entre chaves durante a intercalação. O contador de trocas
+de pares é zero, pois o Merge Sort realiza cópias para a área auxiliar, não trocas entre posições.
+Isso não significa ausência de movimentação de registros.
+
+### Complexidade
+
+Para n transações, o tempo é O(n log n) nos casos melhor, médio e pior nesta implementação,
+sem otimização para trechos já ordenados. O vetor auxiliar ocupa O(n), e a recursão usa
+O(log n) de pilha. Leitura e registros também ocupam O(n), para campos de tamanho limitado.
+
+### Exemplo de execução
+
+O arquivo `saidas/problema_21.txt` mostra a entrada e o histórico completo ordenado.
+A primeira data resultante é `2026-01-13 17:45:21` e a última é `2026-09-25 16:13:27`.
+Foram realizadas 219 comparações e nenhuma troca de pares. Os valores e as descrições
+acompanham suas datas durante a ordenação.
+
+### Dificuldades encontradas e soluções adotadas
+
+- **Comparar datas corretamente:** o contrato do CSV usa formato fixo com ano antes do mês
+  e do dia, permitindo comparação textual sem alterar os dados compartilhados.
+- **Manter estabilidade:** a igualdade favorece a metade esquerda na intercalação.
+- **Interpretar as medições:** o relatório distingue trocas de pares das cópias auxiliares
+  necessárias para produzir a lista ordenada.
+
+### Conclusão
+
+As 50 transações foram ordenadas cronologicamente sem perder registros. A estabilidade foi
+verificada também com registros de teste contendo chaves iguais, e a saída completa foi
+conferida com o terminal. O custo de memória auxiliar é a contrapartida da intercalação estável.
+
+---
+
+## Situação-Problema 22 — Mesclagem de Duas Listas de Contatos Ordenadas
+
+**Algoritmo:** Intercalação do Merge Sort, função `mesclar_contatos()`.
+**Linguagem:** Python.
+
+### Justificativa de escolha
+
+As duas entradas já estão ordenadas. A etapa de intercalação permite produzir uma lista única
+avançando os índices das duas listas, sem ordenar tudo novamente. A remoção de duplicatas
+ocorre durante a mesclagem, comparando o nome escolhido com o último nome inserido.
+
+### Implementação e simulação
+
+A função `problema_22()` lê `dados/contatos_a.csv` e `dados/contatos_b.csv`, com 20 contatos
+em cada arquivo. Antes da intercalação, o algoritmo verifica se cada entrada está em ordem
+crescente por nome; uma entrada fora de ordem gera `ValueError`.
+
+Dois índices acompanham as entradas. Em cada etapa, o menor nome é escolhido e seu índice
+avança. Quando uma lista termina, os contatos restantes da outra continuam sendo processados.
+Um nome igual ao último já inserido é descartado, inclusive se a repetição estiver na mesma lista.
+
+A identidade do contato é o nome exato. Para nomes presentes nas duas entradas, prevalece o
+primeiro telefone da lista A, porque a igualdade favorece A. Se o nome só existir em B,
+prevalece a primeira ocorrência de B. Essa decisão resolve conflitos de telefone sem deixar
+o comportamento implícito. As entradas originais não são alteradas.
+
+### Complexidade
+
+Para listas de tamanhos a e b, validação e mesclagem custam O(a + b) de tempo.
+O resultado e os registros ocupam O(a + b) de espaço. Os índices e demais variáveis de
+controle ocupam O(1), considerando nomes de tamanho limitado.
+
+### Exemplo de execução
+
+```text
+ENTRADA: 20 contatos A e 20 contatos B
+RESUMO:
+  35 contatos únicos.
+  5 duplicatas removidas.
+  Comparações de nomes, incluindo validação: 114
+```
+
+O registro completo está em `saidas/problema_22.txt`. Amanda Rezende Vasconcelos, por
+exemplo, aparece nas duas entradas e fica com o telefone da lista A no resultado.
+
+### Dificuldades encontradas e soluções adotadas
+
+- **Definir duplicidade:** o critério adotado é igualdade exata do nome, sem normalização
+  de acentos ou aproximação de grafias.
+- **Resolver telefones diferentes:** a precedência de A é explicitada no código e na saída.
+- **Preservar o custo linear:** somente o último nome produzido é consultado para remover
+  repetições; não se usa tabela hash nem busca em toda a lista resultante.
+
+### Conclusão
+
+Os 40 registros de entrada produziram 35 contatos únicos em ordem crescente. Foram verificados
+também listas vazias, repetições internas, precedência de telefones e rejeição de entrada
+desordenada. A saída salva corresponde ao conteúdo exibido no terminal.
+
+---
+
+## Situação-Problema 23 — Ordenação de Catálogo de Produtos de E-commerce
+
+**Algoritmo principal:** Quick Sort com pivô mediana de três, `python/ordenacao/quick_sort.py`.
+**Comparação:** Merge Sort.
+**Linguagem:** Python.
+
+### Justificativa de escolha
+
+O catálogo precisa oferecer diferentes ordens de apresentação. O Quick Sort permite ordenar
+os registros por uma chave selecionada, com custo médio O(n log n). A escolha do pivô pela
+mediana de três reduz a dependência de uma única posição da entrada, mas não elimina o
+pior caso quadrático. O Merge Sort é usado como comparação de tempo e operações.
+
+### Implementação e simulação
+
+A função `problema_23()` lê os 100 produtos de `dados/produtos.csv`, convertendo quantidade
+para inteiro e preço para número decimal. São demonstradas ordens crescentes por preço e
+por nome. O arquivo não possui popularidade, portanto esse critério não é inventado.
+Os nomes são comparados pela ordem textual do Python, sem colação específica do português.
+
+O Quick Sort escolhe a mediana dos valores nas posições inicial, central e final, usando
+três comparações e ordenando manualmente os índices candidatos. Depois posiciona o pivô
+no fim e particiona o trecho por varredura. São trocados registros completos.
+A menor partição é processada recursivamente, e a maior continua em um laço, limitando
+a profundidade da pilha inclusive quando o particionamento é desequilibrado.
+
+As comparações incluem as três usadas na escolha de cada pivô e as da partição.
+As trocas contam operações entre posições distintas, incluindo a colocação do pivô;
+as trocas dos índices candidatos não contam como trocas de produtos.
+O Merge Sort retorna zero trocas de pares, mas faz cópias para o vetor auxiliar.
+
+Para cada critério, os dois algoritmos recebem cópias da mesma entrada original. São
+comparadas as sequências de chaves, pois o Quick Sort não é estável e pode reordenar
+registros empatados. Não há alteração dos campos dos produtos durante a ordenação.
+
+### Complexidade
+
+O Quick Sort custa O(n log n) em média e O(n²) no pior caso, incluindo listas com muitas
+chaves iguais nesta partição de duas partes. A recursão na menor partição usa O(log n)
+de pilha no pior caso. O Merge Sort custa O(n log n) de tempo e O(n) auxiliar.
+As cópias, leituras e registros ocupam O(n), para n produtos com campos de tamanho limitado.
+
+### Exemplo de execução
+
+| Critério | Algoritmo | Comparações | Trocas de pares |
+| --- | --- | --- | --- |
+| Preço | Quick Sort | 737 | 399 |
+| Preço | Merge Sort | 544 | 0 |
+| Nome | Quick Sort | 696 | 315 |
+| Nome | Merge Sort | 544 | 0 |
+
+As sequências de chaves dos dois algoritmos coincidiram nos dois critérios.
+`saidas/problema_23.txt` contém a entrada, as duas listagens completas do Quick Sort,
+as medições dos dois algoritmos e o resultado da comparação das chaves.
+
+### Dificuldades encontradas e soluções adotadas
+
+- **Selecionar a chave:** o índice do campo é fornecido por parâmetro, mantendo o algoritmo
+  reutilizável para preços, nomes e tempos de atletas.
+- **Evitar profundidade linear de recursão:** apenas a menor partição usa uma chamada recursiva.
+- **Comparar com justiça:** cada algoritmo recebe uma cópia independente da entrada original.
+- **Explicar os contadores:** trocas e cópias auxiliares são operações distintas; o valor zero
+  do Merge Sort não representa ausência de trabalho de movimentação.
+
+### Conclusão
+
+O catálogo foi ordenado por preço e por nome, preservando os 100 registros completos.
+As chaves resultantes coincidiram com as do Merge Sort. Os tempos registrados pertencem
+a uma execução curta e podem variar; não justificam afirmar que um algoritmo será sempre
+mais rápido. A demonstração respeita o uso de algoritmos próprios solicitado no item 5.4.
+
+---
+
+## Situação-Problema 24 — Classificação de Resultados de uma Competição Esportiva
+
+**Algoritmo:** Quick Sort com pivô mediana de três.
+**Linguagem:** Python.
+
+### Justificativa de escolha
+
+A classificação deve colocar primeiro os atletas com menor tempo. O Quick Sort já implementado
+para produtos pode ser reutilizado indicando o campo do tempo, mantendo os nomes associados
+aos resultados. Após a ordenação, os três primeiros registros formam o pódio.
+
+### Implementação e simulação
+
+A função `problema_24()` lê 30 atletas de `dados/atletas.csv` e converte os tempos para
+número decimal. A apresentação interpreta a unidade como segundos. O algoritmo ordena
+registros `[nome, tempo]` pela posição 1 em ordem crescente.
+
+A saída apresenta a entrada, a classificação completa e o Top 3. Não há regra adicional
+de desempate: o Quick Sort não preserva necessariamente a ordem original de tempos iguais.
+O tempo de ordenação é medido separadamente dos tempos de corrida dos atletas.
+
+### Complexidade
+
+Para n atletas, o Quick Sort custa O(n log n) em média e O(n²) no pior caso.
+A pilha recursiva ocupa O(log n), pois a menor partição é processada recursivamente.
+Leitura, registros e listas ocupam O(n). Extrair três atletas custa O(1), pois o tamanho
+do pódio é fixo.
+
+### Exemplo de execução
+
+```text
+PÓDIO — TOP 3:
+  1. Felipe Moreira Castro | 616.41 s
+  2. Diego Marques Bittencourt | 616.90 s
+  3. Gabriela Torres Dias | 629.32 s
+```
+
+A ordenação realizou 149 comparações e 50 trocas. O arquivo `saidas/problema_24.txt`
+contém todos os 30 atletas na entrada e na classificação, além do pódio e das medições.
+
+### Dificuldades encontradas e soluções adotadas
+
+- **Interpretar a direção:** o menor tempo vence, portanto a ordem é crescente.
+- **Manter nome e tempo juntos:** o particionamento movimenta o registro inteiro.
+- **Separar medições:** o resultado esportivo é diferente da duração de execução do algoritmo.
+- **Explicitar empates:** a aplicação não apresenta uma ordem estável nem um desempate que
+  não tenha sido definido no problema.
+
+### Conclusão
+
+Os 30 atletas foram classificados em ordem crescente de tempo e o pódio corresponde aos
+três primeiros registros. Foram conferidas a preservação dos atletas, a ordem dos resultados
+e a igualdade entre a saída salva e o terminal. O mesmo algoritmo atende aos dois cenários
+de ordenação por meio da seleção explícita da chave.
 
 ---
 

@@ -1,0 +1,85 @@
+========================================================================
+PROBLEMA 24 — CLASSIFICAÇÃO DE UMA COMPETIÇÃO ESPORTIVA
+Algoritmo: Quick Sort | Linguagem: Python
+========================================================================
+
+ENTRADA: 30 atletas de dados/atletas.csv
+  Tempos em segundos; vence o menor tempo.
+  Ana Beatriz Souza | 788.22 s
+  Bruno Carvalho Lima | 705.16 s
+  Carla Menezes Rocha | 841.17 s
+  Daniel Freitas Alves | 764.75 s
+  Eduarda Nunes Pinto | 721.07 s
+  Felipe Moreira Castro | 616.41 s
+  Gabriela Torres Dias | 629.32 s
+  Henrique Barbosa Melo | 787.42 s
+  Isabela Cardoso Ramos | 840.57 s
+  Joao Pedro Antunes | 744.09 s
+  Karina Lopes Ferreira | 732.42 s
+  Lucas Vieira Guedes | 668.67 s
+  Mariana Teixeira Prado | 802.61 s
+  Nicolas Almeida Cruz | 814.84 s
+  Olivia Ribeiro Sampaio | 646.71 s
+  Paulo Cesar Bastos | 798.14 s
+  Quezia Martins Duarte | 652.94 s
+  Rafael Coelho Bezerra | 740.18 s
+  Sabrina Farias Monteiro | 644.31 s
+  Thiago Nogueira Pires | 801.76 s
+  Ursula Amaral Fontes | 632.87 s
+  Vinicius Peixoto Braga | 774.63 s
+  Wesley Tavares Goncalves | 758.62 s
+  Yasmin Cordeiro Leal | 768.30 s
+  Zeca Miranda Bandeira | 690.90 s
+  Amanda Rezende Vasconcelos | 831.63 s
+  Bernardo Siqueira Pontes | 631.39 s
+  Camila Aguiar Fialho | 770.83 s
+  Diego Marques Bittencourt | 616.90 s
+  Elisa Fontenele Macedo | 670.78 s
+
+RESULTADOS — CLASSIFICAÇÃO FINAL:
+  1. Felipe Moreira Castro | 616.41 s
+  2. Diego Marques Bittencourt | 616.90 s
+  3. Gabriela Torres Dias | 629.32 s
+  4. Bernardo Siqueira Pontes | 631.39 s
+  5. Ursula Amaral Fontes | 632.87 s
+  6. Sabrina Farias Monteiro | 644.31 s
+  7. Olivia Ribeiro Sampaio | 646.71 s
+  8. Quezia Martins Duarte | 652.94 s
+  9. Lucas Vieira Guedes | 668.67 s
+  10. Elisa Fontenele Macedo | 670.78 s
+  11. Zeca Miranda Bandeira | 690.90 s
+  12. Bruno Carvalho Lima | 705.16 s
+  13. Eduarda Nunes Pinto | 721.07 s
+  14. Karina Lopes Ferreira | 732.42 s
+  15. Rafael Coelho Bezerra | 740.18 s
+  16. Joao Pedro Antunes | 744.09 s
+  17. Wesley Tavares Goncalves | 758.62 s
+  18. Daniel Freitas Alves | 764.75 s
+  19. Yasmin Cordeiro Leal | 768.30 s
+  20. Camila Aguiar Fialho | 770.83 s
+  21. Vinicius Peixoto Braga | 774.63 s
+  22. Henrique Barbosa Melo | 787.42 s
+  23. Ana Beatriz Souza | 788.22 s
+  24. Paulo Cesar Bastos | 798.14 s
+  25. Thiago Nogueira Pires | 801.76 s
+  26. Mariana Teixeira Prado | 802.61 s
+  27. Nicolas Almeida Cruz | 814.84 s
+  28. Amanda Rezende Vasconcelos | 831.63 s
+  29. Isabela Cardoso Ramos | 840.57 s
+  30. Carla Menezes Rocha | 841.17 s
+
+PÓDIO — TOP 3:
+  1. Felipe Moreira Castro | 616.41 s
+  2. Diego Marques Bittencourt | 616.90 s
+  3. Gabriela Torres Dias | 629.32 s
+
+RESUMO:
+  30 atletas classificados; 3 no pódio.
+  Comparações: 149 | Trocas: 50
+  Tempo de ordenação: 0.000029250 segundos.
+  Tempos iguais não têm critério adicional de desempate.
+
+COMPLEXIDADE:
+  Quick: O(n log n) médio e O(n²) pior; pilha auxiliar O(log n).
+  Cópias, leitura e registros: O(n) de espaço, para n atletas.
+  Extração do pódio: O(1), pois são sempre três atletas.

@@ -31,9 +31,26 @@ RESULTADOS:
     4. Biblioteca → Parque
     5. Parque → Universidade
 
+  Origem: Mercado | Destino: Centro
+  Menor caminho: Mercado → Hospital → Terminal → Centro
+  Distância total: 7 km
+  Trechos percorridos:
+    1. Mercado → Hospital
+    2. Hospital → Terminal
+    3. Terminal → Centro
+
+  Origem: Escola | Destino: Hospital
+  Menor caminho: Escola → Praça → Mercado → Hospital
+  Distância total: 7 km
+  Trechos percorridos:
+    1. Escola → Praça
+    2. Praça → Mercado
+    3. Mercado → Hospital
+
+
 RESUMO:
   Operações: 10 cadastros de vértices, 13 inserções
-  de arestas e 1 consulta de menor caminho com Dijkstra.
+  de arestas e 3 consultas de menor caminho com Dijkstra.
   Cada rua é armazenada nas listas de seus dois extremos.
 
 COMPLEXIDADE:
