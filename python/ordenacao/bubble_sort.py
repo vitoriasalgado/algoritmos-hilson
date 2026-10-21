@@ -1,4 +1,4 @@
-from time import perf_counter # disponibiliza a função de relógio do módulo time em python.
+from time import perf_counter # importa o relógio para medir o tempo
 
 def bubble_sort(valores, indice_preco=None, decrescente=False):
 
@@ -7,13 +7,13 @@ def bubble_sort(valores, indice_preco=None, decrescente=False):
     inicio = perf_counter()
     n = len(valores)
 
-    # posiciona um elemento no final da parte não ordenada, conforme a direção
+    # leva um valor para o fim da parte não ordenada
     for i in range(n-1): 
         houve_troca = False
 
-        # ignora os últimos elementos i que já estão na posição correta
+        # pula os valores do fim que já estão no lugar
         for j in range (n - 1 - i): 
-            comparacoes += 1 # conta a comparação entre vizinhos
+            comparacoes += 1 # conta uma comparação entre vizinhos
             if indice_preco is None:
                 atual = valores[j]
                 proximo = valores [j + 1]

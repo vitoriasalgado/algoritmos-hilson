@@ -18,7 +18,7 @@ class Fila:
             self._inicio += 1
             return item
         else:
-            raise IndexError("Fila vazia (desenfileirar)") # erro aparecerá imediatamente se tentar remover de uma fila vazia
+            raise IndexError("Fila vazia (desenfileirar)") # avisa se tentar remover da fila vazia
         
     def tamanho(self):
         """ mapeia para size """
@@ -29,15 +29,15 @@ class Fila:
         if not self.vazia():
             return self._itens[self._inicio]
         else:
-            raise IndexError("Fila vazia (frente)") # erro aparecerá imediatamente se tentar acessar a frente de uma fila vazia
+            raise IndexError("Fila vazia (frente)") # avisa se tentar consultar a fila vazia
 
     def cancelar_ultimo(self):
         """ cancela o último item da fila """
         if not self.vazia():
-            return self._itens.pop() # remove e informa o último elemento da lista
+            return self._itens.pop() # remove e retorna o último item
         else:
-            raise IndexError("Fila vazia (cancelar último)") # erro aparecerá imediatamente se tentar cancelar de uma fila vazia
+            raise IndexError("Fila vazia (cancelar último)") # avisa se tentar cancelar na fila vazia
 
     def listar(self):
         """ lista os itens da fila """
-        return self._itens[self._inicio:] # retorna apenas os itens que ainda estão na fila
+        return self._itens[self._inicio:] # retorna os itens que ainda estão na fila

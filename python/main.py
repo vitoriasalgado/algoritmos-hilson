@@ -1,11 +1,15 @@
 import csv 
+from random import Random
 from lineares.fila import Fila
 from lineares.pilha import Pilha
 from nao_lineares.grafo import Grafo
 from ordenacao.bubble_sort import bubble_sort
 from ordenacao.selection_sort import selection_sort
+from ordenacao.insertion_sort import insertion_sort
+from ordenacao.merge_sort import merge_sort, mesclar_contatos
+from ordenacao.quick_sort import quick_sort
 
-# valores escolhidos para estimar o tempo fora do csv
+# tempos estimados para cada tipo de atendimento
 duracao_por_tipo ={
     "Consulta": 15,
     "Exame": 20,
@@ -13,13 +17,13 @@ duracao_por_tipo ={
     "Urgencia": 10,
     "Retorno": 10,
 }
-def horario_para_minutos(horario): # problema 2 : converte o horário "00:00" em minutos
+def horario_para_minutos(horario): # converte o horário em minutos
     partes = horario.split(':')
     horas = int(partes[0])
     minutos = int(partes[1])
     return horas * 60 + minutos
 
-def expressao_balanceada(expressao): # problema 4 : cria uma pilha vazia
+def expressao_balanceada(expressao): # usa uma pilha para conferir os delimitadores
     pilha = Pilha()
     for caractere in expressao:
         if caractere in "([{":
@@ -68,7 +72,7 @@ def problema_01():
         registrar(f"  Paciente: {paciente[0]} | Chegada: {paciente[1]} | Tipo: {paciente[2]}")
         chegada = horario_para_minutos(paciente[1])
         duracao = duracao_por_tipo[paciente[2]]
-        if chegada > fim_do_atendimento: # calcula o tempo de espera e o horário de início do atendimento
+        if chegada > fim_do_atendimento: # calcula a espera e o início do atendimento
             inicio = chegada
         else:
             inicio = fim_do_atendimento
@@ -247,7 +251,7 @@ def problema_11():
         "Casa", "Praça", "Escola", "Mercado", "Hospital",
         "Biblioteca", "Parque", "Terminal", "Universidade", "Centro",
     ]
-    # distâncias fictícias em km, onde cada rua permite os dois sentidos.
+    # distâncias fictícias em km e ruas de mão dupla
     ruas = [
         ["Casa", "Praça", 2],
         ["Casa", "Mercado", 7],
@@ -269,9 +273,11 @@ def problema_11():
     for origem, destino, distancia in ruas:
         grafo.adicionar_aresta(origem, destino, distancia)
 
-    origem = "Casa"
-    destino = "Universidade"
-    caminho, distancia_total = grafo.menor_caminho(origem, destino)
+    consultas = [
+        ["Casa", "Universidade"],
+        ["Mercado", "Centro"],
+        ["Escola", "Hospital"],
+    ]
     linhas_saida = []
 
     def registrar(mensagem):
@@ -289,19 +295,22 @@ def problema_11():
         registrar(f"  {inicio} ↔ {fim}: {distancia} km")
 
     registrar("\nRESULTADOS:")
-    registrar(f"  Origem: {origem} | Destino: {destino}")
-    if caminho:
-        registrar("  Menor caminho: " + " → ".join(caminho))
-        registrar(f"  Distância total: {distancia_total} km")
-        registrar("  Trechos percorridos:")
-        for indice in range(len(caminho) - 1):
-            registrar(f"    {indice + 1}. {caminho[indice]} → {caminho[indice + 1]}")
-    else:
-        registrar("  Não existe caminho entre esses locais.")
+    for origem, destino in consultas:
+        caminho, distancia_total = grafo.menor_caminho(origem, destino)
+        registrar(f"  Origem: {origem} | Destino: {destino}")
+        if caminho:
+            registrar("  Menor caminho: " + " → ".join(caminho))
+            registrar(f"  Distância total: {distancia_total} km")
+            registrar("  Trechos percorridos:")
+            for indice in range(len(caminho) - 1):
+                registrar(f"    {indice + 1}. {caminho[indice]} → {caminho[indice + 1]}")
+        else:
+            registrar("  Não existe caminho entre esses locais.")
+        registrar("")
 
     registrar("\nRESUMO:")
     registrar(f"  Operações: {len(locais)} cadastros de vértices, {len(ruas)} inserções")
-    registrar("  de arestas e 1 consulta de menor caminho com Dijkstra.")
+    registrar(f"  de arestas e {len(consultas)} consultas de menor caminho com Dijkstra.")
     registrar("  Cada rua é armazenada nas listas de seus dois extremos.")
     registrar("\nCOMPLEXIDADE:")
     registrar("  Consulta: tempo O(V² + E), com seleção por varredura linear.")
@@ -337,7 +346,7 @@ def problema_12():
         ["Lucas", "Mariana"],
         ["Mariana", "Nicolas"],
     ]
-    # Olivia fica sem amizades para demonstrar uma pessoa desconectada.
+    # olivia fica sem amigos para testar a falta de conexão
 
     for usuario in usuarios:
         grafo.adicionar_vertice(usuario)
@@ -437,7 +446,7 @@ def problema_15():
     registrar(f"\nENTRADA: {len(notas)} notas")
     registrar(f"  Notas originais: {notas}")
 
-    # cada algoritmo recebe uma cópia da mesma entrada original
+    # cada algoritmo recebe uma cópia da entrada
     notas_bubble = notas.copy()
     notas_selection = notas.copy()
     comparacoes_bubble, trocas_bubble, tempo_bubble = bubble_sort(notas_bubble)
@@ -483,7 +492,7 @@ def problema_16():
         preco = float(linha[3])
         produtos.append([nome, preco])
         
-    # as duas ordens partem da mesma entrada original
+    # as duas ordens usam cópias da entrada
     produtos_crescente = produtos.copy()
     produtos_decrescente = produtos.copy()
 
@@ -562,17 +571,17 @@ def problema_17():
         ["Maria", 94],
     ]
     quantidades_selecionados = 5
-    # preserva a ordem original para exibir a entrada
+    # guarda a entrada na ordem original
     candidatos_ordenados = candidatos.copy()
 
-    # compara a pontuação na posição 1, da maior para a menor
+    # ordena pela pontuação, da maior para a menor
     comparacoes, trocas, tempo = selection_sort(
         candidatos_ordenados,
         indice_pontuacao=1,
         decrescente=True,
     )
 
-    # após ordenar, os primeiros números são os melhores colocados
+    # pega os primeiros colocados após ordenar
     selecionados = candidatos_ordenados[:quantidades_selecionados]
 
     linhas_saida = []
@@ -635,9 +644,9 @@ def problema_18():
         ["Revisar anotações antigas", 5],
     ]
 
-    # preserva a entrada; 1 representa a prioridade mais alta
+    # guarda a entrada original e usa 1 como maior prioridade
     tarefas_ordenadas = tarefas.copy()
-    # o campo numérico fica na posição 1, assim como a pontuação dos candidatos
+    # a prioridade fica na posição 1 do registro
     comparacoes, trocas, tempo = selection_sort(
         tarefas_ordenadas, indice_pontuacao=1
     )
@@ -684,6 +693,293 @@ def problema_18():
         arquivo_saida.write("\n".join(linhas_saida) + "\n")
 
 
+def problema_19():
+    cartas_recebidas = [7, 3, 9, 5, 1, 12, 8, 4, 10, 2, 6, 11]
+    mao = []
+    total_comparacoes = 0
+    total_trocas = 0
+    tempo_total = 0
+    linhas_saida = []
+
+    def registrar(mensagem):
+        print(mensagem)
+        linhas_saida.append(mensagem)
+
+    registrar("=" * 72)
+    registrar("PROBLEMA 19 — INSERÇÃO DE NOVAS CARTAS EM UMA MÃO ORDENADA")
+    registrar("Algoritmo: Insertion Sort | Linguagem: Python")
+    registrar("=" * 72)
+
+    registrar(f"\nENTRADA: {len(cartas_recebidas)} cartas recebidas")
+    registrar(f"  Ordem de recebimento: {cartas_recebidas}")
+
+    registrar("\nRECEBIMENTO DAS CARTAS:")
+
+    for numero, carta in enumerate(cartas_recebidas, start=1):
+        mao.append(carta)
+        comparacoes, trocas, tempo = insertion_sort(mao)
+
+        total_comparacoes += comparacoes
+        total_trocas += trocas
+        tempo_total += tempo
+
+        registrar(f"  {numero}. Carta recebida: {carta}")
+        registrar(f"     Mão ordenada: {mao}")
+        registrar(
+            f"     Comparações: {comparacoes} | Trocas: {trocas}"
+        )
+        registrar("")
+
+    registrar("RESUMO:")
+    registrar(f"  {len(cartas_recebidas)} cartas inseridas.")
+    registrar(f"  Mão final: {mao}")
+    registrar(f"  Total de comparações: {total_comparacoes}")
+    registrar(f"  Total de trocas: {total_trocas}")
+    registrar(f"  Tempo total de ordenação: {tempo_total:.9f} segundos.")
+    registrar("  O tempo soma as chamadas do algoritmo e pode variar.")
+
+    registrar("\nCOMPLEXIDADE:")
+    registrar("  Uma chamada: O(m) no melhor caso e O(m²) no pior caso.")
+    registrar("  Nesta simulação, a mão anterior já está ordenada:")
+    registrar("  cada chamada custa O(m), incluindo inserir a nova carta.")
+    registrar("  Recebimento das n cartas: O(n²) de tempo no total.")
+    registrar("  Espaço auxiliar do algoritmo: O(1). Mão: O(n).")
+    registrar("  Histórico das mãos exibidas: O(n²) valores registrados.")
+    registrar("  m é o tamanho da mão atual; n, o total de cartas.")
+
+    with open("saidas/problema_19.txt", "w", encoding="utf-8") as arquivo_saida:
+        arquivo_saida.write("\n".join(linhas_saida) + "\n")
+
+
+def ler_base(caminho, cabecalho_esperado, minimo):
+    with open(caminho, newline="", encoding="utf-8") as arquivo:
+        leitor = csv.reader(arquivo)
+        if next(leitor, None) != cabecalho_esperado:
+            raise ValueError(f"Cabeçalho inválido em {caminho}.")
+        registros = list(leitor)
+    if len(registros) < minimo:
+        raise ValueError(f"{caminho} precisa de pelo menos {minimo} registros.")
+    if any(len(linha) != len(cabecalho_esperado) for linha in registros):
+        raise ValueError(f"Registro incompleto em {caminho}.")
+    return registros
+
+
+def iniciar_registro(numero, titulo, algoritmo):
+    linhas = []
+
+    def registrar(mensagem):
+        print(mensagem)
+        linhas.append(mensagem)
+
+    registrar("=" * 72)
+    registrar(f"PROBLEMA {numero:02d} — {titulo}")
+    registrar(f"Algoritmo: {algoritmo} | Linguagem: Python")
+    registrar("=" * 72)
+    return registrar, linhas
+
+
+def salvar_registro(numero, linhas):
+    with open(f"saidas/problema_{numero:02d}.txt", "w", encoding="utf-8") as arquivo:
+        arquivo.write("\n".join(linhas) + "\n")
+
+
+def problema_20():
+    vendedores = [
+        ["Ana", 80000], ["Bruno", 70000], ["Carla", 60000],
+        ["Daniel", 50000], ["Elisa", 40000], ["Felipe", 30000],
+        ["Gabriela", 20000], ["Henrique", 10000],
+    ]
+    ranking = vendedores.copy()
+    registrar, linhas = iniciar_registro(
+        20, "ATUALIZAÇÃO DO RANKING DE VENDEDORES", "Insertion Sort"
+    )
+    registrar("\nENTRADA: 8 vendedores e 7 dias de atualizações")
+    registrar("  Valores armazenados em centavos para evitar erros decimais.")
+    for nome, total in vendedores:
+        registrar(f"  {nome}: R$ {total / 100:.2f}")
+
+    total_comparacoes = 0
+    total_trocas = 0
+    for dia in range(1, 8):
+        registrar(f"\nATUALIZAÇÕES — DIA {dia}:")
+        for indice, vendedor in enumerate(vendedores):
+            acrescimo = ((dia * (indice + 3) * 137) % 1400) * 100
+            vendedor[1] += acrescimo
+            registrar(f"  {vendedor[0]}: +R$ {acrescimo / 100:.2f}")
+
+        comparacoes, trocas, tempo = insertion_sort(
+            ranking, indice_chave=1, decrescente=True
+        )
+        total_comparacoes += comparacoes
+        total_trocas += trocas
+        registrar("  Ranking atualizado:")
+        for posicao, (nome, total) in enumerate(ranking, start=1):
+            registrar(f"    {posicao}. {nome}: R$ {total / 100:.2f}")
+        registrar(f"  Comparações: {comparacoes} | Trocas: {trocas}")
+        registrar(f"  Tempo de ordenação: {tempo:.9f} segundos.")
+
+    ordenados = ranking.copy()
+    aleatorios = ranking.copy()
+    Random(20).shuffle(aleatorios)
+    registrar("\nCOMPARAÇÃO — MESMOS VENDEDORES E TOTAIS:")
+    for descricao, lista in [("Já ordenada", ordenados), ("Aleatória", aleatorios)]:
+        registrar(f"  {descricao} — entrada: {lista}")
+        comparacoes, trocas, tempo = insertion_sort(
+            lista, indice_chave=1, decrescente=True
+        )
+        registrar(f"  Resultado: {lista}")
+        registrar(f"  Comparações: {comparacoes} | Trocas: {trocas}")
+        registrar(f"  Tempo: {tempo:.9f} segundos.")
+
+    registrar("\nRESUMO:")
+    registrar("  56 atualizações, 7 rankings diários e 2 execuções comparativas.")
+    registrar(f"  Semana: {total_comparacoes} comparações e {total_trocas} trocas.")
+    registrar("  Tempos de uma execução curta; não garantem superioridade geral.")
+    registrar("\nCOMPLEXIDADE:")
+    registrar("  Por ordenação: O(n) no melhor caso e O(n²) no pior.")
+    registrar("  Semana: O(d*n²) no pior caso, para d dias e n vendedores.")
+    registrar("  Algoritmo: O(1) auxiliar; cópias: O(n); registros: O(d*n).")
+    salvar_registro(20, linhas)
+
+
+def problema_21():
+    dados = ler_base(
+        "dados/transacoes.csv", ["data_hora", "valor", "descricao"], 50
+    )
+    transacoes = [[data, float(valor), descricao] for data, valor, descricao in dados]
+    registrar, linhas = iniciar_registro(
+        21, "ORDENAÇÃO DO HISTÓRICO DE TRANSAÇÕES", "Merge Sort"
+    )
+    registrar(f"\nENTRADA: {len(transacoes)} transações de dados/transacoes.csv")
+    for data, valor, descricao in transacoes:
+        registrar(f"  {data} | R$ {valor:.2f} | {descricao}")
+
+    comparacoes, trocas, tempo = merge_sort(transacoes, indice_chave=0)
+    registrar("\nRESULTADOS — ORDEM CRONOLÓGICA:")
+    for data, valor, descricao in transacoes:
+        registrar(f"  {data} | R$ {valor:.2f} | {descricao}")
+    registrar("\nRESUMO:")
+    registrar(f"  {len(transacoes)} transações ordenadas.")
+    registrar(f"  Comparações: {comparacoes} | Trocas de pares: {trocas}")
+    registrar("  O Merge Sort copia registros para uma lista auxiliar.")
+    registrar("  Datas iguais preservam a ordem de registro.")
+    registrar(f"  Tempo: {tempo:.9f} segundos.")
+    registrar("\nCOMPLEXIDADE:")
+    registrar("  Ordenação: O(n log n) de tempo e O(n) de espaço auxiliar.")
+    registrar("  Leitura e registros: O(n), para n transações de tamanho limitado.")
+    salvar_registro(21, linhas)
+
+
+def problema_22():
+    primeira = ler_base("dados/contatos_a.csv", ["nome", "telefone"], 20)
+    segunda = ler_base("dados/contatos_b.csv", ["nome", "telefone"], 20)
+    registrar, linhas = iniciar_registro(
+        22, "MESCLAGEM DE LISTAS DE CONTATOS", "Intercalação do Merge Sort"
+    )
+    registrar(f"\nENTRADA: {len(primeira)} contatos A e {len(segunda)} contatos B")
+    for descricao, lista in [("LISTA A", primeira), ("LISTA B", segunda)]:
+        registrar(f"\n{descricao}:")
+        for nome, telefone in lista:
+            registrar(f"  {nome} | {telefone}")
+
+    contatos, comparacoes, tempo = mesclar_contatos(primeira, segunda)
+    registrar("\nRESULTADOS — LISTA ÚNICA:")
+    for nome, telefone in contatos:
+        registrar(f"  {nome} | {telefone}")
+    registrar("\nRESUMO:")
+    registrar(f"  {len(contatos)} contatos únicos.")
+    registrar(f"  {len(primeira) + len(segunda) - len(contatos)} duplicatas removidas.")
+    registrar("  Duplicidade por nome exato; prevalece o primeiro telefone da lista A.")
+    registrar("  Se o nome só existir em B, prevalece a primeira ocorrência em B.")
+    registrar(f"  Comparações de nomes, incluindo validação: {comparacoes}")
+    registrar(f"  Tempo: {tempo:.9f} segundos.")
+    registrar("\nCOMPLEXIDADE:")
+    registrar("  Validação e mesclagem: O(a + b) de tempo.")
+    registrar("  Resultado e registros: O(a + b) de espaço.")
+    registrar("  a e b são os tamanhos das listas; nomes têm tamanho limitado.")
+    salvar_registro(22, linhas)
+
+
+def problema_23():
+    dados = ler_base(
+        "dados/produtos.csv", ["codigo", "nome", "quantidade", "preco"], 100
+    )
+    produtos = [
+        [codigo, nome, int(quantidade), float(preco)]
+        for codigo, nome, quantidade, preco in dados
+    ]
+    registrar, linhas = iniciar_registro(
+        23, "ORDENAÇÃO DO CATÁLOGO DE PRODUTOS", "Quick Sort e Merge Sort"
+    )
+    registrar(f"\nENTRADA: {len(produtos)} produtos de dados/produtos.csv")
+    for codigo, nome, quantidade, preco in produtos:
+        registrar(f"  {codigo} | {nome} | Estoque: {quantidade} | R$ {preco:.2f}")
+
+    registrar("\nRESULTADOS:")
+    for criterio, indice in [("PREÇO", 3), ("NOME", 1)]:
+        copia_quick = produtos.copy()
+        copia_merge = produtos.copy()
+        comparacoes, trocas, tempo = quick_sort(copia_quick, indice_chave=indice)
+        comparacoes_merge, trocas_merge, tempo_merge = merge_sort(
+            copia_merge, indice_chave=indice
+        )
+        registrar(f"\nORDEM CRESCENTE POR {criterio}:")
+        for codigo, nome, quantidade, preco in copia_quick:
+            registrar(f"  {codigo} | {nome} | Estoque: {quantidade} | R$ {preco:.2f}")
+        registrar(f"  Quick: {comparacoes} comparações | {trocas} trocas | {tempo:.9f} s")
+        registrar(
+            f"  Merge: {comparacoes_merge} comparações | "
+            f"{trocas_merge} trocas de pares | {tempo_merge:.9f} s"
+        )
+        chaves_quick = [produto[indice] for produto in copia_quick]
+        chaves_merge = [produto[indice] for produto in copia_merge]
+        registrar(f"  Sequências de chaves iguais: {chaves_quick == chaves_merge}")
+
+    registrar("\nRESUMO:")
+    registrar("  Duas ordenações por algoritmo, sempre partindo da entrada original.")
+    registrar("  Quick Sort usa mediana de três; conta comparações da seleção do pivô.")
+    registrar("  Trocas contam pares em posições distintas; Merge faz cópias auxiliares.")
+    registrar("  Critérios: preço e nome. O CSV não contém popularidade.")
+    registrar("  Quick não é estável; nomes são comparados na ordem textual do Python.")
+    registrar("  Os tempos podem variar e não garantem vantagem para todo catálogo.")
+    registrar("\nCOMPLEXIDADE:")
+    registrar("  Quick: O(n log n) médio e O(n²) pior; pilha auxiliar O(log n).")
+    registrar("  A menor partição usa recursão e a maior usa um laço.")
+    registrar("  Merge: O(n log n) em todos os casos e O(n) auxiliar.")
+    registrar("  Simulação, cópias e registros: O(n) de espaço, para n produtos.")
+    salvar_registro(23, linhas)
+
+
+def problema_24():
+    dados = ler_base("dados/atletas.csv", ["nome", "tempo"], 30)
+    atletas = [[nome, float(tempo)] for nome, tempo in dados]
+    registrar, linhas = iniciar_registro(
+        24, "CLASSIFICAÇÃO DE UMA COMPETIÇÃO ESPORTIVA", "Quick Sort"
+    )
+    registrar(f"\nENTRADA: {len(atletas)} atletas de dados/atletas.csv")
+    registrar("  Tempos em segundos; vence o menor tempo.")
+    for nome, tempo in atletas:
+        registrar(f"  {nome} | {tempo:.2f} s")
+
+    comparacoes, trocas, tempo_ordenacao = quick_sort(atletas, indice_chave=1)
+    registrar("\nRESULTADOS — CLASSIFICAÇÃO FINAL:")
+    for posicao, (nome, tempo) in enumerate(atletas, start=1):
+        registrar(f"  {posicao}. {nome} | {tempo:.2f} s")
+    registrar("\nPÓDIO — TOP 3:")
+    for posicao, (nome, tempo) in enumerate(atletas[:3], start=1):
+        registrar(f"  {posicao}. {nome} | {tempo:.2f} s")
+    registrar("\nRESUMO:")
+    registrar(f"  {len(atletas)} atletas classificados; 3 no pódio.")
+    registrar(f"  Comparações: {comparacoes} | Trocas: {trocas}")
+    registrar(f"  Tempo de ordenação: {tempo_ordenacao:.9f} segundos.")
+    registrar("  Tempos iguais não têm critério adicional de desempate.")
+    registrar("\nCOMPLEXIDADE:")
+    registrar("  Quick: O(n log n) médio e O(n²) pior; pilha auxiliar O(log n).")
+    registrar("  Cópias, leitura e registros: O(n) de espaço, para n atletas.")
+    registrar("  Extração do pódio: O(1), pois são sempre três atletas.")
+    salvar_registro(24, linhas)
+
+
 if __name__ == "__main__":
     problema_01()
     print("\n")
@@ -715,4 +1011,20 @@ if __name__ == "__main__":
     problema_18()
     print("\n")
 
-    
+    problema_19()
+    print("\n")
+
+    problema_20()
+    print("\n")
+
+    problema_21()
+    print("\n")
+
+    problema_22()
+    print("\n")
+
+    problema_23()
+    print("\n")
+
+    problema_24()
+    print("\n")

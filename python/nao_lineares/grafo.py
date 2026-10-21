@@ -133,7 +133,7 @@ class Grafo():
         return True
 
     def graus_de_separacao(self, origem, destino):
-        """Usa busca em largura (BFS) para contar ligações entre pessoas."""
+        """usa BFS para contar as ligações entre duas pessoas"""
         if origem not in self.vertices or destino not in self.vertices:
             raise ValueError("As duas pessoas precisam estar cadastradas.")
 
@@ -143,7 +143,7 @@ class Grafo():
             if pessoa == destino:
                 indice_destino = indice
 
-        # -1 significa que a pessoa ainda não foi alcançada.
+        # -1 indica uma pessoa ainda não visitada
         distancias = [-1] * len(self.vertices)
         distancias[indice_origem] = 0
 
