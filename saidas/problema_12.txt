@@ -1,0 +1,69 @@
+========================================================================
+PROBLEMA 12 — REDE DE AMIZADES EM UMA REDE SOCIAL SIMPLES
+Estrutura: Grafo não direcionado | Linguagem: Python
+========================================================================
+
+ENTRADA: 15 usuários e 14 amizades
+  Usuários: Ana, Bruno, Carla, Daniel, Elisa, Felipe, Gabriela, Henrique, Isabela, João, Karina, Lucas, Mariana, Nicolas, Olivia
+  Ana ↔ Bruno
+  Ana ↔ Daniel
+  Bruno ↔ Carla
+  Carla ↔ Daniel
+  Daniel ↔ Elisa
+  Elisa ↔ Felipe
+  Felipe ↔ Gabriela
+  Gabriela ↔ Henrique
+  Henrique ↔ Isabela
+  Isabela ↔ João
+  João ↔ Karina
+  Karina ↔ Lucas
+  Lucas ↔ Mariana
+  Mariana ↔ Nicolas
+
+RESULTADOS — LISTA DE AMIGOS:
+  Ana: Bruno, Daniel
+  Bruno: Ana, Carla
+  Carla: Bruno, Daniel
+  Daniel: Ana, Carla, Elisa
+  Elisa: Daniel, Felipe
+  Felipe: Elisa, Gabriela
+  Gabriela: Felipe, Henrique
+  Henrique: Gabriela, Isabela
+  Isabela: Henrique, João
+  João: Isabela, Karina
+  Karina: João, Lucas
+  Lucas: Karina, Mariana
+  Mariana: Lucas, Nicolas
+  Nicolas: Mariana
+  Olivia: sem amigos
+
+AMIGOS EM COMUM:
+  Ana e Carla: Bruno, Daniel
+  Ana e Olivia: nenhum
+
+SUGESTÕES DE AMIZADE:
+  Para Ana: Carla, Elisa
+  Critério: amigos de amigos que ainda não são amigos diretos.
+
+GRAUS DE SEPARAÇÃO — BFS:
+  Ana → Bruno: 1 ligação(ões)
+  Ana → Carla: 2 ligação(ões)
+  Ana → Nicolas: 11 ligação(ões)
+  Ana → Olivia: sem conexão
+  Ana → Ana: 0 ligação(ões)
+
+RESUMO:
+  15 usuários cadastrados e 14 amizades adicionadas.
+  15 consultas de listagem de amigos.
+  2 consultas de amigos em comum.
+  1 consulta de sugestões de amizade.
+  5 consultas de graus de separação por BFS.
+
+COMPLEXIDADE:
+  BFS: tempo O(V + E) e espaço auxiliar O(V).
+  Listar amigos: O(V + d), incluindo a busca pelo nome.
+  Amigos em comum: O(V + d1 + d2 + d1*d2).
+  Sugestões: O(V³) no pior caso, com buscas em listas.
+  Armazenamento do grafo: O(V + E).
+  V é o número de usuários; E, o número de amizades.
+  d é a quantidade de amigos; d1 e d2 são dos usuários consultados.

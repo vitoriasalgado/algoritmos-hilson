@@ -445,6 +445,149 @@ foi aplicada à validação de delimitadores, que também depende da ordem inver
 
 ---
 
+## Situação-Problema 11 — Roteamento de Entrega de Mercadorias (Caminho Mínimo)
+
+**Estrutura utilizada:** Grafo ponderado com listas de adjacência, `python/nao_lineares/grafo.py`.
+**Algoritmo:** Dijkstra com seleção por varredura linear.
+**Linguagem:** Python.
+
+### Justificativa de escolha
+
+Os pontos do mapa são vértices e as ruas são arestas com distâncias em quilômetros.
+Um grafo permite representar as diferentes rotas entre esses pontos. O Dijkstra compara
+os custos acumulados para encontrar a rota de menor distância, considerando pesos não negativos.
+O menor número de ruas percorridas não implica necessariamente a menor distância.
+
+### Implementação e simulação
+
+A função `problema_11()` monta um mapa fictício com 10 locais e 13 ruas de mão dupla.
+As listas `vertices` e `adjacencias` usam índices correspondentes. Cada conexão armazena
+o índice do vizinho e seu peso; uma rua é registrada nos dois sentidos.
+
+O Dijkstra mantém listas de distâncias, visitados e anteriores. A origem começa com distância
+zero e os demais vértices, com infinito. A cada etapa, uma varredura escolhe o vértice não
+visitado de menor distância conhecida e atualiza os custos dos vizinhos quando encontra
+uma rota mais barata. Não é utilizada fila de prioridade pronta.
+
+O método `menor_caminho()` segue os anteriores do destino até a origem e monta a sequência
+na ordem correta. Para um destino inacessível, retorna lista vazia e distância infinita.
+A inserção de arestas rejeita pesos negativos e extremos não cadastrados.
+
+### Complexidade
+
+Para V vértices e E ruas, a consulta usa O(V² + E) de tempo e O(V) de espaço auxiliar.
+A reconstrução do caminho usa O(V) de tempo e espaço no pior caso. O armazenamento do grafo
+ocupa O(V + E), mesmo registrando cada rua nos dois sentidos. A montagem também faz buscas
+lineares por nomes: cadastrar os vértices custa O(V²) e inserir as ruas, O(EV) no pior caso.
+
+### Exemplo de execução
+
+Trecho de `saidas/problema_11.txt`:
+
+```text
+Origem: Casa | Destino: Universidade
+Menor caminho: Casa → Praça → Escola → Biblioteca → Parque → Universidade
+Distância total: 10 km
+```
+
+A rua direta entre Casa e Universidade tem 15 km. A rota encontrada passa por cinco ruas,
+com distâncias 2 + 2 + 1 + 2 + 3, totalizando 10 km.
+O arquivo completo registra todos os locais, ruas, trechos percorridos, resumo e complexidade.
+
+### Dificuldades encontradas e soluções adotadas
+
+- **Relacionar nomes e posições:** as conexões usam índices, e a apresentação converte esses
+  índices novamente para os nomes dos locais.
+- **Reconstruir a rota:** a lista de anteriores permite recuperar o caminho depois de calcular
+  as distâncias, sem guardar uma cópia completa da rota a cada atualização.
+- **Tratar pontos inacessíveis:** quando não existe vértice alcançável a visitar, a busca termina;
+  a simulação prevê uma mensagem para a ausência de caminho.
+
+### Conclusão
+
+A consulta demonstrada encontra uma rota de 10 km, mais curta que a ligação direta de 15 km.
+A saída foi gerada por execução e conferida com o conteúdo exibido no terminal.
+A simulação atual consulta somente Casa e Universidade; a demonstração de rotas entre diferentes
+pares de pontos, solicitada no enunciado, ainda precisa ser acrescentada.
+
+---
+
+## Situação-Problema 12 — Rede de Amizades em uma Rede Social Simples
+
+**Estrutura utilizada:** Grafo não direcionado e fila de implementação própria.
+**Algoritmo:** Busca em largura (BFS) para graus de separação.
+**Linguagem:** Python.
+
+### Justificativa de escolha
+
+Cada usuário é um vértice e cada amizade liga duas pessoas nos dois sentidos. O grafo permite
+consultar amigos diretos, identificar amigos em comum e explorar conexões indiretas.
+A BFS visita primeiro as pessoas a uma ligação de distância, depois as que estão a duas,
+e assim por diante, encontrando o menor número de ligações entre duas pessoas.
+
+### Implementação e simulação
+
+A função `problema_12()` cadastra 15 usuários e 14 amizades. Olivia fica sem conexões para
+demonstrar o caso de uma pessoa isolada. O método `adicionar_amizade()` valida os nomes,
+rejeita amizade da pessoa consigo mesma e retorna `False` quando a amizade já existe.
+Cada amizade usa peso 1 para aproveitar o armazenamento do grafo; a BFS conta ligações.
+
+`listar_amigos()` converte os índices dos vizinhos em nomes. `amigos_em_comum()` compara
+as duas listas e retorna os nomes presentes em ambas. As sugestões são amigos de amigos,
+excluindo a própria pessoa, amigos diretos e sugestões repetidas.
+
+`graus_de_separacao()` usa a classe `Fila`, de `python/lineares/fila.py`, e uma lista de
+distâncias iniciada com -1. A origem recebe zero. Cada vizinho recebe a distância do vértice
+atual mais um e é marcado antes de entrar na fila, evitando visitas repetidas em ciclos.
+O retorno é -1 quando não há conexão e zero quando origem e destino são a mesma pessoa.
+
+### Complexidade
+
+A BFS custa O(V + E) de tempo e O(V) de espaço auxiliar, para V usuários e E amizades.
+Listar amigos custa O(V + d), incluindo a busca do nome e os d vizinhos. Amigos em comum
+custam O(V + d1 + d2 + d1*d2), porque a busca com `in` percorre uma lista; d1 e d2 são
+as quantidades de amigos das duas pessoas. Essas consultas usam O(V) de espaço no pior caso.
+
+As sugestões podem custar O(V³) no pior caso de um grafo simples denso, devido às consultas
+repetidas e às buscas lineares nas listas de amigos e sugestões. Seu espaço auxiliar é O(V).
+O grafo ocupa O(V + E). A consulta de sugestões é uma demonstração simples, sem ranking
+por quantidade de amigos em comum.
+
+### Exemplo de execução
+
+Trechos de `saidas/problema_12.txt`:
+
+```text
+Ana e Carla: Bruno, Daniel
+Ana e Olivia: nenhum
+Para Ana: Carla, Elisa
+Ana → Bruno: 1 ligação(ões)
+Ana → Carla: 2 ligação(ões)
+Ana → Nicolas: 11 ligação(ões)
+Ana → Olivia: sem conexão
+Ana → Ana: 0 ligação(ões)
+```
+
+O registro completo contém as amizades, a lista de amigos dos 15 usuários, duas consultas
+de amigos em comum, uma de sugestões e cinco consultas de graus de separação.
+
+### Dificuldades encontradas e soluções adotadas
+
+- **Distinguir índices e nomes:** as operações percorrem os índices das adjacências e retornam
+  nomes para que os resultados sejam legíveis.
+- **Evitar repetições:** a inserção verifica amizades existentes; a busca em largura marca
+  os vértices antes de enfileirar; a sugestão verifica se o candidato já foi incluído.
+- **Tratar ausência de relações:** listas vazias e o retorno -1 recebem mensagens específicas
+  na simulação, sem confundir pessoa isolada com usuário não cadastrado.
+
+### Conclusão
+
+A rede demonstra amizades diretas, amigos em comum, sugestões e graus de separação,
+incluindo uma pessoa isolada. Foram verificadas amizades repetidas, ciclos, nomes não
+cadastrados e a consulta de uma pessoa para ela mesma. A saída salva corresponde ao terminal.
+
+---
+
 ## Situação-Problema 15 — Ordenação de Notas de uma Turma Pequena
 
 **Algoritmo principal:** Bubble Sort com parada antecipada.

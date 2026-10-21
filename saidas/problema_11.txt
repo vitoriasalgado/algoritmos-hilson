@@ -1,0 +1,43 @@
+========================================================================
+PROBLEMA 11 — MENOR CAMINHO ENTRE LOCAIS
+Estrutura: Grafo | Algoritmo: Dijkstra | Linguagem: Python
+========================================================================
+
+ENTRADA: 10 locais e 13 ruas de mão dupla
+  Mapa fictício com distâncias em km.
+  Locais: Casa, Praça, Escola, Mercado, Hospital, Biblioteca, Parque, Terminal, Universidade, Centro
+  Casa ↔ Praça: 2 km
+  Casa ↔ Mercado: 7 km
+  Praça ↔ Escola: 2 km
+  Praça ↔ Mercado: 3 km
+  Escola ↔ Biblioteca: 1 km
+  Mercado ↔ Hospital: 2 km
+  Biblioteca ↔ Parque: 2 km
+  Hospital ↔ Terminal: 3 km
+  Parque ↔ Universidade: 3 km
+  Terminal ↔ Centro: 2 km
+  Universidade ↔ Centro: 2 km
+  Mercado ↔ Parque: 4 km
+  Casa ↔ Universidade: 15 km
+
+RESULTADOS:
+  Origem: Casa | Destino: Universidade
+  Menor caminho: Casa → Praça → Escola → Biblioteca → Parque → Universidade
+  Distância total: 10 km
+  Trechos percorridos:
+    1. Casa → Praça
+    2. Praça → Escola
+    3. Escola → Biblioteca
+    4. Biblioteca → Parque
+    5. Parque → Universidade
+
+RESUMO:
+  Operações: 10 cadastros de vértices, 13 inserções
+  de arestas e 1 consulta de menor caminho com Dijkstra.
+  Cada rua é armazenada nas listas de seus dois extremos.
+
+COMPLEXIDADE:
+  Consulta: tempo O(V² + E), com seleção por varredura linear.
+  Reconstrução do caminho: O(V). Espaço auxiliar da consulta: O(V).
+  Armazenamento do grafo: O(V + E).
+  V é o número de locais; E, o número de ruas.
