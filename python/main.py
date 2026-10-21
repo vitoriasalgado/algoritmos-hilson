@@ -1,6 +1,7 @@
 import csv 
 from lineares.fila import Fila
 from lineares.pilha import Pilha
+from nao_lineares.grafo import Grafo
 from ordenacao.bubble_sort import bubble_sort
 from ordenacao.selection_sort import selection_sort
 
@@ -239,6 +240,185 @@ def problema_04():
 
     with open("saidas/problema_04.txt", "w", encoding="utf-8") as arquivo_saida:
         arquivo_saida.write("\n".join(linhas_saida) + "\n")
+
+def problema_11():
+    grafo = Grafo()
+    locais = [
+        "Casa", "Praça", "Escola", "Mercado", "Hospital",
+        "Biblioteca", "Parque", "Terminal", "Universidade", "Centro",
+    ]
+    # distâncias fictícias em km, onde cada rua permite os dois sentidos.
+    ruas = [
+        ["Casa", "Praça", 2],
+        ["Casa", "Mercado", 7],
+        ["Praça", "Escola", 2],
+        ["Praça", "Mercado", 3],
+        ["Escola", "Biblioteca", 1],
+        ["Mercado", "Hospital", 2],
+        ["Biblioteca", "Parque", 2],
+        ["Hospital", "Terminal", 3],
+        ["Parque", "Universidade", 3],
+        ["Terminal", "Centro", 2],
+        ["Universidade", "Centro", 2],
+        ["Mercado", "Parque", 4],
+        ["Casa", "Universidade", 15],
+    ]
+
+    for local in locais:
+        grafo.adicionar_vertice(local)
+    for origem, destino, distancia in ruas:
+        grafo.adicionar_aresta(origem, destino, distancia)
+
+    origem = "Casa"
+    destino = "Universidade"
+    caminho, distancia_total = grafo.menor_caminho(origem, destino)
+    linhas_saida = []
+
+    def registrar(mensagem):
+        print(mensagem)
+        linhas_saida.append(mensagem)
+
+    registrar("=" * 72)
+    registrar("PROBLEMA 11 — MENOR CAMINHO ENTRE LOCAIS")
+    registrar("Estrutura: Grafo | Algoritmo: Dijkstra | Linguagem: Python")
+    registrar("=" * 72)
+    registrar(f"\nENTRADA: {len(locais)} locais e {len(ruas)} ruas de mão dupla")
+    registrar("  Mapa fictício com distâncias em km.")
+    registrar("  Locais: " + ", ".join(locais))
+    for inicio, fim, distancia in ruas:
+        registrar(f"  {inicio} ↔ {fim}: {distancia} km")
+
+    registrar("\nRESULTADOS:")
+    registrar(f"  Origem: {origem} | Destino: {destino}")
+    if caminho:
+        registrar("  Menor caminho: " + " → ".join(caminho))
+        registrar(f"  Distância total: {distancia_total} km")
+        registrar("  Trechos percorridos:")
+        for indice in range(len(caminho) - 1):
+            registrar(f"    {indice + 1}. {caminho[indice]} → {caminho[indice + 1]}")
+    else:
+        registrar("  Não existe caminho entre esses locais.")
+
+    registrar("\nRESUMO:")
+    registrar(f"  Operações: {len(locais)} cadastros de vértices, {len(ruas)} inserções")
+    registrar("  de arestas e 1 consulta de menor caminho com Dijkstra.")
+    registrar("  Cada rua é armazenada nas listas de seus dois extremos.")
+    registrar("\nCOMPLEXIDADE:")
+    registrar("  Consulta: tempo O(V² + E), com seleção por varredura linear.")
+    registrar("  Reconstrução do caminho: O(V). Espaço auxiliar da consulta: O(V).")
+    registrar("  Armazenamento do grafo: O(V + E).")
+    registrar("  V é o número de locais; E, o número de ruas.")
+
+    with open("saidas/problema_11.txt", "w", encoding="utf-8") as arquivo_saida:
+        arquivo_saida.write("\n".join(linhas_saida) + "\n")
+
+def problema_12():
+    grafo = Grafo()
+
+    usuarios = [
+        "Ana", "Bruno", "Carla", "Daniel", "Elisa",
+        "Felipe", "Gabriela", "Henrique", "Isabela", "João",
+        "Karina", "Lucas", "Mariana", "Nicolas", "Olivia",
+    ]
+
+    amizades = [
+        ["Ana", "Bruno"],
+        ["Ana", "Daniel"],
+        ["Bruno", "Carla"],
+        ["Carla", "Daniel"],
+        ["Daniel", "Elisa"],
+        ["Elisa", "Felipe"],
+        ["Felipe", "Gabriela"],
+        ["Gabriela", "Henrique"],
+        ["Henrique", "Isabela"],
+        ["Isabela", "João"],
+        ["João", "Karina"],
+        ["Karina", "Lucas"],
+        ["Lucas", "Mariana"],
+        ["Mariana", "Nicolas"],
+    ]
+    # Olivia fica sem amizades para demonstrar uma pessoa desconectada.
+
+    for usuario in usuarios:
+        grafo.adicionar_vertice(usuario)
+
+    for primeira_pessoa, segunda_pessoa in amizades:
+        grafo.adicionar_amizade(primeira_pessoa, segunda_pessoa)
+
+    linhas_saida = []
+
+    def registrar(mensagem):
+        print(mensagem)
+        linhas_saida.append(mensagem)
+
+    registrar("=" * 72)
+    registrar("PROBLEMA 12 — REDE DE AMIZADES EM UMA REDE SOCIAL SIMPLES")
+    registrar("Estrutura: Grafo não direcionado | Linguagem: Python")
+    registrar("=" * 72)
+
+    registrar(
+        f"\nENTRADA: {len(usuarios)} usuários e {len(amizades)} amizades"
+    )
+    registrar("  Usuários: " + ", ".join(usuarios))
+    for primeira_pessoa, segunda_pessoa in amizades:
+        registrar(f"  {primeira_pessoa} ↔ {segunda_pessoa}")
+
+    registrar("\nRESULTADOS — LISTA DE AMIGOS:")
+    for usuario in usuarios:
+        amigos = grafo.listar_amigos(usuario)
+        descricao = ", ".join(amigos) if amigos else "sem amigos"
+        registrar(f"  {usuario}: {descricao}")
+
+    registrar("\nAMIGOS EM COMUM:")
+    pares = [["Ana", "Carla"], ["Ana", "Olivia"]]
+    for primeira_pessoa, segunda_pessoa in pares:
+        comuns = grafo.amigos_em_comum(primeira_pessoa, segunda_pessoa)
+        descricao = ", ".join(comuns) if comuns else "nenhum"
+        registrar(f"  {primeira_pessoa} e {segunda_pessoa}: {descricao}")
+
+    registrar("\nSUGESTÕES DE AMIZADE:")
+    sugestoes = grafo.sugerir_amigos("Ana")
+    descricao = ", ".join(sugestoes) if sugestoes else "nenhuma"
+    registrar(f"  Para Ana: {descricao}")
+    registrar("  Critério: amigos de amigos que ainda não são amigos diretos.")
+
+    registrar("\nGRAUS DE SEPARAÇÃO — BFS:")
+    consultas = [
+        ["Ana", "Bruno"],
+        ["Ana", "Carla"],
+        ["Ana", "Nicolas"],
+        ["Ana", "Olivia"],
+        ["Ana", "Ana"],
+    ]
+    for origem, destino in consultas:
+        graus = grafo.graus_de_separacao(origem, destino)
+        if graus == -1:
+            registrar(f"  {origem} → {destino}: sem conexão")
+        else:
+            registrar(f"  {origem} → {destino}: {graus} ligação(ões)")
+
+    registrar("\nRESUMO:")
+    registrar(
+        f"  {len(usuarios)} usuários cadastrados e "
+        f"{len(amizades)} amizades adicionadas."
+    )
+    registrar(f"  {len(usuarios)} consultas de listagem de amigos.")
+    registrar(f"  {len(pares)} consultas de amigos em comum.")
+    registrar("  1 consulta de sugestões de amizade.")
+    registrar(f"  {len(consultas)} consultas de graus de separação por BFS.")
+
+    registrar("\nCOMPLEXIDADE:")
+    registrar("  BFS: tempo O(V + E) e espaço auxiliar O(V).")
+    registrar("  Listar amigos: O(V + d), incluindo a busca pelo nome.")
+    registrar("  Amigos em comum: O(V + d1 + d2 + d1*d2).")
+    registrar("  Sugestões: O(V³) no pior caso, com buscas em listas.")
+    registrar("  Armazenamento do grafo: O(V + E).")
+    registrar("  V é o número de usuários; E, o número de amizades.")
+    registrar("  d é a quantidade de amigos; d1 e d2 são dos usuários consultados.")
+
+    with open("saidas/problema_12.txt", "w", encoding="utf-8") as arquivo_saida:
+        arquivo_saida.write("\n".join(linhas_saida) + "\n")
+
 
 def problema_15():
     notas = [7.5, 4, 9, 6.5, 8, 5, 10, 3.5,
@@ -517,6 +697,12 @@ if __name__ == "__main__":
     problema_04()
     print("\n")
 
+    problema_11()
+    print("\n")
+
+    problema_12()
+    print("\n")
+
     problema_15()
     print("\n")
 
@@ -527,3 +713,6 @@ if __name__ == "__main__":
     print("\n")
 
     problema_18()
+    print("\n")
+
+    
